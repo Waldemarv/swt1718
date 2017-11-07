@@ -10,6 +10,6 @@
 * Sitzungsprotokolle
 
 ### Latex :sparkles:
-* [Pflichtenheft](https://github.com/Waldemarv/swt1718/blob/latex/latex/Pflichtenheft/Pflichtenheft.pdf)
+* [Pflichtenheft](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Pflichtenheft/Pflichtenheft.pdf)
 * Lastenheft
-* [Sitzungsprotokolle](https://github.com/Waldemarv/swt1718/blob/latex/latex/Sitzungsprotokolle/Sitzungsprotokolle.pdf)
+* [Sitzungsprotokolle](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Sitzungsprotokolle/Sitzungsprotokolle.pdf)
