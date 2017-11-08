@@ -160,7 +160,14 @@
     <property name="title">
      <string>Datei</string>
     </property>
-    <addaction name="actionNeue_Map"/>
+    <widget class="QMenu" name="menuNeu">
+     <property name="title">
+      <string>Neu</string>
+     </property>
+     <addaction name="actionNeue_Map"/>
+     <addaction name="actionNeues_Fahrzeug"/>
+    </widget>
+    <addaction name="menuNeu"/>
     <addaction name="separator"/>
     <addaction name="actionMap_Speichern"/>
     <addaction name="actionMap_Laden"/>
@@ -263,6 +270,16 @@
   <action name="action_ber">
    <property name="text">
     <string>Über</string>
+   </property>
+  </action>
+  <action name="actionNeue_Map">
+   <property name="text">
+    <string>Map</string>
+   </property>
+  </action>
+  <action name="actionNeues_Fahrzeug">
+   <property name="text">
+    <string>Fahrzeug</string>
    </property>
   </action>
  </widget>
