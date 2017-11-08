@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.7)  8 NOV 2017 14:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.7)  8 NOV 2017 14:57
 entering extended mode
 **./Handbuch.tex
 (Handbuch.tex
@@ -665,16 +665,11 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 65.
  [2]
-ngerman: "NN is now obsolete, please use NNN instead on input line 85.
-
 Underfull \hbox (badness 10000) in paragraph at lines 85--89
 
  []
 
-ngerman: "MM is now obsolete, please use MMM instead on input line 91.
-[3]
-ngerman: "MM is now obsolete, please use MMM instead on input line 95.
-[4] [5]
+[3] [4] [5]
 Underfull \hbox (badness 10000) in paragraph at lines 109--118
 
  []
@@ -703,9 +698,9 @@ Amann\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\eccc1440.pk>
 <C:\Users\Jan-Alexander Amann\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen
 \ec\dpi600\eccc1728.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb>
-Output written on Handbuch.pdf (7 pages, 110652 bytes).
+Output written on Handbuch.pdf (7 pages, 109804 bytes).
 PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
+ 303 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
