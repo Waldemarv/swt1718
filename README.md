@@ -5,9 +5,10 @@
 ## Aktuelle Dokumente
 
 ### Office Versionen :eggplant:
-* Pflichtenheft
+* [Pflichtenheft](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Pflichtenheft.docx)
 * Lastenheft
-* Sitzungsprotokolle
+* [Sitzungsprotokolle](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Sitzungsprotokolle.odt)
+* [Benutzerhandbuch](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Benutzerhandbuch%20Autonomes%20Fahren.docx)
 
 ### Latex :sparkles:
 * [Pflichtenheft](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Pflichtenheft/Pflichtenheft.pdf)
