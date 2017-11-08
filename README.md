@@ -15,3 +15,5 @@
 
 * Lastenheft
 * [Sitzungsprotokolle](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Sitzungsprotokolle/Sitzungsprotokolle.pdf) ![PDF](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/pdf.png)
+
+* [Benutzerhandbuch](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Benutzerhandbuch/Handbuch.pdf) ![PDF](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/pdf.png)
