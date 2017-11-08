@@ -11,6 +11,7 @@
 * [Benutzerhandbuch](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Benutzerhandbuch%20Autonomes%20Fahren.docx) ![DOCX](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/docx.png)
 
 ### Latex :sparkles:
-* [Pflichtenheft](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Pflichtenheft/Pflichtenheft.pdf)
+* [Pflichtenheft](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Pflichtenheft/Pflichtenheft.pdf) ![PDF](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/pdf.png)
+
 * Lastenheft
-* [Sitzungsprotokolle](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Sitzungsprotokolle/Sitzungsprotokolle.pdf)
+* [Sitzungsprotokolle](https://raw.githubusercontent.com/Waldemarv/swt1718/latex/latex/Sitzungsprotokolle/Sitzungsprotokolle.pdf) ![PDF](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/pdf.png)
