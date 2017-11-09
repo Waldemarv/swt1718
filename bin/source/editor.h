@@ -1,7 +1,17 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "map.h"
+#include "ui_editor.h"
+
+#include <QtCore>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QtXml>
+
 #include <QMainWindow>
+
 namespace Ui {
 class Editor;
 }
@@ -14,15 +24,24 @@ public:
     explicit Editor(QWidget *parent = 0);
     ~Editor();
 
+    void createMap();
+    void saveMap();
+    void loadMap();
+
+
+
 private slots:
     void on_actionNeue_Map_triggered();
 
     void on_actionSchliessen_triggered();
 
-    void on_actionSimulation_starten_triggered();
+    void on_actionMap_Speichern_triggered();
+
+    void on_actionMap_Laden_triggered();
 
 private:
     Ui::Editor *ui;
+    Map* m;
 };
 
 #endif // EDITOR_H

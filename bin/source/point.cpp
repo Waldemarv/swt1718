@@ -1,11 +1,12 @@
 #include "point.h"
 
-
 Point::Point() {
     this->x = 0;
     this->y = 0;
 }
 
+Point::~Point() {
+}
 
 Point::Point(double nx, double ny) {
     this->x=nx;
