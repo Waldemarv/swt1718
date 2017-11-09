@@ -10,10 +10,6 @@ Map::Map()
     this->sizeY=0;
     this->startingPoint = new Point();
     this->endingPoint = new Point();
-}
 
-Map::Map(int x, int y)
-{
-    this->sizeX = x;
-    this->sizeY = y;
+    //TODO : Was tun, wenn schon eine Map offen?
 }
