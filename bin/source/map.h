@@ -27,6 +27,8 @@ public:
 
     void setStartingPoint(int x, int y);
     void setEndingPoint(int x, int y);
+    void addTile(Tile t);
+    void addObstacle(Obstacle o);
 
     Point getStartingPoint();
     Point getEndingPoint();
