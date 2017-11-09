@@ -12,6 +12,8 @@ private:
 
 public:
 	void drawObstacle();
+    double getwidth();
+    double getlength();
 };
 
 #endif

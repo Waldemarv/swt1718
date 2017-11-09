@@ -13,7 +13,9 @@ private:
 public:
 	void drawTile();
 
-        Tile rotate(Tile t);
+    double getAscent();
+
+    Tile rotate(Tile t);
 
 	Tile();
 };
