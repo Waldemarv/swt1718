@@ -7,7 +7,6 @@ class Tile {
 
 private:
 	Point position;
-	bool openEnds[4];
 	double ascent;
 
 public:
@@ -15,9 +14,11 @@ public:
 
     double getAscent();
 
-    Tile rotate(Tile t);
+    Point getPosition();
 
+    Tile rotate(Tile t);
 	Tile();
+    Tile(double x, double y, double ascent);
 };
 
 #endif
