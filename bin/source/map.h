@@ -13,7 +13,6 @@ private:
     Point endingPoint;
 public:
     Map();
-    Map(int x, int y);
     //TODO createMemento
     //TODO setMemento
 };

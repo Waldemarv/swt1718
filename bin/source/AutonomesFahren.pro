@@ -26,12 +26,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         editor.cpp \
-        map.cpp \
+    map.cpp \
     point.cpp
 
 HEADERS += \
         editor.h \
-        map.h \
+    map.h \
     point.h
 
 FORMS += \
