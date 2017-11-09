@@ -1,18 +1,30 @@
 #ifndef MAP_H
 #define MAP_H
 #include "point.h"
+#include "tile.h"
+#include "obstacle.h"
+#include <vector>
 
 class Map
 {
 private:
-    //TODO obstacleVector
-    //TODO tileVector
+    std::vector<Tile> tiles;
+    std::vector<Obstacle> obstacles;
+
     int sizeX;
     int sizeY;
+
     Point startingPoint;
     Point endingPoint;
+
 public:
     Map();
+    Map(int x, int y);
+    ~Map();
+
+    unsigned int getNumberOfTiles();
+    unsigned int getNumberOfObstacles();
+
     //TODO createMemento
     //TODO setMemento
 };

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,13 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         editor.cpp \
-    map.cpp \
-    point.cpp
+        map.cpp \
+        point.cpp \
+    Tile.cpp \
+    Obstacle.cpp
 
 HEADERS += \
         editor.h \
-    map.h \
-    point.h
+        map.h \
+        point.h \
+    Tile.h \
+    Obstacle.h
 
 FORMS += \
         editor.ui
