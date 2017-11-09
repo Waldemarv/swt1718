@@ -14,6 +14,8 @@ public:
 	void drawObstacle();
     double getwidth();
     double getlength();
+
+    Point getPosition();
 };
 
 #endif

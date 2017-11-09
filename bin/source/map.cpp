@@ -17,10 +17,11 @@ Map::Map(int x, int y)
 unsigned int Map::getNumberOfTiles() { return tiles.size(); }
 unsigned int Map::getNumberOfObstacles() { return obstacles.size(); }
 
-double Map::getStartingPointX() { return startingPoint.getX(); }
-double Map::getStartingPointY() { return startingPoint.getY(); }
-double Map::getEndingPointX() { return endingPoint.getX(); }
-double Map::getEndingPointY() { return endingPoint.getY(); }
+void Map::setStartingPoint(int x, int y) { startingPoint = new Point(x,y); }
+void Map::setEndingPoint(int x, int y) { endingPoint = new Point(x,y); }
+
+Point Map::getStartingPoint() { return startingPoint; }
+Point Map::getEndingPoint() { return endingPoint; }
 
 Tile Map::getTile(int i) { return tiles[i]; }
 Obstacle Map::getObstacle(int i) { return obstacles[i]; }

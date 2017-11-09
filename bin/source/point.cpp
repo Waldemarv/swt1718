@@ -21,11 +21,11 @@ void Point::setY(double ny) {
 }
 
 double Point::getX() {
-    return this->x;
+    return x;
 }
 
 double Point::getY() {
-    return this->y;
+    return y;
 }
 
 Point Point::operator = (Point* np) {

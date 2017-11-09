@@ -25,10 +25,11 @@ public:
     Tile getTile(int i);
     Obstacle getObstacle(int i);
 
-    double getStartingPointX();
-    double getStartingPointY();
-    double getEndingPointX();
-    double getEndingPointY();
+    void setStartingPoint(int x, int y);
+    void setEndingPoint(int x, int y);
+
+    Point getStartingPoint();
+    Point getEndingPoint();
 
     unsigned int getNumberOfTiles();
     unsigned int getNumberOfObstacles();
