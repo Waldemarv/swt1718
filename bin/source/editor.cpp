@@ -6,7 +6,7 @@ Editor::Editor(QWidget *parent) :
     ui(new Ui::Editor)
 {
     ui->setupUi(this);
-    m = new Map();
+    m = nullptr;
 }
 
 Editor::~Editor()
@@ -21,6 +21,18 @@ void Editor::createMap()
         bool ok;
         int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
         m =  new Map(x,x);
+
+        Tile *t = new Tile(124,53252,12431);
+        Tile *f = new Tile(1,2,3);
+
+        Obstacle *o = new Obstacle(5,6,7,8);
+
+        m->addTile(*t);
+        m->addTile(*f);
+        m->addObstacle(*o);
+
+        qDebug()<<m->getNumberOfObstacles();
+        qDebug()<<m->getNumberOfTiles();
     }
     //Wenn bereits map offen
     else {
@@ -44,6 +56,11 @@ void Editor::createMap()
 
 void Editor::saveMap()
 {
+    //Map vorhanden?
+    if(m==nullptr){
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem speichern eine Map");
+    }
+    else{
     //Pfad zum speichern wählen
     QString filename = QFileDialog::getSaveFileName(
             this,
@@ -74,6 +91,9 @@ void Editor::saveMap()
     end.setAttribute("Y:", QString::number(m->getEndingPoint().getY()));
     root.appendChild(end);
 
+    //QDomElement smartVehicle = document.createElement("SmartVehicle");
+    //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
+
     //Obstacles als nodes dem document hinzufügen
     for(int i=0; i < m->getNumberOfObstacles(); i++)
     {
@@ -83,6 +103,7 @@ void Editor::saveMap()
         node.setAttribute("lenght:", QString::number(m->getObstacle(i).getlength()));
         node.setAttribute("X:", QString::number(m->getObstacle(i).getPosition().getX()));
         node.setAttribute("Y:", QString::number(m->getObstacle(i).getPosition().getY()));
+        root.appendChild(node);
     }
 
     //Tiles als nodes dem document hinzufügen
@@ -93,7 +114,7 @@ void Editor::saveMap()
         node.setAttribute("ascent:", QString::number(m->getTile(i).getAscent()));
         node.setAttribute("X:", QString::number(m->getTile(i).getPosition().getX()));
         node.setAttribute("Y:", QString::number(m->getTile(i).getPosition().getY()));
-
+        root.appendChild(node);
     }
 
     //Die zu schreibene Datei erstellen/öffnen
@@ -102,6 +123,7 @@ void Editor::saveMap()
     //Dokument schreiben.
     QTextStream stream(&file);
     stream<<document.toString();
+    }
 }
 
 void Editor::loadMap()
