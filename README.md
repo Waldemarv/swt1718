@@ -6,7 +6,7 @@
 
 ### Office Versionen :eggplant:
 * [Pflichtenheft](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Pflichtenheft.docx) ![DOCX](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/docx.png)
-* [Lastenheft] (https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Lastenheft.docx) ![DOCX](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/docx.png)
+* [Lastenheft](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Lastenheft.docx) ![DOCX](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/docx.png)
 * [Sitzungsprotokolle](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Sitzungsprotokolle.odt) ![ODT](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/odt.png)
 * [Benutzerhandbuch](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/office/Benutzerhandbuch%20Autonomes%20Fahren.docx) ![DOCX](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/icons/docx.png)
 
