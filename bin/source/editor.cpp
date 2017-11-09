@@ -62,17 +62,31 @@ void Editor::saveMap()
 
     //Start- und Endingpoints als nodes dem document hinzufügen
     QDomElement start = document.createElement("StartingPoint");
-    start.setAttribute("X:", QString::number(5));
-    start.setAttribute("Y:", QString::number(12));
+    start.setAttribute("X:", QString::number(m->getStartingPointX()));
+    start.setAttribute("Y:", QString::number(m->getStartingPointY()));
     root.appendChild(start);
 
     QDomElement end = document.createElement("EndingPoint");
-    end.setAttribute("X:", QString::number(8));
-    end.setAttribute("Y:", QString::number(43));
+    end.setAttribute("X:", QString::number(m->getEndingPointX()));
+    end.setAttribute("Y:", QString::number(m->getEndingPointY()));
     root.appendChild(end);
 
     //Obstacles als nodes dem document hinzufügen
+    for(int i=0; i < m->getNumberOfObstacles(); i++)
+    {
+        QDomElement node = document.createElement("Obstacle");
+        node.setAttribute("ID:", QString::number(i));
+        node.setAttribute("width:", QString::number(m->getObstacle(i).getwidth()));
+        node.setAttribute("lenght:", QString::number(m->getObstacle(i).getlength()));
+    }
 
+    //Tiles als nodes dem document hinzufügen
+    for(int i=0; i < m->getNumberOfTiles(); i++)
+    {
+        QDomElement node = document.createElement("Tile");
+        node.setAttribute("ID:", QString::number(i));
+        node.setAttribute("ascent:", QString::number(m->getTile(i).getAscent()));
+    }
 
     //Die zu schreibene Datei erstellen/öffnen
     file.open(QIODevice::WriteOnly | QIODevice::Text);

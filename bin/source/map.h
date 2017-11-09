@@ -22,6 +22,14 @@ public:
     Map(int x, int y);
     ~Map();
 
+    Tile getTile(int i);
+    Obstacle getObstacle(int i);
+
+    double getStartingPointX();
+    double getStartingPointY();
+    double getEndingPointX();
+    double getEndingPointY();
+
     unsigned int getNumberOfTiles();
     unsigned int getNumberOfObstacles();
 
