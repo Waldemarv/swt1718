@@ -1,4 +1,4 @@
- #include "editor.h"
+#include "editor.h"
 #include <iostream>
 
 Editor::Editor(QWidget *parent) :
@@ -20,20 +20,25 @@ void Editor::createMap()
     if(m==nullptr) {
         bool ok;
         int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
+        if(ok) {
         m =  new Map(x,x);
 
-        Tile *t = new Tile(124,53252,12431);
-        Tile *f = new Tile(1,2,3);
+        //Testobjekte erstellen
+
+        Tile *s = new straight;
+        Tile *t = new turn;
 
         Obstacle *o = new Obstacle(5,6,7,8);
 
-        m->addTile(*t);
-        m->addTile(*f);
-        m->addObstacle(*o);
+        m->addTile(s);
+        qDebug()<<m->getTile(0)->getType();
+        m->addTile(t);
+        m->addObstacle(o);
 
         qDebug()<<m->getNumberOfObstacles();
         qDebug()<<m->getNumberOfTiles();
-    }
+        }
+  }
     //Wenn bereits map offen
     else {
         QMessageBox::StandardButton reply;
@@ -44,12 +49,11 @@ void Editor::createMap()
             m = nullptr;
             this->createMap();
         }
-        else if(reply == QMessageBox::Abort) {
-
-        }
-        else {
+        else if(reply == QMessageBox::No) {
             m = nullptr;
             this->createMap();
+        }
+        else {
         }
     }
 }
@@ -58,7 +62,7 @@ void Editor::saveMap()
 {
     //Map vorhanden?
     if(m==nullptr){
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem speichern eine Map");
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Speichern eine Map");
     }
     else{
     //Pfad zum speichern wählen
@@ -80,7 +84,7 @@ void Editor::saveMap()
     //root dem document hinzufügen
     document.appendChild(root);
 
-    //Unterkategorie Points für start und endpunkte einfügen.
+    //Unterkategorie Points einfügen
     QDomElement points = document.createElement("Points");
     root.appendChild(points);
 
@@ -98,32 +102,36 @@ void Editor::saveMap()
     //QDomElement smartVehicle = document.createElement("SmartVehicle");
     //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
 
+    //Unterkategorie für obstacles
     QDomElement obstacles = document.createElement("Obstacles");
     root.appendChild(obstacles);
 
-    //Obstacles als nodes dem document hinzufügen
-    for(int i=0; i < m->getNumberOfObstacles(); i++)
+    //Obstacles als nodes dem unterpunkt hinzufügen
+    for(unsigned int i=0; i < m->getNumberOfObstacles(); i++)
     {
         QDomElement node = document.createElement("Obstacle");
         node.setAttribute("ID:", QString::number(i));
-        node.setAttribute("width:", QString::number(m->getObstacle(i).getwidth()));
-        node.setAttribute("lenght:", QString::number(m->getObstacle(i).getlength()));
-        node.setAttribute("X:", QString::number(m->getObstacle(i).getPosition().getX()));
-        node.setAttribute("Y:", QString::number(m->getObstacle(i).getPosition().getY()));
+        node.setAttribute("Typ:", m->getObstacle(i)->getType());
+        node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
+        node.setAttribute("lenght:", QString::number(m->getObstacle(i)->getlength()));
+        node.setAttribute("X:", QString::number(m->getObstacle(i)->getPosition().getX()));
+        node.setAttribute("Y:", QString::number(m->getObstacle(i)->getPosition().getY()));
         obstacles.appendChild(node);
     }
 
+    //Unterpunkt für tiles hinzufügen
     QDomElement tiles = document.createElement("Tiles");
     root.appendChild(tiles);
 
     //Tiles als nodes dem document hinzufügen
-    for(int i=0; i < m->getNumberOfTiles(); i++)
+    for(unsigned int i=0; i < m->getNumberOfTiles(); i++)
     {
         QDomElement node = document.createElement("Tile");
+        node.setAttribute("Typ:", m->getTile(i)->getType());
         node.setAttribute("ID:", QString::number(i));
-        node.setAttribute("ascent:", QString::number(m->getTile(i).getAscent()));
-        node.setAttribute("X:", QString::number(m->getTile(i).getPosition().getX()));
-        node.setAttribute("Y:", QString::number(m->getTile(i).getPosition().getY()));
+        node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
+        node.setAttribute("X:", QString::number(m->getTile(i)->getPosition().getX()));
+        node.setAttribute("Y:", QString::number(m->getTile(i)->getPosition().getY()));
         tiles.appendChild(node);
     }
 
@@ -172,10 +180,9 @@ void Editor::on_actionSchliessen_triggered()
           this->saveMap();
           QApplication::quit();
       }
-      else if(reply == QMessageBox::Abort) {
-
+      else if(reply == QMessageBox::No) {
+          QApplication::quit();
       }
       else {
-          QApplication::quit();
       }
 }

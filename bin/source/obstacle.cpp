@@ -1,6 +1,11 @@
-#include "obstacle.h"
+#include "Obstacle.h"
 
 void Obstacle::drawObstacle() {
+}
+
+QString Obstacle::getType()
+{
+    return "staticObstacle";
 }
 
 double Obstacle::getlength() { return length; }

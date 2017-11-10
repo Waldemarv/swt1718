@@ -2,6 +2,7 @@
 #define TILE_H
 
 #include "point.h"
+#include <QString>
 
 class Tile {
 
@@ -10,14 +11,15 @@ private:
 	double ascent;
 
 public:
-	void drawTile();
-
     double getAscent();
+
+    virtual void drawTile();
+    virtual QString getType();
 
     Point getPosition();
 
     Tile rotate(Tile t);
-	Tile();
+    Tile();
     Tile(double x, double y, double ascent);
 };
 
