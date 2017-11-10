@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Editor</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icon/img/icon/editor.svg</normaloff>:/icon/img/icon/editor.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
@@ -153,12 +157,12 @@
      <x>0</x>
      <y>0</y>
      <width>1104</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Datei</string>
+     <string>&amp;Datei</string>
     </property>
     <addaction name="actionNeue_Map"/>
     <addaction name="separator"/>
@@ -169,20 +173,20 @@
    </widget>
    <widget class="QMenu" name="menuSimulation">
     <property name="title">
-     <string>Simulation</string>
+     <string>S&amp;imulation</string>
     </property>
     <addaction name="actionSimulation_starten"/>
    </widget>
    <widget class="QMenu" name="menuFenster">
     <property name="title">
-     <string>Fenster</string>
+     <string>&amp;Fenster</string>
     </property>
     <addaction name="actionWindowed"/>
     <addaction name="actionFullScreen"/>
    </widget>
    <widget class="QMenu" name="menuHilfe">
     <property name="title">
-     <string>Hilfe</string>
+     <string>&amp;Hilfe</string>
     </property>
     <addaction name="actionHandbuch"/>
     <addaction name="separator"/>
@@ -214,7 +218,7 @@
      <normaloff>:/icon/img/icon/new_map.svg</normaloff>:/icon/img/icon/new_map.svg</iconset>
    </property>
    <property name="text">
-    <string>Neue Map</string>
+    <string>&amp;Neue Map</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -226,7 +230,7 @@
      <normaloff>:/icon/img/icon/save.svg</normaloff>:/icon/img/icon/save.svg</iconset>
    </property>
    <property name="text">
-    <string>Map speichern</string>
+    <string>&amp;Map speichern</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -238,7 +242,7 @@
      <normaloff>:/icon/img/icon/load.svg</normaloff>:/icon/img/icon/load.svg</iconset>
    </property>
    <property name="text">
-    <string>Map laden</string>
+    <string>Map &amp;laden</string>
    </property>
    <property name="iconText">
     <string>Map laden</string>
@@ -249,7 +253,7 @@
   </action>
   <action name="actionSchliessen">
    <property name="text">
-    <string>Schliessen</string>
+    <string>&amp;Schliessen</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
@@ -261,27 +265,27 @@
      <normaloff>:/icon/img/icon/run.svg</normaloff>:/icon/img/icon/run.svg</iconset>
    </property>
    <property name="text">
-    <string>Simulation starten</string>
+    <string>&amp;Simulation starten</string>
    </property>
   </action>
   <action name="actionWindowed">
    <property name="text">
-    <string>Windowed</string>
+    <string>&amp;Windowed</string>
    </property>
   </action>
   <action name="actionFullScreen">
    <property name="text">
-    <string>Fullscreen</string>
+    <string>&amp;Fullscreen</string>
    </property>
   </action>
   <action name="actionHandbuch">
    <property name="text">
-    <string>Handbuch</string>
+    <string>&amp;Handbuch</string>
    </property>
   </action>
   <action name="action_ber">
    <property name="text">
-    <string>Über</string>
+    <string>&amp;Über</string>
    </property>
   </action>
  </widget>
