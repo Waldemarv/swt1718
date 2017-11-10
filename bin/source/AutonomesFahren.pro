@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui xml
+CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,8 +31,8 @@ SOURCES += \
         point.cpp \
         tile.cpp \
         obstacle.cpp \
-    straight.cpp \
-    turn.cpp
+        straight.cpp \
+        turn.cpp
 
 HEADERS += \
         editor.h \
@@ -39,8 +40,8 @@ HEADERS += \
         point.h \
         tile.h \
         obstacle.h \
-    straight.h \
-    turn.h
+        straight.h \
+        turn.h
 
 FORMS += \
         editor.ui
