@@ -40,3 +40,6 @@ HEADERS += \
 
 FORMS += \
         editor.ui
+
+RESOURCES += \
+    icons.qrc
