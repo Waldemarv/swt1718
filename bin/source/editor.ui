@@ -222,8 +222,8 @@
   </action>
   <action name="actionMap_Speichern">
    <property name="icon">
-    <iconset>
-     <normaloff>img/icon/save.svg</normaloff>img/icon/save.svg</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/save.svg</normaloff>:/icon/img/icon/save.svg</iconset>
    </property>
    <property name="text">
     <string>Map speichern</string>
