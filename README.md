@@ -1,1 +1,0 @@
-Projekt zum autonomen Fahren
