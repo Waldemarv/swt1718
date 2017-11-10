@@ -5,5 +5,9 @@
         <file>img/icon/save.svg</file>
         <file>img/icon/map.svg</file>
         <file>img/icon/new_map.svg</file>
+        <file>img/icon/editor.svg</file>
+        <file>img/icon/simulator.svg</file>
+        <file>img/icon/tacho.svg</file>
+        <file>img/icon/wrench-screwdriver.svg</file>
     </qresource>
 </RCC>
