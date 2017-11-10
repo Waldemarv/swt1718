@@ -28,18 +28,18 @@ SOURCES += \
         editor.cpp \
         map.cpp \
         point.cpp \
-    Tile.cpp \
-    Obstacle.cpp
+        tile.cpp \
+        obstacle.cpp
 
 HEADERS += \
         editor.h \
         map.h \
         point.h \
-    Tile.h \
-    Obstacle.h
+        tile.h \
+        obstacle.h
 
 FORMS += \
         editor.ui
 
 RESOURCES += \
-    icons.qrc
+        icons.qrc
