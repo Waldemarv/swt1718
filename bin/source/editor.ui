@@ -210,8 +210,8 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNeue_Map">
    <property name="icon">
-    <iconset>
-     <normaloff>img/icon/map.svg</normaloff>img/icon/map.svg</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/map.svg</normaloff>:/icon/img/icon/map.svg</iconset>
    </property>
    <property name="text">
     <string>Neue Map</string>
@@ -234,8 +234,8 @@
   </action>
   <action name="actionMap_Laden">
    <property name="icon">
-    <iconset>
-     <normaloff>img/icon/load.svg</normaloff>img/icon/load.svg</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/load.svg</normaloff>:/icon/img/icon/load.svg</iconset>
    </property>
    <property name="text">
     <string>Map laden</string>
@@ -257,8 +257,8 @@
   </action>
   <action name="actionSimulation_starten">
    <property name="icon">
-    <iconset>
-     <normaloff>img/icon/run.svg</normaloff>img/icon/run.svg</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/run.svg</normaloff>:/icon/img/icon/run.svg</iconset>
    </property>
    <property name="text">
     <string>Simulation starten</string>
@@ -286,6 +286,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
