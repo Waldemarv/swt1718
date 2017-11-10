@@ -211,7 +211,7 @@
   <action name="actionNeue_Map">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icon/img/icon/map.svg</normaloff>:/icon/img/icon/map.svg</iconset>
+     <normaloff>:/icon/img/icon/new_map.svg</normaloff>:/icon/img/icon/new_map.svg</iconset>
    </property>
    <property name="text">
     <string>Neue Map</string>
