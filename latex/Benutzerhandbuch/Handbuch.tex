@@ -1,0 +1,120 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[paperwidth=16cm,paperheight=23cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{grey}{rgb}{0.9,0.9,0.9} % Colour of the box surrounding the title
+% usenames allows you to use names of the default colors, the same 16 base colors as used in HTML. The dvipsnames allows you access to more colors, another 64, and svgnames allows access to about 150 colors. The initialization of "table" allows colors to be added to tables by placing the color command just before the table. If you need more colors, then you may also want to look at adding the x11names to the initialization section as well, this offers more than 300 colors, but you need to make sure your xcolor package is the most recent you can download.
+
+
+
+\usepackage{endnotes}
+
+\usepackage{graphicx}
+\graphicspath{{Bilder/}}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+
+\usepackage[onehalfspacing]{setspace}
+%\renewcommand{\familydefault}{\sfdefault}
+
+\date{}
+\author{Jan Philip Wahle, Marvin Janosch, Dennis Szczepanski, Khalid Bellouch
+        \and Jan-Alexander Amann}
+\title{Benutzerhandbuch Autonomes Fahren}
+
+
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	\includegraphics[width=0.5\textwidth]{uni.png}\par\vspace{1cm}
+	{\scshape\LARGE Praktikum Softwaretechnologie\par}
+	\vspace{1cm}
+	{\scshape\Large Gruppe 3\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Autonomes Fahren\par}
+	\vspace{2cm}
+	{\Large\itshape Benutzerhandbuch\par}
+	\vfill
+	erstellt von\par
+    \textsc{Jan-Alexander Amann}
+
+	\vfill
+
+% Bottom of the page
+	{\large \today\par}
+\end{titlepage}
+
+% Inhaltsverzeichnis anzeigen
+\tableofcontents
+
+% Kapitel soll auf naechster Seite beginnen
+\newpage
+
+\section{Installation}
+
+\subsection{Systemanforderungen}
+Damit Sie die Software ausführen können und die Simulation ausreichend schnell abläuft, benötigen sie mindestens folgende Komponenten in ihrem PC:
+\begin{itemize}
+\item Windows, macOS, Linux
+\item 2 GHz CPU
+\item 4 GB RAM
+\item Nvidia CUDA-fähige GPU
+\end{itemize}
+
+\subsection{Installationsprozess}
+
+Führen sie die mitgelieferte Installationsdatei aus und befolgen Sie den Anweisungen auf dem Bildschirm. Sie können das Programm ausführen, sobald die Installation vollständig abgeschlossen ist.
+
+\subsection{Erste Schritte}
+
+Nach dem Programmstart befinden sie sich im Editor. Erstellen sie eine Strecke oder simulieren Sie eine bereits vorhandene Streckendatei.
+
+\newpage
+\section{Einführung in die Software}
+Mit diesem Programm werden realitätsnahe Szenarien aus dem Straßenverkehr abstrahiert um sie dann zu simulieren. \\
+Das System lernt eigenständig vorgegebene Strecken zu absolvieren und weicht dabei statischen und dynamischen Hindernissen aus.
+
+\subsection{Map erstellen}
+Erstellen sie zunächst über „Datei $\rightarrow$ Neu“ in der Menüleiste oder über „Neue Map“ in der Schnellzugriffsleiste eine neue Map und geben sie deren Größe an. \\
+Als nächstes können Sie jedem Feld ein Streckenteil zuordnen und diverse Hindernisse auf die Felder setzen.
+Überhalb der Map finden Sie Streckenteile und Hindernisse die Sie auf der Karte setzen können.\\
+Es müssen nun Start- und Zielpunkt gesetzt werden, um eine Simulation durchführen zu können. Die erstellte Strecke kann gespeichert und dann in die Simulation geladen werden. \\
+
+\subsection{Map ändern}
+Öffnen sie eine bereits erstellte Map mit „Datei $\rightarrow$ Map Laden“ oder mit „Map Laden“ in der Schnellzugriffsleiste. Sie können diese Map nun nach ihren Wünschen anpassen. 
+Anschließend können sie die Map wieder speichern.
+\newpage
+\subsection{Map speichern}
+Eine Map kann gespeichert werden indem sie in der Menü-Leiste „Datei $\rightarrow$ Speichern“ oder in der Schnellzugriffsleiste „Map Speichern“ auswählen. Geben sie einen Dateipfad an unter dem die Strecke gespeichert werden soll.
+\subsection{Fahrzeug erstellen}
+Erstellen sie ein neues Fahrzeug, indem sie in der Menü-Leiste „Datei $\rightarrow$ Neu $\rightarrow$ Fahrzeug“ auswählen. Sie müssen nun eine Mapdatei auswählen, für die das Fahrzeug erstellt werden soll. Nun geben Sie alle relevanten Fahrzeugdaten an. Anschließend wird das Fahrzeug in der Mapdatei gespeichert. Anschließend wird getestet ob das Fahrzeug die Strecke passieren kann.
+\newpage
+\section{Simulation}
+Simulationen können in 2D und 3D durchgeführt werden. Die Simulation läuft nach dem Start bis das Fahrzeug den Zielpunkt erreicht hat oder eine Kollision besteht.
+Des Weiteren kann die Simulation vom Benutzer pausiert oder gestoppt werden.
+
+\subsection{Simulation Starten}
+Um eine Strecke in die Simulation zu Laden wählen sie in der Menüleiste „Simulation $\rightarrow$ Simulation Starten“ oder in der Schnellzugriffsleiste „Simulation Starten“ und geben sie an ob die Simulation in 2D oder 3D erfolgen soll.
+\subsection{Simulation stoppen oder pausieren}
+Um die Simulation zu pausieren oder zu stoppen klicken Sie auf den entsprechenden Button in der Simulation.
+\newpage
+\section{Kontakt und Support}
+\textbf{Mitwirkende} \\ 
+Jan Philip Wahle \\
+Marvin Janosch \\
+Dennis Szczepanski \\
+Khalid Bellouch \\
+Jan-Alexander Amann \\
+\\
+\textbf{Kontakt} \\ 
+Bei Fragen und Problemen wenden sie sich bitte an das Entwickler-Team unter der Mail-Adresse 1521361@uni-wuppertal.de
+
+
+\end{document}
