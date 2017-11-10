@@ -19,11 +19,11 @@ unsigned int Map::getNumberOfObstacles() { return obstacles.size(); }
 
 void Map::setStartingPoint(int x, int y) { startingPoint = new Point(x,y); }
 void Map::setEndingPoint(int x, int y) { endingPoint = new Point(x,y); }
-void Map::addTile(Tile t) { tiles.push_back(t); }
-void Map::addObstacle(Obstacle o) { obstacles.push_back(o); }
+void Map::addTile(Tile* t) { tiles.push_back(t); }
+void Map::addObstacle(Obstacle* o) { obstacles.push_back(o); }
 
 Point Map::getStartingPoint() { return startingPoint; }
 Point Map::getEndingPoint() { return endingPoint; }
 
-Tile Map::getTile(int i) { return tiles[i]; }
-Obstacle Map::getObstacle(int i) { return obstacles[i]; }
+Tile* Map::getTile(int i) { return tiles[i]; }
+Obstacle* Map::getObstacle(int i) { return obstacles[i]; }

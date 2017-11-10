@@ -29,20 +29,21 @@ SOURCES += \
         map.cpp \
         point.cpp \
         tile.cpp \
-        obstacle.cpp
+        obstacle.cpp \
+    straight.cpp \
+    turn.cpp
 
 HEADERS += \
         editor.h \
         map.h \
         point.h \
         tile.h \
-        obstacle.h
+        obstacle.h \
+    straight.h \
+    turn.h
 
 FORMS += \
         editor.ui
 
 RESOURCES += \
         icons.qrc
-
-CONFIG += \
-        c++11
