@@ -1,4 +1,4 @@
-#include "Obstacle.h"
+#include "obstacle.h"
 
 void Obstacle::drawObstacle() {
 }
