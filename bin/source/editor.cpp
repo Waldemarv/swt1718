@@ -80,19 +80,26 @@ void Editor::saveMap()
     //root dem document hinzufügen
     document.appendChild(root);
 
+    //Unterkategorie Points für start und endpunkte einfügen.
+    QDomElement points = document.createElement("Points");
+    root.appendChild(points);
+
     //Start- und Endingpoints als nodes dem document hinzufügen
     QDomElement start = document.createElement("StartingPoint");
     start.setAttribute("X:", QString::number(m->getStartingPoint().getX()));
     start.setAttribute("Y:", QString::number(m->getStartingPoint().getY()));
-    root.appendChild(start);
+    points.appendChild(start);
 
     QDomElement end = document.createElement("EndingPoint");
     end.setAttribute("X:", QString::number(m->getEndingPoint().getX()));
     end.setAttribute("Y:", QString::number(m->getEndingPoint().getY()));
-    root.appendChild(end);
+    points.appendChild(end);
 
     //QDomElement smartVehicle = document.createElement("SmartVehicle");
     //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
+
+    QDomElement obstacles = document.createElement("Obstacles");
+    root.appendChild(obstacles);
 
     //Obstacles als nodes dem document hinzufügen
     for(int i=0; i < m->getNumberOfObstacles(); i++)
@@ -103,8 +110,11 @@ void Editor::saveMap()
         node.setAttribute("lenght:", QString::number(m->getObstacle(i).getlength()));
         node.setAttribute("X:", QString::number(m->getObstacle(i).getPosition().getX()));
         node.setAttribute("Y:", QString::number(m->getObstacle(i).getPosition().getY()));
-        root.appendChild(node);
+        obstacles.appendChild(node);
     }
+
+    QDomElement tiles = document.createElement("Tiles");
+    root.appendChild(tiles);
 
     //Tiles als nodes dem document hinzufügen
     for(int i=0; i < m->getNumberOfTiles(); i++)
@@ -114,7 +124,7 @@ void Editor::saveMap()
         node.setAttribute("ascent:", QString::number(m->getTile(i).getAscent()));
         node.setAttribute("X:", QString::number(m->getTile(i).getPosition().getX()));
         node.setAttribute("Y:", QString::number(m->getTile(i).getPosition().getY()));
-        root.appendChild(node);
+        tiles.appendChild(node);
     }
 
     //Die zu schreibene Datei erstellen/öffnen
