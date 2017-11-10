@@ -153,21 +153,14 @@
      <x>0</x>
      <y>0</y>
      <width>1104</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>Datei</string>
     </property>
-    <widget class="QMenu" name="menuNeu">
-     <property name="title">
-      <string>Neu</string>
-     </property>
-     <addaction name="actionNeue_Map"/>
-     <addaction name="actionNeues_Fahrzeug"/>
-    </widget>
-    <addaction name="menuNeu"/>
+    <addaction name="actionNeue_Map"/>
     <addaction name="separator"/>
     <addaction name="actionMap_Speichern"/>
     <addaction name="actionMap_Laden"/>
@@ -216,6 +209,10 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNeue_Map">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/icon/map.svg</normaloff>img/icon/map.svg</iconset>
+   </property>
    <property name="text">
     <string>Neue Map</string>
    </property>
@@ -224,16 +221,27 @@
    </property>
   </action>
   <action name="actionMap_Speichern">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/icon/save.svg</normaloff>img/icon/save.svg</iconset>
+   </property>
    <property name="text">
-    <string>Map Speichern</string>
+    <string>Map speichern</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionMap_Laden">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/icon/load.svg</normaloff>img/icon/load.svg</iconset>
+   </property>
    <property name="text">
-    <string>Map Laden</string>
+    <string>Map laden</string>
+   </property>
+   <property name="iconText">
+    <string>Map laden</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
@@ -248,6 +256,10 @@
    </property>
   </action>
   <action name="actionSimulation_starten">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/icon/run.svg</normaloff>img/icon/run.svg</iconset>
+   </property>
    <property name="text">
     <string>Simulation starten</string>
    </property>
@@ -270,16 +282,6 @@
   <action name="action_ber">
    <property name="text">
     <string>Über</string>
-   </property>
-  </action>
-  <action name="actionNeue_Map">
-   <property name="text">
-    <string>Map</string>
-   </property>
-  </action>
-  <action name="actionNeues_Fahrzeug">
-   <property name="text">
-    <string>Fahrzeug</string>
    </property>
   </action>
  </widget>
