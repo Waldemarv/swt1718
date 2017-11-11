@@ -5,6 +5,7 @@
 #include "ui_editor.h"
 
 #include <QtCore>
+#include <QGraphicsItem>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -39,9 +40,16 @@ private slots:
 
     void on_actionMap_Laden_triggered();
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::Editor *ui;
     Map* m;
+    QGraphicsScene *scene;
+    QGraphicsEllipseItem *ellipse;
+    QGraphicsRectItem *rect;
 };
 
 #endif // EDITOR_H

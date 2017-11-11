@@ -9,15 +9,15 @@ Point::~Point() {
 }
 
 Point::Point(double nx, double ny) {
-    this->x=nx;
-    this->y=ny;
+    x=nx;
+    y=ny;
 }
 
 void Point::setX(double nx) {
-    this->x=nx;
+    x=nx;
 }
 void Point::setY(double ny) {
-    this->y=ny;
+    y=ny;
 }
 
 double Point::getX() {

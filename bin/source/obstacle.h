@@ -7,7 +7,7 @@
 class Obstacle {
 
 private:
-	Point position;
+    Point* position;
 	double width;
 	double length;
 
@@ -21,7 +21,7 @@ public:
     Obstacle();
     Obstacle(double x, double y, double width, double length);
 
-    Point getPosition();
+    Point* getPosition();
 };
 
 #endif
