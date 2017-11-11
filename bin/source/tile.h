@@ -3,22 +3,42 @@
 
 #include "point.h"
 #include <QString>
+#include <QGraphicsItem>
+#include <QPainter>
+#include <Qdebug>
 
-class Tile {
+class Tile : public QGraphicsItem {
 
-private:
-	Point position;
-	double ascent;
+protected:
+    Point* position;
+    double ascent;
+
+    QPointF topLeft;
+    QPointF topRight;
+    QPointF bottomRight;
+    QPointF bottomLeft;
+    QPointF topCenter;
+    QPointF bottomCenter;
+    QPointF leftCenter;
+    QPointF rightCenter;
 
 public:
+    virtual QRectF boundingRect() const;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
     double getAscent();
 
     virtual void drawTile();
     virtual QString getType();
 
-    Point getPosition();
+    void setAscent(double Ascent);
 
-    Tile rotate(Tile t);
+    Point* getPosition();
+
+    void rotate();
+
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+
     Tile();
     Tile(double x, double y, double ascent);
 };

@@ -8,8 +8,10 @@ class turn : public Tile
 {
 public:
     turn();
+    turn(double x, double y, double ascent);
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QString getType();
-    void drawTile();
 };
 
 #endif // TURN_H

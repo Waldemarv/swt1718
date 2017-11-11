@@ -2,8 +2,8 @@
 #define MAP_H
 #include "point.h"
 #include "tile.h"
-    #include "straight.h"
-    #include "turn.h"
+#include "straight.h"
+#include "turn.h"
 #include "obstacle.h"
 #include <vector>
 

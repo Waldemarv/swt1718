@@ -6,7 +6,11 @@ Editor::Editor(QWidget *parent) :
     ui(new Ui::Editor)
 {
     ui->setupUi(this);
+
     m = nullptr;
+
+    scene = new QGraphicsScene(this);
+    ui->graphicsView->setScene(scene);
 }
 
 Editor::~Editor()
@@ -22,21 +26,6 @@ void Editor::createMap()
         int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
         if(ok) {
         m =  new Map(x,x);
-
-        //Testobjekte erstellen
-
-        Tile *s = new straight;
-        Tile *t = new turn;
-
-        Obstacle *o = new Obstacle(5,6,7,8);
-
-        m->addTile(s);
-        qDebug()<<m->getTile(0)->getType();
-        m->addTile(t);
-        m->addObstacle(o);
-
-        qDebug()<<m->getNumberOfObstacles();
-        qDebug()<<m->getNumberOfTiles();
         }
   }
     //Wenn bereits map offen
@@ -114,8 +103,8 @@ void Editor::saveMap()
         node.setAttribute("Typ:", m->getObstacle(i)->getType());
         node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
         node.setAttribute("lenght:", QString::number(m->getObstacle(i)->getlength()));
-        node.setAttribute("X:", QString::number(m->getObstacle(i)->getPosition().getX()));
-        node.setAttribute("Y:", QString::number(m->getObstacle(i)->getPosition().getY()));
+        node.setAttribute("X:", QString::number(m->getObstacle(i)->getPosition()->getX()));
+        node.setAttribute("Y:", QString::number(m->getObstacle(i)->getPosition()->getY()));
         obstacles.appendChild(node);
     }
 
@@ -130,8 +119,8 @@ void Editor::saveMap()
         node.setAttribute("Typ:", m->getTile(i)->getType());
         node.setAttribute("ID:", QString::number(i));
         node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
-        node.setAttribute("X:", QString::number(m->getTile(i)->getPosition().getX()));
-        node.setAttribute("Y:", QString::number(m->getTile(i)->getPosition().getY()));
+        node.setAttribute("X:", QString::number(m->getTile(i)->getPosition()->getX()));
+        node.setAttribute("Y:", QString::number(m->getTile(i)->getPosition()->getY()));
         tiles.appendChild(node);
     }
 
@@ -185,4 +174,33 @@ void Editor::on_actionSchliessen_triggered()
       }
       else {
       }
+}
+
+void Editor::on_pushButton_clicked()
+{
+    if(m == nullptr)
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else
+    {
+        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);
+        m->addTile(t);
+        scene->addItem(t);
+    }
+}
+
+void Editor::on_pushButton_2_clicked()
+{
+    if(m == nullptr)
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else
+    {
+        Tile *t = new turn((m->getNumberOfTiles()*100),0, 0);
+        m->addTile(t);
+        scene->addItem(t);
+    }
+
 }

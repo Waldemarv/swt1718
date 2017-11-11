@@ -81,6 +81,32 @@
          <attribute name="title">
           <string>Strecke</string>
          </attribute>
+         <widget class="QPushButton" name="pushButton">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>80</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>straight</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="geometry">
+           <rect>
+            <x>110</x>
+            <y>20</y>
+            <width>80</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>turn</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab_2">
          <property name="maximumSize">
@@ -96,23 +122,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QOpenGLWidget" name="openGLWidget">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>300</width>
-          <height>300</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>400</width>
-          <height>400</height>
-         </size>
-        </property>
-       </widget>
+       <widget class="QGraphicsView" name="graphicsView"/>
       </item>
      </layout>
     </item>
@@ -157,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>1104</width>
-     <height>25</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
