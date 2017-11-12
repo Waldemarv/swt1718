@@ -81,7 +81,7 @@
          <attribute name="title">
           <string>Strecke</string>
          </attribute>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="straightButton">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -94,7 +94,7 @@
            <string>straight</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="turnButton">
           <property name="geometry">
            <rect>
             <x>110</x>
@@ -131,6 +131,19 @@
          <attribute name="title">
           <string>Hindernisse</string>
          </attribute>
+         <widget class="QPushButton" name="staticObstacle">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>81</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>staticObstacle</string>
+          </property>
+         </widget>
         </widget>
        </widget>
       </item>
