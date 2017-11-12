@@ -31,8 +31,6 @@ public:
     void saveMap();
     void loadMap();
 
-
-
 private slots:
     void on_actionNeue_Map_triggered();
 
@@ -42,11 +40,13 @@ private slots:
 
     void on_actionMap_Laden_triggered();
 
-    void on_pushButton_clicked();
+    void on_straightButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_turnButton_clicked();
 
     void on_deleteButton_clicked();
+
+    void on_staticObstacle_clicked();
 
 private:
     Ui::Editor *ui;

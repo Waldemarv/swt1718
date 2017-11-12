@@ -3,8 +3,11 @@
 
 #include "point.h"
 #include <QString>
+#include <QGraphicsItem>
+#include <QPainter>
+#include <Qdebug>
 
-class Obstacle {
+class Obstacle :public QGraphicsItem {
 
 private:
     Point* position;
@@ -15,7 +18,8 @@ public:
     double getwidth();
     double getlength();
 
-    virtual void drawObstacle();
+    virtual QRectF boundingRect() const;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
 
     Obstacle();

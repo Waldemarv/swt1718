@@ -106,8 +106,8 @@ void Editor::saveMap()
         node.setAttribute("Typ:", m->getObstacle(i)->getType());
         node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
         node.setAttribute("lenght:", QString::number(m->getObstacle(i)->getlength()));
-        node.setAttribute("X:", QString::number(m->getObstacle(i)->getPosition()->getX()));
-        node.setAttribute("Y:", QString::number(m->getObstacle(i)->getPosition()->getY()));
+        node.setAttribute("X:", QString::number(m->getObstacle(i)->pos().x()));
+        node.setAttribute("Y:", QString::number(m->getObstacle(i)->pos().y()));
         obstacles.appendChild(node);
     }
 
@@ -122,8 +122,8 @@ void Editor::saveMap()
         node.setAttribute("Typ:", m->getTile(i)->getType());
         node.setAttribute("ID:", QString::number(i));
         node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
-        node.setAttribute("X:", QString::number(m->getTile(i)->getPosition()->getX()));
-        node.setAttribute("Y:", QString::number(m->getTile(i)->getPosition()->getY()));
+        node.setAttribute("X:", QString::number(m->getTile(i)->pos().x()));
+        node.setAttribute("Y:", QString::number(m->getTile(i)->pos().y()));
         tiles.appendChild(node);
     }
 
@@ -179,7 +179,7 @@ void Editor::on_actionSchliessen_triggered()
       }
 }
 
-void Editor::on_pushButton_clicked()
+void Editor::on_straightButton_clicked()
 {
     if(m == nullptr)
     {
@@ -193,7 +193,7 @@ void Editor::on_pushButton_clicked()
     }
 }
 
-void Editor::on_pushButton_2_clicked()
+void Editor::on_turnButton_clicked()
 {
     if(m == nullptr)
     {
@@ -220,5 +220,19 @@ void Editor::on_deleteButton_clicked()
         scene->removeItem(m->getCurrentTile());
         scene->update();
         m->deleteCurrentTile();
+    }
+}
+
+void Editor::on_staticObstacle_clicked()
+{
+    if(m == nullptr)
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else
+    {
+        Obstacle *o = new Obstacle(m->getNumberOfObstacles()*20,0,10,10);
+        m->addObstacle(o);
+        scene->addItem(o);
     }
 }
