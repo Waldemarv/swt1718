@@ -4,6 +4,8 @@
 #include "map.h"
 #include "ui_editor.h"
 
+#include <QGraphicsLayout>
+#include <QGraphicsGridLayout>
 #include <QtCore>
 #include <QGraphicsItem>
 #include <QInputDialog>
@@ -43,6 +45,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_deleteButton_clicked();
 
 private:
     Ui::Editor *ui;

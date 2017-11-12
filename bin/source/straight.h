@@ -9,10 +9,11 @@ class straight : public Tile
 public:
     straight();
     straight(double x, double y, double ascent);
+
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QString getType();
 
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void rotate();
 };
 

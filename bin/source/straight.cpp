@@ -10,7 +10,6 @@ straight::straight(double x, double y, double ascent)
     position->setX(x);
     position->setY(y);
     setAscent(ascent);
-    setFlag(QGraphicsItem::ItemIsMovable);
 
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
@@ -28,6 +27,17 @@ void straight::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 {
     painter->drawLine(topLeft, topRight);
     painter->drawLine(bottomLeft,bottomRight);
+}
+
+void straight::rotate()
+{
+    QPointF temp = topLeft;
+    topLeft = topRight;
+    topRight = bottomRight;
+    bottomRight = bottomLeft;
+    bottomLeft = temp;
+
+    update();
 }
 
 QString straight::getType()
