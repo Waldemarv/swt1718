@@ -11,6 +11,12 @@ Editor::Editor(QWidget *parent) :
 
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+
+    ui->treeWidget->setColumnCount(3);
+    ui->treeWidget->setColumnWidth(0,140);
+    ui->treeWidget->setColumnWidth(1,60);
+    ui->treeWidget->setColumnWidth(2,60);
+
 }
 
 Editor::~Editor()
@@ -26,6 +32,13 @@ void Editor::createMap()
         int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
         if(ok) {
         m =  new Map(x,x);
+
+        root = new QTreeWidgetItem(ui->treeWidget);
+        root->setText(0, "Map");
+        root->setText(1,QString::number(x));
+        root->setText(2,QString::number(x));
+        ui->treeWidget->addTopLevelItem(root);
+
         }
   }
     //Wenn bereits map offen
@@ -144,7 +157,16 @@ void Editor::loadMap()
                 tr("Datei wählen..."),
                 "C:/",
                 tr("Extensible Markup Language Files (*.xml)")
-    );
+                );
+}
+
+void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(0, name);
+    item->setText(1, QString::number(posX));
+    item->setText(2, QString::number(posY));
+    parent->addChild(item);
 }
 
 void Editor::on_actionMap_Laden_triggered()
@@ -190,6 +212,7 @@ void Editor::on_straightButton_clicked()
         Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);    //TODO: Ändern für Grid Layout
         m->addTile(t);
         scene->addItem(t);
+        addChild(root, "straight", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
 
@@ -204,6 +227,7 @@ void Editor::on_turnButton_clicked()
         Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
         m->addTile(t);
         scene->addItem(t);
+        addChild(root, "turn", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 
 }
@@ -220,6 +244,7 @@ void Editor::on_deleteButton_clicked()
         scene->removeItem(m->getCurrentTile());
         scene->update();
         m->deleteCurrentTile();
+        root->removeChild(root->child(root->childCount()-1));
     }
 }
 
@@ -234,5 +259,6 @@ void Editor::on_staticObstacle_clicked()
         Obstacle *o = new Obstacle(m->getNumberOfObstacles()*20,0,10,10);
         m->addObstacle(o);
         scene->addItem(o);
+        addChild(root, "staticObstacle", m->getCurrentObstacle()->getPosition()->getX(), m->getCurrentObstacle()->getPosition()->getY());
     }
 }

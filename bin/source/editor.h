@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QtXml>
+#include <QtGui>
 
 #include <QMainWindow>
 
@@ -30,6 +31,8 @@ public:
     void createMap();
     void saveMap();
     void loadMap();
+
+    void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 
 private slots:
     void on_actionNeue_Map_triggered();
@@ -52,8 +55,7 @@ private:
     Ui::Editor *ui;
     Map* m;
     QGraphicsScene *scene;
-    QGraphicsEllipseItem *ellipse;
-    QGraphicsRectItem *rect;
+    QTreeWidgetItem* root;
 };
 
 #endif // EDITOR_H
