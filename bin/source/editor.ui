@@ -107,6 +107,19 @@
            <string>turn</string>
           </property>
          </widget>
+         <widget class="QPushButton" name="deleteButton">
+          <property name="geometry">
+           <rect>
+            <x>210</x>
+            <y>20</y>
+            <width>80</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>delete</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab_2">
          <property name="maximumSize">

@@ -9,7 +9,6 @@ turn::turn(double x, double y, double ascent)
     position->setX(x);
     position->setY(y);
     setAscent(ascent);
-    setFlag(QGraphicsItem::ItemIsMovable);
 
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
@@ -31,12 +30,30 @@ QRectF turn::boundingRect() const
 void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QRectF rec = boundingRect();
+    QBrush brush(Qt::red);
 
     painter->drawLine(topLeft, topRight);
     painter->drawLine(topRight, bottomRight);
 
     painter->drawLine(rec.center(), leftCenter);
     painter->drawLine(rec.center(), bottomCenter);
+}
+
+void turn::rotate()
+{
+    QPointF temp = topLeft;
+    topLeft = topRight;
+    topRight = bottomRight;
+    bottomRight = bottomLeft;
+    bottomLeft = temp;
+
+    temp=leftCenter;
+    leftCenter = topCenter;
+    topCenter = rightCenter;
+    rightCenter = bottomCenter;
+    bottomCenter = temp;
+
+    update();
 }
 
 QString turn::getType()

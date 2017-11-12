@@ -51,7 +51,10 @@ void Editor::saveMap()
 {
     //Map vorhanden?
     if(m==nullptr){
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Speichern eine Map");
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Speichern eine Map!");
+    }
+    else if(m->getNumberOfItems() == 0){
+        QMessageBox::about(this, "Keine Elemente in der Map", "Bitte fügen Sie mindestens ein Objekt hinzu!");
     }
     else{
     //Pfad zum speichern wählen
@@ -96,7 +99,7 @@ void Editor::saveMap()
     root.appendChild(obstacles);
 
     //Obstacles als nodes dem unterpunkt hinzufügen
-    for(unsigned int i=0; i < m->getNumberOfObstacles(); i++)
+    for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
     {
         QDomElement node = document.createElement("Obstacle");
         node.setAttribute("ID:", QString::number(i));
@@ -184,7 +187,7 @@ void Editor::on_pushButton_clicked()
     }
     else
     {
-        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);
+        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);    //TODO: Ändern für Grid Layout
         m->addTile(t);
         scene->addItem(t);
     }
@@ -198,9 +201,24 @@ void Editor::on_pushButton_2_clicked()
     }
     else
     {
-        Tile *t = new turn((m->getNumberOfTiles()*100),0, 0);
+        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
         m->addTile(t);
         scene->addItem(t);
     }
 
+}
+
+void Editor::on_deleteButton_clicked()
+{
+    if(m == nullptr) {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else if(m->getNumberOfItems() == 0) {
+        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+    }
+    else {
+        scene->removeItem(m->getCurrentTile());
+        scene->update();
+        m->deleteCurrentTile();
+    }
 }
