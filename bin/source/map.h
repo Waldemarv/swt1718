@@ -34,6 +34,10 @@ public:
     void setSize(int x, int y);
     void addTile(Tile* t);
     void addObstacle(Obstacle* o);
+
+    void deleteTile(int i);
+    void deleteObstacle(int i);
+
     void deleteCurrentTile();
     void deleteCurrentObstacle();
 

@@ -97,7 +97,7 @@
          <widget class="QPushButton" name="turnButton">
           <property name="geometry">
            <rect>
-            <x>110</x>
+            <x>100</x>
             <y>20</y>
             <width>80</width>
             <height>61</height>
@@ -110,7 +110,7 @@
          <widget class="QPushButton" name="deleteTile">
           <property name="geometry">
            <rect>
-            <x>210</x>
+            <x>190</x>
             <y>20</y>
             <width>80</width>
             <height>61</height>
@@ -118,6 +118,19 @@
           </property>
           <property name="text">
            <string>deleteTile</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="deleteSelectedTile">
+          <property name="geometry">
+           <rect>
+            <x>280</x>
+            <y>20</y>
+            <width>121</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>DeleteSelected</string>
           </property>
          </widget>
         </widget>
@@ -155,6 +168,19 @@
           </property>
           <property name="text">
            <string>deleteObstacle</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="deleteSelectedObstacle">
+          <property name="geometry">
+           <rect>
+            <x>210</x>
+            <y>20</y>
+            <width>131</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Delete Selected</string>
           </property>
          </widget>
         </widget>

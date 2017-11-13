@@ -5,7 +5,7 @@
 #include <QString>
 #include <QGraphicsItem>
 #include <QPainter>
-#include <Qdebug>
+#include <QDebug>
 
 class Obstacle :public QGraphicsItem {
 
@@ -16,6 +16,10 @@ private:
 
 public:
     bool pressed;
+    bool selected;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     double getwidth();
     double getlength();

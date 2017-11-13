@@ -5,7 +5,7 @@
 #include <QString>
 #include <QGraphicsItem>
 #include <QPainter>
-#include <Qdebug>
+#include <QDebug>
 #include <QObject>
 
 class Tile : public QGraphicsItem {
@@ -25,6 +25,7 @@ protected:
 
 public:
     bool pressed;   //Für Mouse click event
+    bool selected;
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

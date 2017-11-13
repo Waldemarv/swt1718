@@ -340,3 +340,46 @@ void Editor::on_deleteObstacle_clicked()
 
     }
 }
+
+void Editor::on_deleteSelectedTile_clicked()
+{
+    if(m == nullptr) {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else if(m->getNumberOfItems() == 0) {
+        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+    }
+    else {
+        for(unsigned int i = 0; i < m->getNumberOfTiles() ; i++){
+            if(m->getTile(i)->selected){
+                scene->removeItem(m->getTile(i));
+                scene->update();
+                m->deleteTile(i);
+                updateTreeTiles();
+                treeTiles->removeChild(treeTiles->child(i));
+            }
+        }
+    }
+}
+
+void Editor::on_deleteSelectedObstacle_clicked()
+{
+    if(m == nullptr) {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else if(m->getNumberOfItems() == 0) {
+        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+    }
+    else {
+
+        for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++){
+            if(m->getObstacle(i)->selected){
+                scene->removeItem(m->getObstacle(i));
+                scene->update();
+                m->deleteObstacle(i);
+                updateTreeObstacles();
+                treeObstacles->removeChild(treeObstacles->child(i));
+            }
+        }
+    }
+}
