@@ -15,8 +15,13 @@ private:
 	double length;
 
 public:
+    bool pressed;
+
     double getwidth();
     double getlength();
+
+    void updatePosition();
+    void setPosition(double x, double y);
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

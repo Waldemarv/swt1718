@@ -34,4 +34,12 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
 {
     position = new Point(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
+    //setPos(x,y);
+}
+
+void Obstacle::setPosition(double x, double y)
+{
+    position->setX(x);
+    position->setY(y);
+    //setPos(x,y);
 }

@@ -10,6 +10,7 @@ Tile::Tile(double x, double y, double Ascent) : ascent(Ascent) {
     position = new Point(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
     pressed = false;
+    //setPos(x,y);
 }
 
 QRectF Tile::boundingRect() const
@@ -27,6 +28,13 @@ void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 }
 
 double Tile::getAscent(){ return ascent; }
+
+void Tile::setPosition(double x, double y)
+{
+    position->setX(x);
+    position->setY(y);
+    //setPos(x,y);
+}
 
 QString Tile::getType()
 {

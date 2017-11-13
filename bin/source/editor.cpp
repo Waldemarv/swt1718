@@ -33,12 +33,30 @@ void Editor::createMap()
         if(ok) {
         m =  new Map(x,x);
 
-        root = new QTreeWidgetItem(ui->treeWidget);
-        root->setText(0, "Map");
-        root->setText(1,QString::number(x));
-        root->setText(2,QString::number(x));
-        ui->treeWidget->addTopLevelItem(root);
+        connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
+            bool oki;
+            int f = QInputDialog::getInt(this, tr("Größe Ändern"), tr("Neue Mapgröße festlegen:"), 32, 16, 64, 1, &oki);
+            if(oki) {
+            m->setSize(f,f);
+            updateSize();
+            }
+        });
 
+        treeRoot = new QTreeWidgetItem(ui->treeWidget);
+        treeRoot->setText(0, "Map");
+        treeRoot->setText(1,QString::number(x));
+        treeRoot->setText(2,QString::number(x));
+        ui->treeWidget->addTopLevelItem(treeRoot);
+
+        treeTiles = new QTreeWidgetItem(ui->treeWidget);
+        treeTiles->setText(0, "Tiles");
+        treeTiles->setText(1,QString::number(treeTiles->childCount()));
+        treeRoot->addChild(treeTiles);
+
+        treeObstacles = new QTreeWidgetItem(ui->treeWidget);
+        treeObstacles->setText(0, "Obstacles");
+        treeObstacles->setText(1,QString::number(treeObstacles->childCount()));
+        treeRoot->addChild(treeObstacles);
         }
   }
     //Wenn bereits map offen
@@ -47,13 +65,15 @@ void Editor::createMap()
         reply = QMessageBox::question(this, "Alte Map speichern?", "Möchten Sie vor dem Erstellen ihrer neuen Map die vorherige Karte speichern?",
                                       QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
         if (reply == QMessageBox::Yes) {
-            this->saveMap();
-            m = nullptr;
-            this->createMap();
+            saveMap();
+            deleteMap();
+            clearTree();
+            createMap();
         }
         else if(reply == QMessageBox::No) {
-            m = nullptr;
-            this->createMap();
+            deleteMap();
+            clearTree();
+            createMap();
         }
         else {
         }
@@ -119,8 +139,8 @@ void Editor::saveMap()
         node.setAttribute("Typ:", m->getObstacle(i)->getType());
         node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
         node.setAttribute("lenght:", QString::number(m->getObstacle(i)->getlength()));
-        node.setAttribute("X:", QString::number(m->getObstacle(i)->pos().x()));
-        node.setAttribute("Y:", QString::number(m->getObstacle(i)->pos().y()));
+        node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
+        node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
         obstacles.appendChild(node);
     }
 
@@ -135,8 +155,8 @@ void Editor::saveMap()
         node.setAttribute("Typ:", m->getTile(i)->getType());
         node.setAttribute("ID:", QString::number(i));
         node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
-        node.setAttribute("X:", QString::number(m->getTile(i)->pos().x()));
-        node.setAttribute("Y:", QString::number(m->getTile(i)->pos().y()));
+        node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
+        node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
         tiles.appendChild(node);
     }
 
@@ -158,6 +178,35 @@ void Editor::loadMap()
                 "C:/",
                 tr("Extensible Markup Language Files (*.xml)")
                 );
+}
+
+void Editor::deleteMap()
+{
+    delete m;
+    m=nullptr;
+}
+
+void Editor::updateTreeTiles()
+{
+    treeTiles->setText(1, QString::number(m->getNumberOfTiles()));
+}
+
+void Editor::updateTreeObstacles()
+{
+    treeObstacles->setText(1, QString::number(m->getNumberOfObstacles()));
+}
+
+void Editor::updateSize()
+{
+    treeRoot->setText(1, QString::number(m->getSizeX()));
+    treeRoot->setText(2, QString::number(m->getSizeY()));
+}
+
+void Editor::clearTree()
+{
+    delete ui->treeWidget->topLevelItem(0);
+    delete ui->treeWidget->topLevelItem(1);
+    delete ui->treeWidget->topLevelItem(2);
 }
 
 void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
@@ -209,10 +258,13 @@ void Editor::on_straightButton_clicked()
     }
     else
     {
-        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);    //TODO: Ändern für Grid Layout
+        Tile *t = new straight((m->getNumberOfTiles()*25),0, 0);    //TODO: Ändern für Grid Layout
+
         m->addTile(t);
         scene->addItem(t);
-        addChild(root, "straight", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+
+        updateTreeTiles();
+        addChild(treeTiles, "straight", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
 
@@ -224,27 +276,32 @@ void Editor::on_turnButton_clicked()
     }
     else
     {
-        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
+        Tile *t = new turn((m->getNumberOfTiles()*25),0, 0);  //TODO: Ändern für Grid Layout
         m->addTile(t);
+        qDebug()<<m->getNumberOfTiles();
         scene->addItem(t);
-        addChild(root, "turn", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+
+        updateTreeTiles();
+        addChild(treeTiles, "turn", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 
 }
 
-void Editor::on_deleteButton_clicked()
+void Editor::on_deleteTile_clicked()
 {
     if(m == nullptr) {
         QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
     }
-    else if(m->getNumberOfItems() == 0) {
+    else if(m->getNumberOfTiles() == 0) {
         QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
     }
     else {
         scene->removeItem(m->getCurrentTile());
         scene->update();
         m->deleteCurrentTile();
-        root->removeChild(root->child(root->childCount()-1));
+
+        updateTreeTiles();
+        treeTiles->removeChild(treeTiles->child(treeTiles->childCount()-1));
     }
 }
 
@@ -256,9 +313,30 @@ void Editor::on_staticObstacle_clicked()
     }
     else
     {
-        Obstacle *o = new Obstacle(m->getNumberOfObstacles()*20,0,10,10);
+        Obstacle *o = new Obstacle((m->getNumberOfObstacles()*20),0,10,10);
         m->addObstacle(o);
         scene->addItem(o);
-        addChild(root, "staticObstacle", m->getCurrentObstacle()->getPosition()->getX(), m->getCurrentObstacle()->getPosition()->getY());
+
+        updateTreeObstacles();
+        addChild(treeObstacles, "staticObstacle", m->getCurrentObstacle()->getPosition()->getX(), m->getCurrentObstacle()->getPosition()->getY());
+    }
+}
+
+void Editor::on_deleteObstacle_clicked()
+{
+    if(m == nullptr) {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else if(m->getNumberOfObstacles() == 0) {
+        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+    }
+    else {
+        scene->removeItem(m->getCurrentObstacle());
+        scene->update();
+        m->deleteCurrentObstacle();
+
+        updateTreeObstacles();
+        treeObstacles->removeChild(treeObstacles->child(treeObstacles->childCount()-1));
+
     }
 }

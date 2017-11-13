@@ -31,6 +31,7 @@ public:
 
     void setStartingPoint(int x, int y);
     void setEndingPoint(int x, int y);
+    void setSize(int x, int y);
     void addTile(Tile* t);
     void addObstacle(Obstacle* o);
     void deleteCurrentTile();
@@ -42,6 +43,9 @@ public:
     unsigned int getNumberOfTiles();
     unsigned int getNumberOfObstacles();
     unsigned int getNumberOfItems();
+
+    unsigned int getSizeX();
+    unsigned int getSizeY();
 
     //TODO createMemento
     //TODO setMemento
