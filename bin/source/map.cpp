@@ -43,8 +43,12 @@ void Map::setSize(int x, int y)
 }
 void Map::addTile(Tile* t) { tiles.push_back(t); }
 void Map::addObstacle(Obstacle* o) { obstacles.push_back(o); }
+
 void Map::deleteCurrentTile() { tiles.pop_back(); }
 void Map::deleteCurrentObstacle() { obstacles.pop_back(); }
+
+void Map::deleteTile(int i){    tiles.erase(tiles.begin()+i);   }
+void Map::deleteObstacle(int i) {   obstacles.erase(obstacles.begin()+i); }
 
 Point Map::getStartingPoint() { return startingPoint; }
 Point Map::getEndingPoint() { return endingPoint; }

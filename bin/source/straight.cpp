@@ -26,6 +26,20 @@ QRectF straight::boundingRect() const
 
 void straight::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    //Hightligh when Selected
+    if(selected){
+        QPen pen;
+        pen.setColor(Qt::red);
+        pen.setWidth(3);
+        painter->setPen(pen);
+        painter->drawRect(boundingRect());
+    }
+    // Change Pen: Color to Black and Size to 3
+    QPen mainPen;
+    mainPen.setColor(Qt::black);
+    mainPen.setWidth(1);
+    painter->setPen(mainPen);
+
     painter->drawLine(topLeft, topRight);
     painter->drawLine(bottomLeft,bottomRight);
 }
