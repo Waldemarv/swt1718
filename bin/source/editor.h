@@ -31,6 +31,12 @@ public:
     void createMap();
     void saveMap();
     void loadMap();
+    void clearTree();
+    void deleteMap();
+
+    void updateTreeTiles();
+    void updateTreeObstacles();
+    void updateSize();
 
     void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 
@@ -47,15 +53,19 @@ private slots:
 
     void on_turnButton_clicked();
 
-    void on_deleteButton_clicked();
+    void on_deleteTile_clicked();
 
     void on_staticObstacle_clicked();
+
+    void on_deleteObstacle_clicked();
 
 private:
     Ui::Editor *ui;
     Map* m;
     QGraphicsScene *scene;
-    QTreeWidgetItem* root;
+    QTreeWidgetItem* treeRoot;
+    QTreeWidgetItem* treeObstacles;
+    QTreeWidgetItem* treeTiles;
 };
 
 #endif // EDITOR_H

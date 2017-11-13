@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <Qdebug>
+#include <QObject>
 
 class Tile : public QGraphicsItem {
 
@@ -31,6 +32,7 @@ public:
 
     double getAscent();
 
+    void setPosition(double x, double y);
     void setAscent(double Ascent);
     virtual void rotate();
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);

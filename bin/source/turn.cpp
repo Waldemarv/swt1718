@@ -10,6 +10,8 @@ turn::turn(double x, double y, double ascent)
     position->setY(y);
     setAscent(ascent);
 
+    setPos(x,y);
+
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
     topRight = rec.topRight();

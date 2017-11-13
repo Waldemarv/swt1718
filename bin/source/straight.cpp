@@ -10,6 +10,7 @@ straight::straight(double x, double y, double ascent)
     position->setX(x);
     position->setY(y);
     setAscent(ascent);
+    setPos(x,y);
 
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
