@@ -13,6 +13,8 @@ private:
     std::vector<Tile*> tiles;
     std::vector<Obstacle*> obstacles;
 
+    int gridSize;
+
     int sizeX;
     int sizeY;
 
@@ -50,6 +52,7 @@ public:
 
     unsigned int getSizeX();
     unsigned int getSizeY();
+    int getGridSize();
 
     //TODO createMemento
     //TODO setMemento

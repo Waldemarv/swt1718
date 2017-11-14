@@ -36,7 +36,11 @@ public:
 
     void updateTreeTiles();
     void updateTreeObstacles();
-    void updateSize();
+    void updateTreeSize();
+    void updateMapValues(int x, int y);
+
+    void addTreeItems();
+    void addTreeMap(double x, double y);
 
     void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 

@@ -4,12 +4,16 @@ Map::Map()
 {
     sizeX=0;
     sizeY=0;
+
+    gridSize = 50;
 }
 
 Map::Map(int x, int y)
 {
     sizeX = x;
     sizeY = y;
+
+    gridSize = 50;
 }
 
 Map::~Map()
@@ -32,6 +36,8 @@ unsigned int Map::getNumberOfItems() { return obstacles.size() + tiles.size(); }
 
 unsigned int Map::getSizeX() { return sizeX; }
 unsigned int Map::getSizeY() { return sizeY; }
+
+int Map::getGridSize() { return gridSize; }
 
 void Map::setStartingPoint(int x, int y) { startingPoint = new Point(x,y); }
 void Map::setEndingPoint(int x, int y) { endingPoint = new Point(x,y); }
