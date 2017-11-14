@@ -9,9 +9,12 @@ Editor::Editor(QWidget *parent) :
 
     m = nullptr;
 
+    //Eine neue "Scene" wird erstellt. Hier werden unsere Items in einer festen Begrenzung geaddet.
     scene = new QGraphicsScene(this);
+    //Die Scene wir der QGraphicsView hinzugefügt und angezeigt.
     ui->graphicsView->setScene(scene);
 
+    //Hier wird das tree Widget auf 3 Spalten und die jeweiligen Breiten der Spalten angepasst
     ui->treeWidget->setColumnCount(3);
     ui->treeWidget->setColumnWidth(0,140);
     ui->treeWidget->setColumnWidth(1,60);
@@ -28,15 +31,23 @@ void Editor::createMap()
 {
     //Wenn keine map vorhanden
     if(m==nullptr) {
+        //bool ob der ok button gedrückt wurde
         bool ok;
+
+        //Setze die Größe auf die des QInputDialogs
         int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
         if(ok) {
 
+        //Erstelle eine Map mit den Größen
         m =  new Map(x,x);
+        //Füge eine Map mit den Koordinaten auch dem TreeWidget hinzu
         addTreeMap(x,x);
+        //Füge alle Items(Tiles, Obstacles) als "OberItem" hinzu.
         addTreeItems();
-        updateMapValues(x,x);
+        //Setze die Größe der scene
+        scene->setSceneRect((-(x*m->getGridSize())/2), -(x*m->getGridSize()/2),x*m->getGridSize()/2,x*m->getGridSize()/2);
 
+        //Verbinde das tree Widget bei doppelclick mit einer LambdaFunktion, die ein QInputDialog öffnet und die Map Values mit der neuen Zahl updatet
         connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
             bool oki;
             int f = QInputDialog::getInt(this, tr("Größe Ändern"), tr("Neue Mapgröße festlegen:"), 32, 16, 64, 1, &oki);
@@ -49,18 +60,27 @@ void Editor::createMap()
   }
     //Wenn bereits map offen
     else {
+        //Dialog: "Möchten Sie vor dem Erstellen ihrer neuen Map die vorherige Karte speichern?"
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Alte Map speichern?", "Möchten Sie vor dem Erstellen ihrer neuen Map die vorherige Karte speichern?",
                                       QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+        //Wenn ja gedrückt wurde:
         if (reply == QMessageBox::Yes) {
+            //speicher die Map
             saveMap();
+            //lösche alle Elemente im TreeWidet
             clearTree();
+            //Lösche die Map
             deleteMap();
+            //erstelle eine neue Map
             createMap();
         }
         else if(reply == QMessageBox::No) {
+            //lösche alle Elemente im TreeWidet
             clearTree();
+            //Lösche die Map
             deleteMap();
+            //erstelle eine neue Map
             createMap();
         }
         else {
@@ -170,49 +190,63 @@ void Editor::loadMap()
 
 void Editor::deleteMap()
 {
+    //Lösche m
     delete m;
+    //Setze m zu nullptr für if Abfragen in saveMap und createMap.
     m=nullptr;
 }
 
 void Editor::updateTreeTiles()
 {
+    //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Tiles
     treeTiles->setText(1, QString::number(m->getNumberOfTiles()));
 }
 
 void Editor::updateTreeObstacles()
 {
+    //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Obstacles
     treeObstacles->setText(1, QString::number(m->getNumberOfObstacles()));
 }
 
 void Editor::updateTreeSize()
 {
+    //Setze die Größerr Map neu im Tree
     treeRoot->setText(1, QString::number(m->getSizeX()));
     treeRoot->setText(2, QString::number(m->getSizeY()));
 }
 
 void Editor::updateMapValues(int x, int y)
 {
+    //Setze die Größe der Map
     m->setSize(x,y);
+    //Update die Größe im Tree
     updateTreeSize();
+    //Setze die Größe der Scene im GraphicsView
     scene->setSceneRect((-(x*m->getGridSize())/2), -(x*m->getGridSize()/2),x*m->getGridSize()/2,x*m->getGridSize()/2);
+    //Zeichne die umrandung der Scene neu.
     update();
 }
 
 void Editor::addTreeItems()
 {
+    //Erstelle Tiles als Child von Map
     treeTiles = new QTreeWidgetItem();
     treeTiles->setText(0, "Tiles");
     treeTiles->setText(1,QString::number(treeTiles->childCount()));
     treeRoot->addChild(treeTiles);
 
+    //Erstelle Obstacles als Child von Map
     treeObstacles = new QTreeWidgetItem();
     treeObstacles->setText(0, "Obstacles");
     treeObstacles->setText(1,QString::number(treeObstacles->childCount()));
     treeRoot->addChild(treeObstacles);
+
+    //Weiterehinzufügen (SmartVehicle, Points, etc.)
 }
 
 void Editor::addTreeMap(double x, double y)
 {
+    //Setze Map als root des Trees
     treeRoot = new QTreeWidgetItem(ui->treeWidget);
     treeRoot->setText(0, "Map");
     treeRoot->setText(1,QString::number(x));
@@ -222,11 +256,13 @@ void Editor::addTreeMap(double x, double y)
 
 void Editor::clearTree()
 {
+    //Lösche root und alle Childs
     delete ui->treeWidget->topLevelItem(0);
 }
 
 void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
 {
+    //Füge einem Parent Item ein Child hinzu
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, name);
     item->setText(1, QString::number(posX));
@@ -268,18 +304,23 @@ void Editor::on_actionSchliessen_triggered()
 
 void Editor::on_straightButton_clicked()
 {
+    //Wenn keine Map vorhanden
     if(m == nullptr)
     {
         QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
     }
     else
     {
+        //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new straight((m->getNumberOfTiles()*25),0, 0);    //TODO: Ändern für Grid Layout
 
+        //Füge es der Map hinzu
         m->addTile(t);
+        //Füge es der scene hinzu und lass es damit zeichnen
         scene->addItem(t);
-
+        //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeTiles();
+        //Füge es dem Tree mit position hinzu
         addChild(treeTiles, "straight", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
@@ -292,12 +333,17 @@ void Editor::on_turnButton_clicked()
     }
     else
     {
+        //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new turn((m->getNumberOfTiles()*25),0, 0);  //TODO: Ändern für Grid Layout
-        m->addTile(t);
-        qDebug()<<m->getNumberOfTiles();
-        scene->addItem(t);
 
+        //Füge es der Map hinzu
+        m->addTile(t);
+
+        //Füge es der scene hinzu und lass es damit zeichnen
+        scene->addItem(t);
+        //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeTiles();
+        //Füge es dem Tree mit position hinzu
         addChild(treeTiles, "turn", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 
