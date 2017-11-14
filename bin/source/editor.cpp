@@ -31,33 +31,21 @@ void Editor::createMap()
         bool ok;
         int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
         if(ok) {
+
         m =  new Map(x,x);
+        addTreeMap(x,x);
+        addTreeItems();
+        updateMapValues(x,x);
 
         connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
             bool oki;
             int f = QInputDialog::getInt(this, tr("Größe Ändern"), tr("Neue Mapgröße festlegen:"), 32, 16, 64, 1, &oki);
+
             if(oki) {
-            m->setSize(f,f);
-            updateSize();
+                updateMapValues(f,f);
             }
         });
-
-        treeRoot = new QTreeWidgetItem(ui->treeWidget);
-        treeRoot->setText(0, "Map");
-        treeRoot->setText(1,QString::number(x));
-        treeRoot->setText(2,QString::number(x));
-        ui->treeWidget->addTopLevelItem(treeRoot);
-
-        treeTiles = new QTreeWidgetItem(ui->treeWidget);
-        treeTiles->setText(0, "Tiles");
-        treeTiles->setText(1,QString::number(treeTiles->childCount()));
-        treeRoot->addChild(treeTiles);
-
-        treeObstacles = new QTreeWidgetItem(ui->treeWidget);
-        treeObstacles->setText(0, "Obstacles");
-        treeObstacles->setText(1,QString::number(treeObstacles->childCount()));
-        treeRoot->addChild(treeObstacles);
-        }
+     }
   }
     //Wenn bereits map offen
     else {
@@ -66,13 +54,13 @@ void Editor::createMap()
                                       QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
         if (reply == QMessageBox::Yes) {
             saveMap();
-            deleteMap();
             clearTree();
+            deleteMap();
             createMap();
         }
         else if(reply == QMessageBox::No) {
-            deleteMap();
             clearTree();
+            deleteMap();
             createMap();
         }
         else {
@@ -196,17 +184,45 @@ void Editor::updateTreeObstacles()
     treeObstacles->setText(1, QString::number(m->getNumberOfObstacles()));
 }
 
-void Editor::updateSize()
+void Editor::updateTreeSize()
 {
     treeRoot->setText(1, QString::number(m->getSizeX()));
     treeRoot->setText(2, QString::number(m->getSizeY()));
 }
 
+void Editor::updateMapValues(int x, int y)
+{
+    m->setSize(x,y);
+    updateTreeSize();
+    scene->setSceneRect((-(x*m->getGridSize())/2), -(x*m->getGridSize()/2),x*m->getGridSize()/2,x*m->getGridSize()/2);
+    update();
+}
+
+void Editor::addTreeItems()
+{
+    treeTiles = new QTreeWidgetItem();
+    treeTiles->setText(0, "Tiles");
+    treeTiles->setText(1,QString::number(treeTiles->childCount()));
+    treeRoot->addChild(treeTiles);
+
+    treeObstacles = new QTreeWidgetItem();
+    treeObstacles->setText(0, "Obstacles");
+    treeObstacles->setText(1,QString::number(treeObstacles->childCount()));
+    treeRoot->addChild(treeObstacles);
+}
+
+void Editor::addTreeMap(double x, double y)
+{
+    treeRoot = new QTreeWidgetItem(ui->treeWidget);
+    treeRoot->setText(0, "Map");
+    treeRoot->setText(1,QString::number(x));
+    treeRoot->setText(2,QString::number(y));
+    ui->treeWidget->addTopLevelItem(treeRoot);
+}
+
 void Editor::clearTree()
 {
     delete ui->treeWidget->topLevelItem(0);
-    delete ui->treeWidget->topLevelItem(1);
-    delete ui->treeWidget->topLevelItem(2);
 }
 
 void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
