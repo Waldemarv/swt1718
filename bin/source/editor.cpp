@@ -1,6 +1,7 @@
 #include "editor.h"
 #include <iostream>
 
+/*! Stellt grundlegende Funktionen zum Erstellen und bearbeiten von Maps zur Verfügung */
 Editor::Editor(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Editor)
@@ -26,7 +27,7 @@ Editor::~Editor()
 {
     delete ui;
 }
-
+/*! Erstellt eine leere Map und oeffnet diese. */
 void Editor::createMap()
 {
     //Wenn keine map vorhanden
@@ -87,7 +88,7 @@ void Editor::createMap()
         }
     }
 }
-
+/*! Speichert die geoeffnete Map in einer XML-Datei */
 void Editor::saveMap()
 {
     //Map vorhanden?
@@ -176,7 +177,7 @@ void Editor::saveMap()
     stream<<document.toString();
     }
 }
-
+/*! Laedt eine Map-Datei und oeffnet die Map im Editor */
 void Editor::loadMap()
 {
     //Pfad für die zu ladene Map wählen
@@ -187,7 +188,7 @@ void Editor::loadMap()
                 tr("Extensible Markup Language Files (*.xml)")
                 );
 }
-
+/*! Loescht die geoffnete Map */
 void Editor::deleteMap()
 {
     //Lösche m
@@ -195,26 +196,28 @@ void Editor::deleteMap()
     //Setze m zu nullptr für if Abfragen in saveMap und createMap.
     m=nullptr;
 }
-
+/*! Aktualisiert die Anzahl der Tiles im TreeView */
 void Editor::updateTreeTiles()
 {
     //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Tiles
     treeTiles->setText(1, QString::number(m->getNumberOfTiles()));
 }
-
+/*! Aktualisiert die Anzahl der Obstacles im TreeView */
 void Editor::updateTreeObstacles()
 {
     //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Obstacles
     treeObstacles->setText(1, QString::number(m->getNumberOfObstacles()));
 }
-
+/*! Aktualisiert die Groesse der Map im TreeView */
 void Editor::updateTreeSize()
 {
-    //Setze die Größerr Map neu im Tree
+    //Setze die Größe der Map neu im Tree
     treeRoot->setText(1, QString::number(m->getSizeX()));
     treeRoot->setText(2, QString::number(m->getSizeY()));
 }
-
+/*! Aendert die Größe der Map und zeichnet diese neu
+    \param x neuer x-Wert der Map
+    \param y neuer y-Wert der Map*/
 void Editor::updateMapValues(int x, int y)
 {
     //Setze die Größe der Map
@@ -226,7 +229,7 @@ void Editor::updateMapValues(int x, int y)
     //Zeichne die umrandung der Scene neu.
     update();
 }
-
+/*! Erstellt Ueberschriftelemente für das TreeView */
 void Editor::addTreeItems()
 {
     //Erstelle Tiles als Child von Map
@@ -243,7 +246,7 @@ void Editor::addTreeItems()
 
     //Weiterehinzufügen (SmartVehicle, Points, etc.)
 }
-
+/*! Setzt die geoeffnete Map als Hauptelement des TreeView */
 void Editor::addTreeMap(double x, double y)
 {
     //Setze Map als root des Trees
@@ -253,13 +256,17 @@ void Editor::addTreeMap(double x, double y)
     treeRoot->setText(2,QString::number(y));
     ui->treeWidget->addTopLevelItem(treeRoot);
 }
-
+/*! Loescht alle Elemente des TreeView */
 void Editor::clearTree()
 {
     //Lösche root und alle Childs
     delete ui->treeWidget->topLevelItem(0);
 }
-
+/*! Fuegt dem TreeView ein Kindelement hinzu.
+ *  \param *param zeigt auf das TreeView
+ *  \param name Typ des Elementes (Tile,Obstacle..)
+ *  \param posX x-Position des Elementes
+ *  \param posY y-Position des Elementes */
 void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
 {
     //Füge einem Parent Item ein Child hinzu
@@ -285,6 +292,7 @@ void Editor::on_actionNeue_Map_triggered()
     this->createMap();
 }
 
+/*! Schließt das Editorfenster und fragt ggf. ab , was mit der geöffneten Map passieren soll */
 void Editor::on_actionSchliessen_triggered()
 {
       //Vor dem schließen Ja/Nein/Abbrechen Abfrage
@@ -302,6 +310,7 @@ void Editor::on_actionSchliessen_triggered()
       }
 }
 
+/*! Erstellt ein neues Straigt-Tile und fügt dieses der Map hinzu */
 void Editor::on_straightButton_clicked()
 {
     //Wenn keine Map vorhanden
@@ -325,6 +334,7 @@ void Editor::on_straightButton_clicked()
     }
 }
 
+/*! Erstellt ein neues Turn-Tile und fügt dieses der Map hinzu */
 void Editor::on_turnButton_clicked()
 {
     if(m == nullptr)
@@ -349,6 +359,7 @@ void Editor::on_turnButton_clicked()
 
 }
 
+/*! Löscht das letzte erstellte Tile */
 void Editor::on_deleteTile_clicked()
 {
     if(m == nullptr) {
@@ -367,6 +378,7 @@ void Editor::on_deleteTile_clicked()
     }
 }
 
+/*! Erstellt ein statisches Obstacle und fügt dieses der Map hinzu*/
 void Editor::on_staticObstacle_clicked()
 {
     if(m == nullptr)
@@ -384,6 +396,7 @@ void Editor::on_staticObstacle_clicked()
     }
 }
 
+/*! Löscht das letzte erstelle Obstacle */
 void Editor::on_deleteObstacle_clicked()
 {
     if(m == nullptr) {
@@ -403,6 +416,7 @@ void Editor::on_deleteObstacle_clicked()
     }
 }
 
+/*! Löscht alle markierten Tiles */
 void Editor::on_deleteSelectedTile_clicked()
 {
     if(m == nullptr) {
@@ -424,6 +438,7 @@ void Editor::on_deleteSelectedTile_clicked()
     }
 }
 
+/*! Löscht alle markierten Obstacles */
 void Editor::on_deleteSelectedObstacle_clicked()
 {
     if(m == nullptr) {
