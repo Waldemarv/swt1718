@@ -1,6 +1,6 @@
 #ifndef POINT_H
 #define POINT_H
-
+/*! Definiert einen Punkt in der x-y-Ebene */
 class Point
 {
 private:

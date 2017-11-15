@@ -4,6 +4,10 @@ turn::turn()
 {
 }
 
+/*! Erstellt eine Kurve
+ * \param x x-Position der Kurve
+ * \param y y-Position der Kurve
+ * \param ascent Steigung der Kurve */
 turn::turn(double x, double y, double ascent)
 {
     position->setX(x);
@@ -23,12 +27,16 @@ turn::turn(double x, double y, double ascent)
     rightCenter = QPointF(rec.center().x()+50, rec.center().y());
 
 }
-
+/*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF turn::boundingRect() const
 {
     return QRectF(position->getX(),position->getY(),100,100);
 }
 
+/*! Zeichnet das Tile
+ * \param painter Painter der zum Zeichnen benutzt wird
+ * \param option Optionen für das Zeichnen
+ * \param widget Widget in welches gezeichnet wird */
 void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     //Hightligh when Selected
@@ -55,6 +63,7 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawLine(rec.center(), bottomCenter);
 }
 
+/*! Rotiert das Tile */
 void turn::rotate()
 {
     QPointF temp = topLeft;
@@ -72,6 +81,8 @@ void turn::rotate()
     update();
 }
 
+/*! Gibt den Typen des Tile zurück
+ * \return Typ des Tile */
 QString turn::getType()
 {
     return "turn";

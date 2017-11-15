@@ -1,7 +1,9 @@
 #include "editor.h"
 #include <iostream>
+#include <QGraphicsWidget>
 
-/*! Stellt grundlegende Funktionen zum Erstellen und bearbeiten von Maps zur Verfügung */
+/*! Erstellt ein Editorfenster
+ * \param *parent Fenster in welchem der Editor gezeichnet werden soll */
 Editor::Editor(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Editor)
@@ -10,13 +12,20 @@ Editor::Editor(QWidget *parent) :
 
     m = nullptr;
 
-    //Eine neue "Scene" wird erstellt. Hier werden unsere Items in einer festen Begrenzung geaddet.
-    scene = new QGraphicsScene(this);
-    //Die Scene wir der QGraphicsView hinzugefügt und angezeigt.
+    //Erstellen des Grafikfensters
+    scene = new QGraphicsScene(this); //Neue Scene erstellen
+    //GridLayout und Widget erstellen, in welchem das GridLayout benutzt wird
+    QGraphicsGridLayout *layout = new QGraphicsGridLayout;
+    QGraphicsWidget *form = new QGraphicsWidget;
+    form->setLayout(layout);
+    //Die Scene vom GraphicsView anzeigen lassen
     ui->graphicsView->setScene(scene);
+    scene->addItem(form);
 
-    //Hier wird das tree Widget auf 3 Spalten und die jeweiligen Breiten der Spalten angepasst
-    ui->treeWidget->setColumnCount(3);
+    //TreeView erstellen
+    ui->treeWidget->setColumnCount(3); // treeWidget mit 3 Zeilen erstellen
+    ui->treeWidget->setHeaderLabels(QStringList() << "Objekt :" << "X : " << "Y : ");
+
     ui->treeWidget->setColumnWidth(0,140);
     ui->treeWidget->setColumnWidth(1,60);
     ui->treeWidget->setColumnWidth(2,60);
@@ -30,23 +39,30 @@ Editor::~Editor()
 /*! Erstellt eine leere Map und oeffnet diese. */
 void Editor::createMap()
 {
-    //Wenn keine map vorhanden
+    //Wenn keine Map vorhanden :
     if(m==nullptr) {
-        //bool ob der ok button gedrückt wurde
-        bool ok;
+        bool ok; //Abfrage ob OK gedrückt wurde
 
         //Setze die Größe auf die des QInputDialogs
         int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
-        if(ok) {
+        if(ok) { //Wenn OK gedrückt wurde :
+        m =  new Map(x,x); //Neue Map erstellen
+        addTreeMap(x,x); //Map dem TreeWidget hinzufügen
+        addTreeItems(); //Hauptitems für das TreeWidget hinzufügen (Tiles, Obstacles...)
 
-        //Erstelle eine Map mit den Größen
-        m =  new Map(x,x);
-        //Füge eine Map mit den Koordinaten auch dem TreeWidget hinzu
-        addTreeMap(x,x);
-        //Füge alle Items(Tiles, Obstacles) als "OberItem" hinzu.
-        addTreeItems();
-        //Setze die Größe der scene
-        scene->setSceneRect((-(x*m->getGridSize())/2), -(x*m->getGridSize()/2),x*m->getGridSize()/2,x*m->getGridSize()/2);
+        //Größe der Scene setzen
+        scene->setSceneRect(0,0,x*m->getGridSize(),x*m->getGridSize());
+
+        //Pen für das Zeichnen des Rasters erstellen
+        QPen pen;
+        pen.setColor(Qt::gray);
+        pen.setWidth(1);
+
+        //Koordinatenraster zeichnen
+        for (int i = 0 ; i<=x ; i++) {
+        scene->addLine(i*m->getGridSize(),0,i*m->getGridSize(),x*m->getGridSize(),pen);
+        scene->addLine(0,i*m->getGridSize(),x*m->getGridSize(),i*m->getGridSize(),pen);
+        }
 
         //Verbinde das tree Widget bei doppelclick mit einer LambdaFunktion, die ein QInputDialog öffnet und die Map Values mit der neuen Zahl updatet
         connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
