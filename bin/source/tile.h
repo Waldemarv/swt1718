@@ -7,8 +7,8 @@
 #include <QPainter>
 #include <QDebug>
 #include <QObject>
-
-class Tile : public QGraphicsItem {
+/*! Realisiert Streckenelemente einer Map */
+class Tile : public QGraphicsObject {
 
 protected:
     Point* position;
@@ -38,11 +38,11 @@ public:
     virtual void rotate();
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren
-
     Point* getPosition();
 
     Tile();
     Tile(double x, double y, double ascent);
+
 };
 
 #endif

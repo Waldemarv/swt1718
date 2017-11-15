@@ -3,7 +3,7 @@
 
 #include "tile.h"
 #include <QString>
-
+/*! Unterklasse von Tile, realisiert ein gerades Streckenstück*/
 class straight : public Tile
 {
 public:

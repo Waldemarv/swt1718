@@ -7,6 +7,7 @@
 #include "obstacle.h"
 #include <vector>
 
+/*! Speichert die relevanten Daten einer Map und erlaubt das hinzufügen und bearbeiten von Elementen auf dieser */
 class Map
 {
 private:

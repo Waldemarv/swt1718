@@ -7,6 +7,7 @@
 #include <QPainter>
 #include <QDebug>
 
+/*! Klasse für statische Hindernisse */
 class Obstacle :public QGraphicsItem {
 
 private:
