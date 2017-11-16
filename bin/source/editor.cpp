@@ -339,7 +339,6 @@ void Editor::on_straightButton_clicked()
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);    //TODO: Ändern für Grid Layout
-
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -376,25 +375,6 @@ void Editor::on_turnButton_clicked()
 
 }
 
-/*! Löscht das letzte erstellte Tile */
-void Editor::on_deleteTile_clicked()
-{
-    if(m == nullptr) {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
-    }
-    else if(m->getNumberOfTiles() == 0) {
-        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
-    }
-    else {
-        scene->removeItem(m->getCurrentTile());
-        scene->update();
-        m->deleteCurrentTile();
-
-        updateTreeNumberOfTiles();
-        treeTiles->removeChild(treeTiles->child(treeTiles->childCount()-1));
-    }
-}
-
 /*! Erstellt ein statisches Obstacle und fügt dieses der Map hinzu*/
 void Editor::on_staticObstacle_clicked()
 {
@@ -404,7 +384,7 @@ void Editor::on_staticObstacle_clicked()
     }
     else
     {
-        Obstacle *o = new Obstacle();
+        Obstacle *o = new Obstacle(m->getNumberOfObstacles(), 0, 0, 0);
         m->addObstacle(o);
         scene->addItem(o);
 
@@ -414,27 +394,7 @@ void Editor::on_staticObstacle_clicked()
     }
 }
 
-/*! Löscht das letzte erstelle Obstacle */
-void Editor::on_deleteObstacle_clicked()
-{
-    if(m == nullptr) {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
-    }
-    else if(m->getNumberOfObstacles() == 0) {
-        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
-    }
-    else {
-        scene->removeItem(m->getCurrentObstacle());
-        scene->update();
-        m->deleteCurrentObstacle();
-
-        updateTreeNumberOfObstacles();
-        treeObstacles->removeChild(treeObstacles->child(treeObstacles->childCount()-1));
-
-    }
-}
-
-/*! Löscht alle markierten Tiles */
+/*! Löscht alle markierten Tiles, falls keins markiert ist, das letzte (Zummaenfügung von beiden delete Funktionen) */
 void Editor::on_deleteSelectedTile_clicked()
 {
     if(m == nullptr) {
@@ -444,6 +404,7 @@ void Editor::on_deleteSelectedTile_clicked()
         QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
     }
     else {
+        bool isOneTileSelected = false;
         for(unsigned int i = 0; i < m->getNumberOfTiles() ; i++){
             if(m->getTile(i)->selected){
                 scene->removeItem(m->getTile(i));
@@ -452,12 +413,22 @@ void Editor::on_deleteSelectedTile_clicked()
                 updateTreeNumberOfTiles();
                 treeTiles->removeChild(treeTiles->child(i));
                 i--;
+                isOneTileSelected = true;
             }
         }
+            if(isOneTileSelected == false)
+            {
+                scene->removeItem(m->getCurrentTile());
+                scene->update();
+                m->deleteCurrentTile();
+
+                updateTreeNumberOfTiles();
+                treeTiles->removeChild(treeTiles->child(treeTiles->childCount()-1));
+            }
     }
 }
 
-/*! Löscht alle markierten Obstacles */
+/*! Löscht alle markierten Obstacles, falls keins markiert ist, das letzte (Zummaenfügung von beiden delete Funktionen) */
 void Editor::on_deleteSelectedObstacle_clicked()
 {
     if(m == nullptr) {
@@ -467,7 +438,7 @@ void Editor::on_deleteSelectedObstacle_clicked()
         QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
     }
     else {
-
+        bool isOneObstacleSelected = false;
         for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++){
             if(m->getObstacle(i)->selected){
                 scene->removeItem(m->getObstacle(i));
@@ -476,7 +447,17 @@ void Editor::on_deleteSelectedObstacle_clicked()
                 updateTreeNumberOfObstacles();
                 treeObstacles->removeChild(treeObstacles->child(i));
                 i--;
+                isOneObstacleSelected = true;
             }
         }
+            if(isOneObstacleSelected == false)
+            {
+                scene->removeItem(m->getCurrentObstacle());
+                scene->update();
+                m->deleteCurrentObstacle();
+
+                updateTreeNumberOfObstacles();
+                treeObstacles->removeChild(treeObstacles->child(treeObstacles->childCount()-1));
+            }
     }
 }
