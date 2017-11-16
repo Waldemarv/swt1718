@@ -64,11 +64,7 @@ private slots:
 
     void on_turnButton_clicked();
 
-    void on_deleteTile_clicked();
-
     void on_staticObstacle_clicked();
-
-    void on_deleteObstacle_clicked();
 
     void on_deleteSelectedTile_clicked();
 

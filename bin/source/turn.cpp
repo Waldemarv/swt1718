@@ -14,8 +14,6 @@ turn::turn(double x, double y, double ascent)
     position->setY(y);
     setAscent(ascent);
 
-    setPos(x,y);
-
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
     topRight = rec.topRight();
@@ -50,7 +48,7 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     // Change Pen: Color to Black and Size to 3
     QPen mainPen;
     mainPen.setColor(Qt::black);
-    mainPen.setWidth(1);
+    mainPen.setWidth(2);
     painter->setPen(mainPen);
 
     QRectF rec = boundingRect();
