@@ -4,7 +4,7 @@
 Tile::Tile() {
     position = new Point();
     setFlag(QGraphicsItem::ItemIsMovable);
-    pressed = false;
+    released = true;
     selected = false;
 
 }
@@ -15,9 +15,8 @@ Tile::Tile() {
 Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
     position = new Point(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
-    pressed = false;
+    released = true;
     selected = false;
-    //setPos(x,y);
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
@@ -44,6 +43,37 @@ void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
  * \return Steigung des Tile */
 double Tile::getAscent(){ return ascent; }
 
+void Tile::fitIntoGrid()
+{
+    /* Im folgenden bin ich von 4 Quadraten ausgegenagen in denen sich das Objekt bewegt, da egal an welcher Stelle der Map, dieser Fall eintritt.
+     * Das Objekt bewegt sich also in den Koordinaten x=0,...,100 und y=0,...,100.
+     * Mit dem ModuloOperator ist es möglich Die Objekte genau Auf diese 4 Quadranten Abzubilden.
+     * Danach wird entschieden welchem Quadranten das Objekt zugeordnet wird und dementsprechend die osition gesetzt. */
+
+    if(((int)scenePos().x() % 50) < 25)
+    {
+        if(((int)scenePos().y() % 50) < 25)
+        {
+            setPos((scenePos().x()-((int)scenePos().x()%50)), (scenePos().y()-((int)scenePos().y()%50)));
+        }
+        else
+        {
+            setPos(scenePos().x()-((int)scenePos().x()%50), scenePos().y() + (50-((int)scenePos().y()%50)));
+        }
+    }
+    else
+    {
+        if(((int)scenePos().y() % 50) <25)
+        {
+            setPos(scenePos().x() + (50 - (int)scenePos().x()%50), scenePos().y()-((int)scenePos().y()%50));
+        }
+        else
+        {
+            setPos(scenePos().x() + (50 - (int)scenePos().x()%50), scenePos().y() + (50 - (int)scenePos().y()%50));
+        }
+    }
+}
+
 /*! Ändert die Position des Tile
  * \param x neue x-Koordinate des Tile
  * \param y neue y-Koordinate des Tile */
@@ -51,7 +81,6 @@ void Tile::setPosition(double x, double y)
 {
     position->setX(x);
     position->setY(y);
-    //setPos(x,y);
 }
 
 /*! Gibt den Typen des Tile zurück
@@ -84,7 +113,7 @@ void Tile::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 /*! Wählt das angeklickte Tile aus */
 void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    pressed=true;
+    released=false;
     if(selected){
        selected = false;
     } else {
@@ -92,4 +121,11 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
     update();
     QGraphicsItem::mousePressEvent(event);
+}
+
+void Tile::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    released=true;
+    fitIntoGrid();
+    QGraphicsItem::mouseReleaseEvent(event);
 }

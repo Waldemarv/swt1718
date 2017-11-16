@@ -16,7 +16,7 @@ private:
 	double length;
 
 public:
-    bool pressed;
+    bool released;
     bool selected;
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren

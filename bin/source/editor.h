@@ -34,14 +34,20 @@ public:
     void loadMap();
     void clearTree();
     void deleteMap();
+    void drawGridLayout(int x, int y);
 
-    void updateTreeTiles();
-    void updateTreeObstacles();
-    void updateTreeSize();
+    void updateTreeNumberOfTiles();
+    void updateTreeNumberOfObstacles();
+    void updateTreeMapSize();
     void updateMapValues(int x, int y);
+
+    void fitIntoGrid(Tile* t);
 
     void addTreeItems();
     void addTreeMap(double x, double y);
+
+    void updateTreePos();
+
 
     void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 
