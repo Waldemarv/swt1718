@@ -15,12 +15,8 @@ Editor::Editor(QWidget *parent) :
     //Erstellen des Grafikfensters
     scene = new QGraphicsScene(this); //Neue Scene erstellen
     //GridLayout und Widget erstellen, in welchem das GridLayout benutzt wird
-    QGraphicsGridLayout *layout = new QGraphicsGridLayout;
-    QGraphicsWidget *form = new QGraphicsWidget;
-    form->setLayout(layout);
     //Die Scene vom GraphicsView anzeigen lassen
     ui->graphicsView->setScene(scene);
-    scene->addItem(form);
 
     //TreeView erstellen
     ui->treeWidget->setColumnCount(3); // treeWidget mit 3 Zeilen erstellen
@@ -29,7 +25,6 @@ Editor::Editor(QWidget *parent) :
     ui->treeWidget->setColumnWidth(0,140);
     ui->treeWidget->setColumnWidth(1,60);
     ui->treeWidget->setColumnWidth(2,60);
-
 }
 
 Editor::~Editor()
@@ -44,7 +39,7 @@ void Editor::createMap()
         bool ok; //Abfrage ob OK gedrückt wurde
 
         //Setze die Größe auf die des QInputDialogs
-        int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 32, 16, 64, 1, &ok);
+        int x = QInputDialog::getInt(this, tr("Neue Map erstellen.."), tr("Mapgröße festlegen:"), 16, 8, 64, 1, &ok);
         if(ok) { //Wenn OK gedrückt wurde :
         m =  new Map(x,x); //Neue Map erstellen
         addTreeMap(x,x); //Map dem TreeWidget hinzufügen
@@ -52,16 +47,8 @@ void Editor::createMap()
 
         //Größe der Scene setzen
         scene->setSceneRect(0,0,x*m->getGridSize(),x*m->getGridSize());
-
-        //Pen für das Zeichnen des Rasters erstellen
-        QPen pen;
-        pen.setColor(Qt::gray);
-        pen.setWidth(1);
-
-        //Koordinatenraster zeichnen
-        for (int i = 0 ; i<=x ; i++) {
-        scene->addLine(i*m->getGridSize(),0,i*m->getGridSize(),x*m->getGridSize(),pen);
-        scene->addLine(0,i*m->getGridSize(),x*m->getGridSize(),i*m->getGridSize(),pen);
+        //GridLayout Linien zeichnen
+        drawGridLayout(x,x);
         }
 
         //Verbinde das tree Widget bei doppelclick mit einer LambdaFunktion, die ein QInputDialog öffnet und die Map Values mit der neuen Zahl updatet
@@ -74,7 +61,6 @@ void Editor::createMap()
             }
         });
      }
-  }
     //Wenn bereits map offen
     else {
         //Dialog: "Möchten Sie vor dem Erstellen ihrer neuen Map die vorherige Karte speichern?"
@@ -212,20 +198,34 @@ void Editor::deleteMap()
     //Setze m zu nullptr für if Abfragen in saveMap und createMap.
     m=nullptr;
 }
+
+void Editor::drawGridLayout(int x, int y)
+{
+    //Pen für das Zeichnen des Rasters erstellen
+    QPen pen;
+    pen.setColor(Qt::lightGray);
+    pen.setWidth(0.5);
+
+    //Koordinatenraster zeichnen
+    for (int i = 0 ; i<=x ; i++) {
+    scene->addLine(i*m->getGridSize(),0,i*m->getGridSize(),x*m->getGridSize(),pen);
+    scene->addLine(0,i*m->getGridSize(),x*m->getGridSize(),i*m->getGridSize(),pen);
+    }
+}
 /*! Aktualisiert die Anzahl der Tiles im TreeView */
-void Editor::updateTreeTiles()
+void Editor::updateTreeNumberOfTiles()
 {
     //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Tiles
     treeTiles->setText(1, QString::number(m->getNumberOfTiles()));
 }
 /*! Aktualisiert die Anzahl der Obstacles im TreeView */
-void Editor::updateTreeObstacles()
+void Editor::updateTreeNumberOfObstacles()
 {
     //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Obstacles
     treeObstacles->setText(1, QString::number(m->getNumberOfObstacles()));
 }
 /*! Aktualisiert die Groesse der Map im TreeView */
-void Editor::updateTreeSize()
+void Editor::updateTreeMapSize()
 {
     //Setze die Größe der Map neu im Tree
     treeRoot->setText(1, QString::number(m->getSizeX()));
@@ -239,10 +239,11 @@ void Editor::updateMapValues(int x, int y)
     //Setze die Größe der Map
     m->setSize(x,y);
     //Update die Größe im Tree
-    updateTreeSize();
+    updateTreeMapSize();
     //Setze die Größe der Scene im GraphicsView
-    scene->setSceneRect((-(x*m->getGridSize())/2), -(x*m->getGridSize()/2),x*m->getGridSize()/2,x*m->getGridSize()/2);
-    //Zeichne die umrandung der Scene neu.
+    scene->setSceneRect(0,0,x*m->getGridSize(),x*m->getGridSize());
+    //Zeichne die Linien für das neue GridLayout
+    drawGridLayout(x,y);
     update();
 }
 /*! Erstellt Ueberschriftelemente für das TreeView */
@@ -337,14 +338,14 @@ void Editor::on_straightButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new straight((m->getNumberOfTiles()*25),0, 0);    //TODO: Ändern für Grid Layout
+        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);    //TODO: Ändern für Grid Layout
 
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
         scene->addItem(t);
         //Lass die aktuelle Zahl der Tiles aktualisieren
-        updateTreeTiles();
+        updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
         addChild(treeTiles, "straight", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
@@ -360,7 +361,7 @@ void Editor::on_turnButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new turn((m->getNumberOfTiles()*25),0, 0);  //TODO: Ändern für Grid Layout
+        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
 
         //Füge es der Map hinzu
         m->addTile(t);
@@ -368,7 +369,7 @@ void Editor::on_turnButton_clicked()
         //Füge es der scene hinzu und lass es damit zeichnen
         scene->addItem(t);
         //Lass die aktuelle Zahl der Tiles aktualisieren
-        updateTreeTiles();
+        updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
         addChild(treeTiles, "turn", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
@@ -389,7 +390,7 @@ void Editor::on_deleteTile_clicked()
         scene->update();
         m->deleteCurrentTile();
 
-        updateTreeTiles();
+        updateTreeNumberOfTiles();
         treeTiles->removeChild(treeTiles->child(treeTiles->childCount()-1));
     }
 }
@@ -403,11 +404,12 @@ void Editor::on_staticObstacle_clicked()
     }
     else
     {
-        Obstacle *o = new Obstacle((m->getNumberOfObstacles()*20),0,10,10);
+        Obstacle *o = new Obstacle();
         m->addObstacle(o);
         scene->addItem(o);
 
-        updateTreeObstacles();
+
+        updateTreeNumberOfObstacles();
         addChild(treeObstacles, "staticObstacle", m->getCurrentObstacle()->getPosition()->getX(), m->getCurrentObstacle()->getPosition()->getY());
     }
 }
@@ -426,7 +428,7 @@ void Editor::on_deleteObstacle_clicked()
         scene->update();
         m->deleteCurrentObstacle();
 
-        updateTreeObstacles();
+        updateTreeNumberOfObstacles();
         treeObstacles->removeChild(treeObstacles->child(treeObstacles->childCount()-1));
 
     }
@@ -447,8 +449,9 @@ void Editor::on_deleteSelectedTile_clicked()
                 scene->removeItem(m->getTile(i));
                 scene->update();
                 m->deleteTile(i);
-                updateTreeTiles();
+                updateTreeNumberOfTiles();
                 treeTiles->removeChild(treeTiles->child(i));
+                i--;
             }
         }
     }
@@ -470,8 +473,9 @@ void Editor::on_deleteSelectedObstacle_clicked()
                 scene->removeItem(m->getObstacle(i));
                 scene->update();
                 m->deleteObstacle(i);
-                updateTreeObstacles();
+                updateTreeNumberOfObstacles();
                 treeObstacles->removeChild(treeObstacles->child(i));
+                i--;
             }
         }
     }

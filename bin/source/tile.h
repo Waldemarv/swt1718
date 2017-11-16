@@ -24,7 +24,7 @@ protected:
     QPointF rightCenter;
 
 public:
-    bool pressed;   //Für Mouse click event
+    bool released;
     bool selected;
 
     virtual QRectF boundingRect() const;
@@ -33,11 +33,14 @@ public:
 
     double getAscent();
 
+    void fitIntoGrid();
+
     void setPosition(double x, double y);
     void setAscent(double Ascent);
     virtual void rotate();
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     Point* getPosition();
 
     Tile();

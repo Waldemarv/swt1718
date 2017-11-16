@@ -57,7 +57,7 @@ Point* Obstacle::getPosition() { return position; }
 Obstacle::Obstacle(){
     position = new Point();
     setFlag(QGraphicsItem::ItemIsMovable);
-    pressed = false;
+    released = true;
     selected = false;
 
 }
@@ -71,7 +71,7 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
 {
     position = new Point(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
-    pressed = false;
+    released = true;
     selected = false;
     //setPos(x,y);
 }
@@ -90,7 +90,7 @@ void Obstacle::setPosition(double x, double y)
 /*! Wählt ein Obstacle an, wenn es angeklickt wurde */
 void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    pressed=true;
+    released=false;
 
     if(selected){
        selected = false;
@@ -104,7 +104,7 @@ void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Obstacle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    pressed=false;
+    released=true;
     update();
     QGraphicsItem::mouseReleaseEvent(event);
 }
