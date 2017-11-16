@@ -4,8 +4,6 @@
 #include "map.h"
 #include "ui_editor.h"
 
-#include <QGraphicsLayout>
-#include <QGraphicsGridLayout>
 #include <QtCore>
 #include <QGraphicsItem>
 #include <QInputDialog>
@@ -13,7 +11,6 @@
 #include <QFileDialog>
 #include <QtXml>
 #include <QtGui>
-
 #include <QMainWindow>
 
 namespace Ui {
@@ -41,13 +38,11 @@ public:
     void updateTreeMapSize();
     void updateMapValues(int x, int y);
 
-    void fitIntoGrid(Tile* t);
-
     void addTreeItems();
     void addTreeMap(double x, double y);
 
-    void updateTreePos();
-
+    void setTreeTilesPosition(QPointF position, int index);
+    void setTreeObstaclesPosition(QPointF position, int index);
 
     void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 
