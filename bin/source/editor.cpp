@@ -41,6 +41,18 @@ void Editor::createMap()
 
         //scene (graphisches Fenster zum letztendlichen zeichnen) erstellen und in das GraphicWidget setzen
         scene = new QGraphicsScene(this);
+        //aktuelle Position im treeView anzeigen
+        connect(scene, QGraphicsScene::changed, [this]{
+            for(unsigned int i=0; i<m->getNumberOfTiles();i++)
+            {
+                setTreeTilesPosition(m->getTile(i)->scenePos(), i);
+            }
+            for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
+            {
+                setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
+            }
+        });
+
         ui->graphicsView->setScene(scene);
 
         //Größe der Scene setzen
@@ -243,10 +255,9 @@ void Editor::updateMapValues(int x, int y)
     //Update die Größe im Tree
     updateTreeMapSize();
     //Setze die Größe der Scene im GraphicsView
-    scene->setSceneRect(0,0,x*m->getGridSize(),x*m->getGridSize());
+    scene->setSceneRect(0,0,x*m->getGridSize(),y*m->getGridSize());
     //Zeichne die Linien für das neue GridLayout
     drawGridLayout(x,y);
-    update();
 }
 /*! Erstellt Ueberschriftelemente für das TreeView */
 void Editor::addTreeItems()
@@ -294,6 +305,18 @@ void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
     item->setText(1, QString::number(posX));
     item->setText(2, QString::number(posY));
     parent->addChild(item);
+}
+
+void Editor::setTreeTilesPosition(QPointF position, int index)
+{
+    treeTiles->child(index)->setText(1, QString::number(position.x()));
+    treeTiles->child(index)->setText(2, QString::number(position.y()));
+}
+
+void Editor::setTreeObstaclesPosition(QPointF position, int index)
+{
+    treeObstacles->child(index)->setText(1, QString::number(position.x()));
+    treeObstacles->child(index)->setText(2, QString::number(position.y()));
 }
 
 void Editor::on_actionMap_Laden_triggered()
@@ -364,9 +387,10 @@ void Editor::on_turnButton_clicked()
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
 
+        t->setIndex(m->getNumberOfTiles());
+
         //Füge es der Map hinzu
         m->addTile(t);
-
         //Füge es der scene hinzu und lass es damit zeichnen
         scene->addItem(t);
         //Lass die aktuelle Zahl der Tiles aktualisieren
@@ -386,7 +410,7 @@ void Editor::on_staticObstacle_clicked()
     }
     else
     {
-        Obstacle *o = new Obstacle(m->getNumberOfObstacles(), 0, 0, 0);
+        Obstacle *o = new Obstacle(m->getNumberOfObstacles()*20, 0, 20, 20);
         m->addObstacle(o);
         scene->addItem(o);
 

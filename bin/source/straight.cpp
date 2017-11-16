@@ -3,7 +3,6 @@
 /*! Erstellt ein leeres gerades Streckenstück */
 straight::straight()
 {
-    Tile();
 }
 
 /*! Erstellt ein gerades Streckenstück

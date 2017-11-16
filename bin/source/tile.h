@@ -6,13 +6,14 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QDebug>
-#include <QObject>
-/*! Realisiert Streckenelemente einer Map */
-class Tile : public QGraphicsObject {
 
+/*! Realisiert Streckenelemente einer Map */
+class Tile : public QGraphicsItem  {
 protected:
     Point* position;
     double ascent;
+
+    int index;
 
     QPointF topLeft;
     QPointF topRight;
@@ -24,6 +25,9 @@ protected:
     QPointF rightCenter;
 
 public:
+    Tile();
+    Tile(double x, double y, double ascent);
+
     bool released;
     bool selected;
 
@@ -32,8 +36,10 @@ public:
     virtual QString getType();
 
     double getAscent();
+    int getIndex();
 
     void fitIntoGrid();
+    void setIndex(int i);
 
     void setPosition(double x, double y);
     void setAscent(double Ascent);
@@ -42,10 +48,6 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     Point* getPosition();
-
-    Tile();
-    Tile(double x, double y, double ascent);
-
 };
 
 #endif
