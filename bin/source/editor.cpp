@@ -12,12 +12,6 @@ Editor::Editor(QWidget *parent) :
 
     m = nullptr;
 
-    //Erstellen des Grafikfensters
-    scene = new QGraphicsScene(this); //Neue Scene erstellen
-    //GridLayout und Widget erstellen, in welchem das GridLayout benutzt wird
-    //Die Scene vom GraphicsView anzeigen lassen
-    ui->graphicsView->setScene(scene);
-
     //TreeView erstellen
     ui->treeWidget->setColumnCount(3); // treeWidget mit 3 Zeilen erstellen
     ui->treeWidget->setHeaderLabels(QStringList() << "Objekt :" << "X : " << "Y : ");
@@ -44,6 +38,10 @@ void Editor::createMap()
         m =  new Map(x,x); //Neue Map erstellen
         addTreeMap(x,x); //Map dem TreeWidget hinzufügen
         addTreeItems(); //Hauptitems für das TreeWidget hinzufügen (Tiles, Obstacles...)
+
+        //scene (graphisches Fenster zum letztendlichen zeichnen) erstellen und in das GraphicWidget setzen
+        scene = new QGraphicsScene(this);
+        ui->graphicsView->setScene(scene);
 
         //Größe der Scene setzen
         scene->setSceneRect(0,0,x*m->getGridSize(),x*m->getGridSize());
@@ -75,6 +73,8 @@ void Editor::createMap()
             clearTree();
             //Lösche die Map
             deleteMap();
+            //Lösch die Zeichnung
+            delete scene;
             //erstelle eine neue Map
             createMap();
         }
@@ -83,6 +83,8 @@ void Editor::createMap()
             clearTree();
             //Lösche die Map
             deleteMap();
+            //Lösch die Zeichnung
+            delete scene;
             //erstelle eine neue Map
             createMap();
         }
