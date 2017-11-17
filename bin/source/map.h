@@ -5,6 +5,7 @@
 #include "straight.h"
 #include "turn.h"
 #include "obstacle.h"
+#include "intersection.h"
 #include <vector>
 
 /*! Speichert die relevanten Daten einer Map und erlaubt das hinzufügen und bearbeiten von Elementen auf dieser */
