@@ -23,7 +23,17 @@ turn::turn(double x, double y, double ascent)
     bottomCenter = QPointF(rec.center().x(), rec.center().y()+50);
     leftCenter = QPointF(rec.center().x()-50, rec.center().y());
     rightCenter = QPointF(rec.center().x()+50, rec.center().y());
+    direction=0;
 
+    // Pfad für Standardausrichtung der Kurve wird gezeichnet.
+    QPainterPath path;
+    path.moveTo(bottomRight);
+    path.arcTo(rec,0,90);
+    path.lineTo(topLeft);
+    path.moveTo(leftCenter);
+    path.lineTo(rec.center());
+    path.lineTo(bottomCenter);
+    this->path = path;
 }
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF turn::boundingRect() const
@@ -54,29 +64,60 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     QRectF rec = boundingRect();
     QBrush brush(Qt::red);
 
-    painter->drawLine(topLeft, topRight);
-    painter->drawLine(topRight, bottomRight);
-
-    painter->drawLine(rec.center(), leftCenter);
-    painter->drawLine(rec.center(), bottomCenter);
+    painter->drawPath(this->path);
 }
 
 /*! Rotiert das Tile */
 void turn::rotate()
 {
-    QPointF temp = topLeft;
-    topLeft = topRight;
-    topRight = bottomRight;
-    bottomRight = bottomLeft;
-    bottomLeft = temp;
+    direction++;
+    QRectF rec = boundingRect();
+    QPainterPath newPath;
 
-    temp=leftCenter;
-    leftCenter = topCenter;
-    topCenter = rightCenter;
-    rightCenter = bottomCenter;
-    bottomCenter = temp;
+    if (direction%4 == 0) {
+        newPath.moveTo(bottomRight);
+        newPath.arcTo(rec,0,90);
+        newPath.lineTo(topLeft);
+        newPath.moveTo(leftCenter);
+        newPath.lineTo(rec.center());
+        newPath.lineTo(bottomCenter);
+    }
+    else if (direction% 4 == 1) {
+        newPath.moveTo(bottomLeft);
+        newPath.arcTo(rec,-180,-90);
+        newPath.lineTo(topRight);
+        newPath.moveTo(rightCenter);
+        newPath.lineTo(rec.center());
+        newPath.lineTo(bottomCenter);
+    }
+    else if(direction%4 == 2) {
+        newPath.moveTo(rightCenter);
+        newPath.arcTo(rec,0,-90);
+        newPath.moveTo(rightCenter);
+        newPath.lineTo(topRight);
+        newPath.moveTo(rec.center());
+        newPath.lineTo(topCenter);
+        newPath.moveTo(rec.center());
+        newPath.lineTo(leftCenter);
+        newPath.moveTo(bottomCenter);
+        newPath.lineTo(bottomLeft);
+    }
+    else if(direction%4 == 3) {
+        newPath.moveTo(leftCenter);
+        newPath.arcTo(rec,-180,90);
+        newPath.lineTo(bottomRight);
+        newPath.moveTo(leftCenter);
+        newPath.lineTo(topLeft);
+        newPath.moveTo(topCenter);
+        newPath.lineTo(rec.center());
+        newPath.lineTo(rightCenter);
+        newPath.moveTo(bottomCenter);
+
+    }
+    this->path = newPath;
 
     update();
+
 }
 
 /*! Gibt den Typen des Tile zurück

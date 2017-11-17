@@ -6,6 +6,9 @@
 
 class turn : public Tile
 {
+protected :
+    int direction;
+
 public:
     turn();
     turn(double x, double y, double ascent);
