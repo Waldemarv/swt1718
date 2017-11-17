@@ -65,6 +65,10 @@ private slots:
 
     void on_deleteSelectedObstacle_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_intersectionButton_clicked();
+
 private:
     Ui::Editor *ui;
     Map* m;

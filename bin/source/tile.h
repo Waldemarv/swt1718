@@ -14,6 +14,7 @@ protected:
     double ascent;
     int index;
     QPainterPath path;
+    int direction;
 
     QPointF topLeft;
     QPointF topRight;
