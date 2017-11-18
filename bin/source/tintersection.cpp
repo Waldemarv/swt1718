@@ -14,6 +14,8 @@ Tintersection::Tintersection(double x, double y, double ascent)
     position->setY(y);
     setAscent(ascent);
 
+    setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
+
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
     topRight = rec.topRight();
@@ -42,10 +44,10 @@ Tintersection::Tintersection(double x, double y, double ascent)
 QRectF Tintersection::boundingRect() const
 { //Unterschiedliches BoundingRect je nach Ausrichtung des Tiles
     if(this->direction%4 == 0 || this->direction%4==2) {
-    return QRectF(position->getX(),position->getY(),150,100);
+    return QRectF(0,0,150,100);
     }
     else {
-    return QRectF(position->getX(),position->getY(),100,150);
+    return QRectF(0,0,100,150);
     }
 }
 
