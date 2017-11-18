@@ -489,7 +489,6 @@ void Editor::on_deleteSelectedObstacle_clicked()
     }
 }
 
-
 void Editor::on_intersectionButton_clicked()
 {
     if(m == nullptr)

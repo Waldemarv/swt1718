@@ -14,6 +14,8 @@ turn::turn(double x, double y, double ascent)
     position->setY(y);
     setAscent(ascent);
 
+    setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
+
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
     topRight = rec.topRight();
@@ -38,7 +40,7 @@ turn::turn(double x, double y, double ascent)
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF turn::boundingRect() const
 {
-    return QRectF(position->getX(),position->getY(),100,100);
+    return QRectF(0,0,100,100);
 }
 
 /*! Zeichnet das Tile

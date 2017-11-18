@@ -11,7 +11,7 @@ QString Obstacle::getType()
  * \return Begrenzungsrechteck des Obstacle */
 QRectF Obstacle::boundingRect() const
 {
-    return QRectF(position->getX(),position->getY(),width,length);
+    return QRectF(0,0,width,length);
 }
 
 /*! Zeichnet das Obstacle
@@ -70,6 +70,7 @@ Obstacle::Obstacle(){
 Obstacle::Obstacle(double x, double y, double width, double length) : width(width), length(length)
 {
     position = new Point(x,y);
+    setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
     setFlag(QGraphicsItem::ItemIsMovable);
     released = true;
     selected = false;

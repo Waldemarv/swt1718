@@ -15,6 +15,8 @@ straight::straight(double x, double y, double ascent)
     position->setY(y);
     setAscent(ascent);
 
+    setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
+
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
     topRight = rec.topRight();
@@ -25,7 +27,7 @@ straight::straight(double x, double y, double ascent)
  * \return Begrenzungsrechteck für das Tile */
 QRectF straight::boundingRect() const
 {
-    return QRectF(position->getX(),position->getY(),50,50);
+    return QRectF(0,0,50,50);
 }
 /*! Zeichnet das Tile
  * \param painter Painter der zum Zeichnen benutzt wird
