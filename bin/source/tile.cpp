@@ -107,6 +107,7 @@ void Tile::rotate() {}
 void Tile::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     rotate();
+    update();
     QGraphicsItem::mouseDoubleClickEvent(event);
 }
 /*! Wählt das angeklickte Tile aus */

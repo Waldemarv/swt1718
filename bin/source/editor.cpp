@@ -7,7 +7,7 @@
 Editor::Editor(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Editor)
-{
+    {
     ui->setupUi(this);
 
     m = nullptr;
@@ -222,10 +222,10 @@ void Editor::drawGridLayout(int x, int y)
     pen.setWidth(0.5);
 
     //Koordinatenraster zeichnen
-    for (int i = 0 ; i<=x ; i++) {
-    scene->addLine(i*m->getGridSize(),0,i*m->getGridSize(),x*m->getGridSize(),pen);
-    scene->addLine(0,i*m->getGridSize(),x*m->getGridSize(),i*m->getGridSize(),pen);
-    }
+    for (int i = 0 ; i<=x ; i++)
+        scene->addLine(0,i*m->getGridSize(),x*m->getGridSize(),i*m->getGridSize(),pen);
+    for(int i = 0; i<=y; i++)
+        scene->addLine(i*m->getGridSize(),0,i*m->getGridSize(),y*m->getGridSize(),pen);
 }
 /*! Aktualisiert die Anzahl der Tiles im TreeView */
 void Editor::updateTreeNumberOfTiles()
@@ -431,6 +431,12 @@ void Editor::on_deleteSelectedTile_clicked()
         bool isOneTileSelected = false;
         for(unsigned int i = 0; i < m->getNumberOfTiles() ; i++){
             if(m->getTile(i)->selected){
+                //Falls End oder Start Tiles gelöscht wurden, button wieder enabled um neue zu erstellen
+                if(m->getTile(i)->getType() == "StartingTile")
+                    ui->startingPoint->setEnabled(true);
+                if(m->getTile(i)->getType() == "EndingTile")
+                   ui->endingPoint->setEnabled(true);
+
                 scene->removeItem(m->getTile(i));
                 scene->update();
                 m->deleteTile(i);
@@ -442,6 +448,12 @@ void Editor::on_deleteSelectedTile_clicked()
         }
             if(isOneTileSelected == false)
             {
+                //Falls End oder Start Tiles gelöscht wurden, button wieder enabled um neue zu erstellen
+                if(m->getCurrentTile()->getType() == "StartingTile")
+                    ui->startingPoint->setEnabled(true);
+                if(m->getCurrentTile()->getType() == "EndingTile")
+                   ui->endingPoint->setEnabled(true);
+
                 scene->removeItem(m->getCurrentTile());
                 scene->update();
                 m->deleteCurrentTile();
@@ -495,7 +507,7 @@ void Editor::on_intersectionButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Intersection *t = new Intersection((m->getNumberOfTiles()*50),0, 0);
+        Tile *t = new Intersection((m->getNumberOfTiles()*50),0, 0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -516,7 +528,7 @@ void Editor::on_tIntersectionButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tintersection *t = new Tintersection((m->getNumberOfTiles()*50),0, 0);
+        Tile *t = new Tintersection((m->getNumberOfTiles()*50),0, 0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -525,5 +537,53 @@ void Editor::on_tIntersectionButton_clicked()
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
         addChild(treeTiles, "T-Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+    }
+}
+
+void Editor::on_startingPoint_clicked()
+{
+    if(m == nullptr)
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else
+    {
+        Tile *s = Startingtile::createStartingTile();
+        //setze aktuelles starting Tile
+        m->setStartingTile(s);
+        //Füge es der Map hinzu
+        m->addTile(s);
+        //Füge es der scene hinzu und lass es damit zeichnen
+        scene->addItem(s);
+        //Lass die aktuelle Zahl der Tiles aktualisieren
+        updateTreeNumberOfTiles();
+        //Füge es dem Tree mit position hinzu
+        addChild(treeTiles, "StartinPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+
+        ui->startingPoint->setEnabled(false);
+    }
+}
+
+void Editor::on_endingPoint_clicked()
+{
+    if(m == nullptr)
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else
+    {
+        Tile *e = Endingtile::createEndingTile();
+        //Setze aktuelles Ending Tile
+        m->setEndingTile(e);
+        //Füge es der Map hinzu
+        m->addTile(e);
+        //Füge es der scene hinzu und lass es damit zeichnen
+        scene->addItem(e);
+        //Lass die aktuelle Zahl der Tiles aktualisieren
+        updateTreeNumberOfTiles();
+        //Füge es dem Tree mit position hinzu
+        addChild(treeTiles, "StartinPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+
+        ui->endingPoint->setEnabled(false);
     }
 }

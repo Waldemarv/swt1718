@@ -69,6 +69,10 @@ private slots:
 
     void on_tIntersectionButton_clicked();
 
+    void on_startingPoint_clicked();
+
+    void on_endingPoint_clicked();
+
 private:
     Ui::Editor *ui;
     Map* m;
@@ -76,6 +80,7 @@ private:
     QTreeWidgetItem* treeRoot;
     QTreeWidgetItem* treeObstacles;
     QTreeWidgetItem* treeTiles;
+    QTreeWidgetItem* treePoints;
 };
 
 #endif // EDITOR_H

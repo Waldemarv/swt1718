@@ -34,7 +34,9 @@ SOURCES += \
         straight.cpp \
         turn.cpp \
     intersection.cpp \
-    tintersection.cpp
+    tintersection.cpp \
+    startingtile.cpp \
+    endingtile.cpp
 
 HEADERS += \
         editor.h \
@@ -45,7 +47,9 @@ HEADERS += \
         straight.h \
         turn.h \
     intersection.h \
-    tintersection.h
+    tintersection.h \
+    startingtile.h \
+    endingtile.h
 
 FORMS += \
         editor.ui

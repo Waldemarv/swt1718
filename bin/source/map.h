@@ -6,8 +6,11 @@
 #include "turn.h"
 #include "obstacle.h"
 #include "intersection.h"
-#include <vector>
 #include "tintersection.h"
+#include "startingtile.h"
+#include "endingtile.h"
+#include <vector>
+
 
 /*! Speichert die relevanten Daten einer Map und erlaubt das hinzufügen und bearbeiten von Elementen auf dieser */
 class Map
@@ -24,6 +27,9 @@ private:
     Point startingPoint;
     Point endingPoint;
 
+    Tile* startingTile;
+    Tile* endingTile;
+
 public:
     Map();
     Map(int x, int y);
@@ -33,6 +39,12 @@ public:
     Tile* getCurrentTile();
     Obstacle* getObstacle(int i);
     Obstacle* getCurrentObstacle();
+
+    Tile* getStartingTile();
+    Tile* getEndingTile();
+
+    void setStartingTile(Tile* t);
+    void setEndingTile(Tile* t);
 
     void setStartingPoint(int x, int y);
     void setEndingPoint(int x, int y);
