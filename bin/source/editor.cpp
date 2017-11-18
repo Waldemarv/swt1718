@@ -364,7 +364,7 @@ void Editor::on_straightButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);    //TODO: Ändern für Grid Layout
+        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -386,10 +386,7 @@ void Editor::on_turnButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
-
-        t->setIndex(m->getNumberOfTiles());
-
+        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -498,10 +495,7 @@ void Editor::on_intersectionButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Intersection *t = new Intersection((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
-
-        t->setIndex(m->getNumberOfTiles());
-
+        Intersection *t = new Intersection((m->getNumberOfTiles()*50),0, 0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -522,10 +516,7 @@ void Editor::on_tIntersectionButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tintersection *t = new Tintersection((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
-
-        t->setIndex(m->getNumberOfTiles());
-
+        Tintersection *t = new Tintersection((m->getNumberOfTiles()*50),0, 0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
