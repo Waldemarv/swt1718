@@ -44,13 +44,10 @@ void Editor::createMap()
         //aktuelle Position im treeView anzeigen
         connect(scene, QGraphicsScene::changed, [this]{
             for(unsigned int i=0; i<m->getNumberOfTiles();i++)
-            {
                 setTreeTilesPosition(m->getTile(i)->scenePos(), i);
-            }
+
             for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
-            {
                 setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
-            }
             scene->update();
         });
 
@@ -141,13 +138,13 @@ void Editor::saveMap()
 
     //Start- und Endingpoints als nodes dem document hinzufügen
     QDomElement start = document.createElement("StartingPoint");
-    start.setAttribute("X:", QString::number(m->getStartingPoint().getX()));
-    start.setAttribute("Y:", QString::number(m->getStartingPoint().getY()));
+    start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()));
+    start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()));
     points.appendChild(start);
 
     QDomElement end = document.createElement("EndingPoint");
-    end.setAttribute("X:", QString::number(m->getEndingPoint().getX()));
-    end.setAttribute("Y:", QString::number(m->getEndingPoint().getY()));
+    end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()));
+    end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()));
     points.appendChild(end);
 
     //QDomElement smartVehicle = document.createElement("SmartVehicle");
@@ -558,7 +555,7 @@ void Editor::on_startingPoint_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "StartinPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "StartingPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
 
         ui->startingPoint->setEnabled(false);
     }
@@ -582,7 +579,7 @@ void Editor::on_endingPoint_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "StartinPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "EndingPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
 
         ui->endingPoint->setEnabled(false);
     }
