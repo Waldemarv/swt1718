@@ -1,12 +1,16 @@
 #include "intersection.h"
 Intersection::Intersection(){}
 
+/*! Erstellt eine Kreuzung und fügt diese dem Editor hinzu
+ * \param x x-Koordinate der Kreuzung
+ * \param y y-Koordinate der Kreuzung
+ * \param ascent Steigung der Kreuzung */
 Intersection::Intersection(double x, double y , double ascent)
 {
     position->setX(x);
     position->setY(y);
     setAscent(ascent);
-    //TODO : Pfad nicht relativ zum center zeichnen. Hat bei mir zu abstürzen geführt
+
 
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
@@ -74,5 +78,5 @@ void Intersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
  * \return Typ des Tile */
 QString Intersection::getType()
 {
-    return "turn";
+    return "Intersection";
 }

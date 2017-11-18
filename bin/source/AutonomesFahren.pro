@@ -33,7 +33,8 @@ SOURCES += \
         obstacle.cpp \
         straight.cpp \
         turn.cpp \
-    intersection.cpp
+    intersection.cpp \
+    tintersection.cpp
 
 HEADERS += \
         editor.h \
@@ -43,7 +44,8 @@ HEADERS += \
         obstacle.h \
         straight.h \
         turn.h \
-    intersection.h
+    intersection.h \
+    tintersection.h
 
 FORMS += \
         editor.ui

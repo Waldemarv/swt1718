@@ -69,6 +69,8 @@ private slots:
 
     void on_intersectionButton_clicked();
 
+    void on_tIntersectionButton_clicked();
+
 private:
     Ui::Editor *ui;
     Map* m;
