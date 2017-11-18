@@ -114,3 +114,23 @@ Obstacle* Map::getObstacle(int i) { return obstacles[i]; }
 /*! Gibt das letzte erstellte Obstacle zurück
  * \return Obstacle,welches zuletzt erstellt wurde */
 Obstacle *Map::getCurrentObstacle() { return obstacles.back(); }
+
+Tile *Map::getStartingTile()
+{
+    return startingTile;
+}
+
+Tile *Map::getEndingTile()
+{
+    return endingTile;
+}
+
+void Map::setStartingTile(Tile *t)
+{
+    startingTile = t;
+}
+
+void Map::setEndingTile(Tile *t)
+{
+    endingTile = t;
+}

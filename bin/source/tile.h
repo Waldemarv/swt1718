@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QDebug>
+#include <QMessageBox>
 
 /*! Realisiert Streckenelemente einer Map */
 class Tile : public QGraphicsItem  {
