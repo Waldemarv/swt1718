@@ -12,7 +12,6 @@ class Tile : public QGraphicsItem  {
 protected:
     Point* position;
     double ascent;
-    int index;
     QPainterPath path;
     int direction;
 

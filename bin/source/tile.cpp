@@ -42,11 +42,6 @@ void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
  * \return Steigung des Tile */
 double Tile::getAscent(){ return ascent; }
 
-int Tile::getIndex()
-{
-    return index;
-}
-
 void Tile::fitIntoGrid()
 {
     /* Im folgenden bin ich von 4 Quadraten ausgegenagen in denen sich das Objekt bewegt, da egal an welcher Stelle der Map, dieser Fall eintritt.
@@ -76,11 +71,6 @@ void Tile::fitIntoGrid()
             setPos(scenePos().x() + (50 - (int)scenePos().x()%50), scenePos().y() + (50 - (int)scenePos().y()%50));
         }
     }
-}
-
-void Tile::setIndex(int i)
-{
-    index = i;
 }
 
 /*! Ändert die Position des Tile
