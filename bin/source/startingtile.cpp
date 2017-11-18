@@ -16,7 +16,7 @@ QRectF Startingtile::boundingRect() const
 
 QString Startingtile::getType()
 {
-    return "StartingTile";
+    return "StartingPoint";
 }
 
 Startingtile *Startingtile::createStartingTile()

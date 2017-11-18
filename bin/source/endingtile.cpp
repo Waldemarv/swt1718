@@ -16,7 +16,7 @@ QRectF Endingtile::boundingRect() const
 
 QString Endingtile::getType()
 {
-    return "EndingTile";
+    return "EndingPoint";
 }
 
 Endingtile *Endingtile::createEndingTile()
