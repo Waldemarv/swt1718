@@ -51,6 +51,7 @@ void Editor::createMap()
             {
                 setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
             }
+            scene->update();
         });
 
         ui->graphicsView->setScene(scene);
