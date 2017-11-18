@@ -7,6 +7,7 @@
 #include "obstacle.h"
 #include "intersection.h"
 #include <vector>
+#include "tintersection.h"
 
 /*! Speichert die relevanten Daten einer Map und erlaubt das hinzufügen und bearbeiten von Elementen auf dieser */
 class Map

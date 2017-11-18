@@ -81,6 +81,7 @@ void turn::rotate()
         newPath.moveTo(leftCenter);
         newPath.lineTo(rec.center());
         newPath.lineTo(bottomCenter);
+        direction=0;
     }
     else if (direction% 4 == 1) {
         newPath.moveTo(bottomLeft);

@@ -509,6 +509,30 @@ void Editor::on_intersectionButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+    }
+}
+
+void Editor::on_tIntersectionButton_clicked()
+{
+    if(m == nullptr)
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else
+    {
+        //Erstelle ein neues Tile mit Tile(x,y,ascent)
+        Tintersection *t = new Tintersection((m->getNumberOfTiles()*50),0, 0);  //TODO: Ändern für Grid Layout
+
+        t->setIndex(m->getNumberOfTiles());
+
+        //Füge es der Map hinzu
+        m->addTile(t);
+        //Füge es der scene hinzu und lass es damit zeichnen
+        scene->addItem(t);
+        //Lass die aktuelle Zahl der Tiles aktualisieren
+        updateTreeNumberOfTiles();
+        //Füge es dem Tree mit position hinzu
+        addChild(treeTiles, "T-Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
