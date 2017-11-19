@@ -191,7 +191,7 @@ void Editor::saveMap()
     stream<<document.toString();
     }
 }
-/*! Laedt eine Map-Datei und oeffnet die Map im Editor */
+/*! Lädt eine Map-Datei und oeffnet die Map im Editor */
 void Editor::loadMap()
 {
     //Pfad für die zu ladene Map wählen
@@ -202,7 +202,7 @@ void Editor::loadMap()
                 tr("Extensible Markup Language Files (*.xml)")
                 );
 }
-/*! Loescht die geoffnete Map */
+/*! Löscht die geoffnete Map */
 void Editor::deleteMap()
 {
     //Lösche m
@@ -257,7 +257,7 @@ void Editor::updateMapValues(int x, int y)
     //Zeichne die Linien für das neue GridLayout
     drawGridLayout(x,y);
 }
-/*! Erstellt Ueberschriftelemente für das TreeView */
+/*! Erstellt Überschriftelemente für das TreeView */
 void Editor::addTreeItems()
 {
     //Erstelle Tiles als Child von Map
@@ -274,7 +274,7 @@ void Editor::addTreeItems()
 
     //Weiterehinzufügen (SmartVehicle, Points, etc.)
 }
-/*! Setzt die geoeffnete Map als Hauptelement des TreeView */
+/*! Setzt die geöffnete Map als Hauptelement des TreeView */
 void Editor::addTreeMap(double x, double y)
 {
     //Setze Map als root des Trees
@@ -284,13 +284,13 @@ void Editor::addTreeMap(double x, double y)
     treeRoot->setText(2,QString::number(y));
     ui->treeWidget->addTopLevelItem(treeRoot);
 }
-/*! Loescht alle Elemente des TreeView */
+/*! Löscht alle Elemente des TreeView */
 void Editor::clearTree()
 {
     //Lösche root und alle Childs
     delete ui->treeWidget->topLevelItem(0);
 }
-/*! Fuegt dem TreeView ein Kindelement hinzu.
+/*! Fügt dem TreeView ein Kindelement hinzu.
  *  \param *param zeigt auf das TreeView
  *  \param name Typ des Elementes (Tile,Obstacle..)
  *  \param posX x-Position des Elementes
@@ -305,12 +305,18 @@ void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
     parent->addChild(item);
 }
 
+/*! Setzt die Position eines Tile im TreeView
+*    \param position Position des Tile
+     \param index Index des Tile im Tile-Vektor*/
 void Editor::setTreeTilesPosition(QPointF position, int index)
 {
     treeTiles->child(index)->setText(1, QString::number(position.x()));
     treeTiles->child(index)->setText(2, QString::number(position.y()));
 }
 
+/*! Setzt die Position eines Obstacle im TreeView
+*    \param position Position des Obstacle
+     \param index Index des Obstacle im Tile-Vektor*/
 void Editor::setTreeObstaclesPosition(QPointF position, int index)
 {
     treeObstacles->child(index)->setText(1, QString::number(position.x()));
@@ -495,6 +501,7 @@ void Editor::on_deleteSelectedObstacle_clicked()
     }
 }
 
+/*! Erstellt ein neues Intersection-Tile und fügt dieses der Map hinzu */
 void Editor::on_intersectionButton_clicked()
 {
     if(m == nullptr)
@@ -515,7 +522,7 @@ void Editor::on_intersectionButton_clicked()
         addChild(treeTiles, "Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
-
+/*! Erstellt ein neues T-Intersection-Tile und fügt dieses der Map hinzu */
 void Editor::on_tIntersectionButton_clicked()
 {
     if(m == nullptr)
@@ -536,7 +543,7 @@ void Editor::on_tIntersectionButton_clicked()
         addChild(treeTiles, "T-Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
-
+/*! Erstellt ein StartingPoint-Tile, falls es noch keines gibt und fügt dieses der Map hinzu */
 void Editor::on_startingPoint_clicked()
 {
     if(m == nullptr)
@@ -561,6 +568,7 @@ void Editor::on_startingPoint_clicked()
     }
 }
 
+/*! Erstellt ein EndingPoint-Tile, falls es noch keines gibt und fügt dieses der Map hinzu */
 void Editor::on_endingPoint_clicked()
 {
     if(m == nullptr)

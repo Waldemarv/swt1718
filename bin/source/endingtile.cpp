@@ -1,5 +1,6 @@
 #include "endingtile.h"
 
+/*! Erstellt den Endabschnitt der Strecke*/
 Endingtile::Endingtile()
 {
     QRectF rec = boundingRect();
@@ -8,17 +9,21 @@ Endingtile::Endingtile()
     bottomLeft = rec.bottomLeft();
     bottomRight = rec.bottomRight();
 }
-
+/*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF Endingtile::boundingRect() const
 {
     return QRectF(0,0,50,50);
 }
 
+/*! Gibt den Typen des Tile zurück
+ * \return Typ des Tile */
 QString Endingtile::getType()
 {
     return "EndingPoint";
 }
 
+/*! Prüft ob die Map schon einen Endabschnitt hat, falls nicht, wird einer Erzeugt
+    \returns Pointer der auf den Endabschnitt zeigt*/
 Endingtile *Endingtile::createEndingTile()
 {
     if(endingTilePointer == 0)
@@ -28,6 +33,10 @@ Endingtile *Endingtile::createEndingTile()
     return endingTilePointer;
 }
 
+/*! Zeichnet das Tile
+ * \param painter Painter der zum Zeichnen benutzt wird
+ * \param option Optionen für das Zeichnen
+ * \param widget Widget in welches gezeichnet wird */
 void Endingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     //Hightlight when Selected
@@ -49,8 +58,13 @@ void Endingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->drawLine(topRight, bottomRight);
 }
 
+/*! Rotiert das Tile */
 void Endingtile::rotate()
 {
+    direction++;
+    if(direction==4){
+        direction = 0;
+    }
     QPointF temp = topLeft;
     topLeft = topRight;
     topRight = bottomRight;
