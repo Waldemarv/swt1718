@@ -73,6 +73,8 @@ private slots:
 
     void on_endingPoint_clicked();
 
+    void on_treeWidget_itemClicked(QTreeWidgetItem *item, int column);
+
 private:
     Ui::Editor *ui;
     Map* m;
