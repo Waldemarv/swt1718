@@ -11,7 +11,7 @@ Startingtile::Startingtile()
 
 Startingtile::~Startingtile()
 {
-    delete startingTilePointer;
+    startingTilePointer = 0;
 }
 
 QRectF Startingtile::boundingRect() const
@@ -28,8 +28,10 @@ Startingtile *Startingtile::createStartingTile()
 {
     if(startingTilePointer == 0)
     {
+        qDebug()<<"Kein Tile";
         startingTilePointer = new Startingtile();
     }
+    qDebug()<<"Ein Tile";
     return startingTilePointer;
 }
 

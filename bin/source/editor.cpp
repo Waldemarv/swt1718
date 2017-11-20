@@ -70,6 +70,11 @@ void Editor::createMap()
                 updateMapValues(f,f);
             }
         });
+        //Wenn alte Map vorhanden war, müssen die Buttons für startingPoint/endingPoint wieder enabled werden
+        if(!ui->startingPointButton->isEnabled())
+            ui->startingPointButton->setEnabled(true);
+        if(!ui->endingPointButton->isEnabled())
+            ui->endingPointButton->setEnabled(true);
      }
     //Wenn bereits map offen
     else {
@@ -140,13 +145,13 @@ void Editor::saveMap()
 
     //Start- und Endingpoints als nodes dem document hinzufügen
     QDomElement start = document.createElement("StartingPoint");
-    start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()));
-    start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()));
+    start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()+20));
+    start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()+20));
     points.appendChild(start);
 
     QDomElement end = document.createElement("EndingPoint");
-    end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()));
-    end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()));
+    end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()+20));
+    end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
     points.appendChild(end);
 
     //QDomElement smartVehicle = document.createElement("SmartVehicle");

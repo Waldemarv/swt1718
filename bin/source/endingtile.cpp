@@ -11,7 +11,7 @@ Endingtile::Endingtile()
 
 Endingtile::~Endingtile()
 {
-    delete endingTilePointer;
+    endingTilePointer = 0;
 }
 
 QRectF Endingtile::boundingRect() const

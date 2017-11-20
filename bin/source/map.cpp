@@ -31,8 +31,6 @@ Map::~Map()
 
     delete &endingPoint;
     delete &startingPoint;
-    delete startingTile;
-    delete endingTile;
 }
 /*! Gibt die Anzahl der Tiles auf der Map zurück
     \return Anzahl der Tiles auf der Map*/
