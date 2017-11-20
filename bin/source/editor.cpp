@@ -18,12 +18,13 @@ Editor::Editor(QWidget *parent) :
 
     ui->treeWidget->setColumnWidth(0,140);
     ui->treeWidget->setColumnWidth(1,60);
-    ui->treeWidget->setColumnWidth(2,60);
+    ui->treeWidget->setColumnWidth(2,60);    
 }
 
 Editor::~Editor()
 {
     delete ui;
+    delete m;
 }
 /*! Erstellt eine leere Map und oeffnet diese. */
 void Editor::createMap()
@@ -41,13 +42,14 @@ void Editor::createMap()
 
         //scene (graphisches Fenster zum letztendlichen zeichnen) erstellen und in das GraphicWidget setzen
         scene = new QGraphicsScene(this);
-        //aktuelle Position im treeView anzeigen
+        //Verbindungsstück der Veränderung der scene
         connect(scene, QGraphicsScene::changed, [this]{
             for(unsigned int i=0; i<m->getNumberOfTiles();i++)
                 setTreeTilesPosition(m->getTile(i)->scenePos(), i);
 
             for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
                 setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
+
             scene->update();
         });
 
@@ -191,7 +193,7 @@ void Editor::saveMap()
     stream<<document.toString();
     }
 }
-/*! Lädt eine Map-Datei und oeffnet die Map im Editor */
+/*! Laedt eine Map-Datei und oeffnet die Map im Editor */
 void Editor::loadMap()
 {
     //Pfad für die zu ladene Map wählen
@@ -202,7 +204,7 @@ void Editor::loadMap()
                 tr("Extensible Markup Language Files (*.xml)")
                 );
 }
-/*! Löscht die geoffnete Map */
+/*! Loescht die geoffnete Map */
 void Editor::deleteMap()
 {
     //Lösche m
@@ -257,7 +259,7 @@ void Editor::updateMapValues(int x, int y)
     //Zeichne die Linien für das neue GridLayout
     drawGridLayout(x,y);
 }
-/*! Erstellt Überschriftelemente für das TreeView */
+/*! Erstellt Ueberschriftelemente für das TreeView */
 void Editor::addTreeItems()
 {
     //Erstelle Tiles als Child von Map
@@ -274,7 +276,7 @@ void Editor::addTreeItems()
 
     //Weiterehinzufügen (SmartVehicle, Points, etc.)
 }
-/*! Setzt die geöffnete Map als Hauptelement des TreeView */
+/*! Setzt die geoeffnete Map als Hauptelement des TreeView */
 void Editor::addTreeMap(double x, double y)
 {
     //Setze Map als root des Trees
@@ -284,13 +286,13 @@ void Editor::addTreeMap(double x, double y)
     treeRoot->setText(2,QString::number(y));
     ui->treeWidget->addTopLevelItem(treeRoot);
 }
-/*! Löscht alle Elemente des TreeView */
+/*! Loescht alle Elemente des TreeView */
 void Editor::clearTree()
 {
     //Lösche root und alle Childs
     delete ui->treeWidget->topLevelItem(0);
 }
-/*! Fügt dem TreeView ein Kindelement hinzu.
+/*! Fuegt dem TreeView ein Kindelement hinzu.
  *  \param *param zeigt auf das TreeView
  *  \param name Typ des Elementes (Tile,Obstacle..)
  *  \param posX x-Position des Elementes
@@ -305,18 +307,40 @@ void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
     parent->addChild(item);
 }
 
-/*! Setzt die Position eines Tile im TreeView
-*    \param position Position des Tile
-     \param index Index des Tile im Tile-Vektor*/
+void Editor::keyPressEvent(QKeyEvent *event)
+{
+    //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
+    if(event->key() == Qt::Key_Up)
+        timer->start(10);
+
+    else if(event->key() == Qt::Key_Left)
+        leftTimer->start(10);
+
+    else if(event->key() == Qt::Key_Right)
+        rightTimer->start(10);
+
+    QWidget::keyPressEvent(event);
+}
+
+void Editor::keyReleaseEvent(QKeyEvent *event)
+{
+    //Schalte Timer wieder aus, wenn Knopf losgelassen wird
+    if(event->key() == Qt::Key_Up)
+        timer->stop();
+    else if(event->key() == Qt::Key_Left)
+        leftTimer->stop();
+    else if(event->key() == Qt::Key_Right)
+        rightTimer->stop();
+
+    QWidget::keyReleaseEvent(event);
+}
+
 void Editor::setTreeTilesPosition(QPointF position, int index)
 {
     treeTiles->child(index)->setText(1, QString::number(position.x()));
     treeTiles->child(index)->setText(2, QString::number(position.y()));
 }
 
-/*! Setzt die Position eines Obstacle im TreeView
-*    \param position Position des Obstacle
-     \param index Index des Obstacle im Tile-Vektor*/
 void Editor::setTreeObstaclesPosition(QPointF position, int index)
 {
     treeObstacles->child(index)->setText(1, QString::number(position.x()));
@@ -422,7 +446,7 @@ void Editor::on_staticObstacle_clicked()
 }
 
 /*! Löscht alle markierten Tiles, falls keins markiert ist, das letzte (Zummaenfügung von beiden delete Funktionen) */
-void Editor::on_deleteSelectedTile_clicked()
+void Editor::on_deleteTileButton_clicked()
 {
     if(m == nullptr) {
         QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
@@ -436,9 +460,9 @@ void Editor::on_deleteSelectedTile_clicked()
             if(m->getTile(i)->selected){
                 //Falls End oder Start Tiles gelöscht wurden, button wieder enabled um neue zu erstellen
                 if(m->getTile(i)->getType() == "StartingTile")
-                    ui->startingPoint->setEnabled(true);
+                    ui->startingPointButton->setEnabled(true);
                 if(m->getTile(i)->getType() == "EndingTile")
-                   ui->endingPoint->setEnabled(true);
+                   ui->endingPointButton->setEnabled(true);
 
                 scene->removeItem(m->getTile(i));
                 scene->update();
@@ -453,9 +477,9 @@ void Editor::on_deleteSelectedTile_clicked()
             {
                 //Falls End oder Start Tiles gelöscht wurden, button wieder enabled um neue zu erstellen
                 if(m->getCurrentTile()->getType() == "StartingTile")
-                    ui->startingPoint->setEnabled(true);
+                    ui->startingPointButton->setEnabled(true);
                 if(m->getCurrentTile()->getType() == "EndingTile")
-                   ui->endingPoint->setEnabled(true);
+                   ui->endingPointButton->setEnabled(true);
 
                 scene->removeItem(m->getCurrentTile());
                 scene->update();
@@ -468,7 +492,7 @@ void Editor::on_deleteSelectedTile_clicked()
 }
 
 /*! Löscht alle markierten Obstacles, falls keins markiert ist, das letzte (Zummaenfügung von beiden delete Funktionen) */
-void Editor::on_deleteSelectedObstacle_clicked()
+void Editor::on_deleteObstacleButton_clicked()
 {
     if(m == nullptr) {
         QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
@@ -501,7 +525,6 @@ void Editor::on_deleteSelectedObstacle_clicked()
     }
 }
 
-/*! Erstellt ein neues Intersection-Tile und fügt dieses der Map hinzu */
 void Editor::on_intersectionButton_clicked()
 {
     if(m == nullptr)
@@ -522,7 +545,7 @@ void Editor::on_intersectionButton_clicked()
         addChild(treeTiles, "Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
-/*! Erstellt ein neues T-Intersection-Tile und fügt dieses der Map hinzu */
+
 void Editor::on_tIntersectionButton_clicked()
 {
     if(m == nullptr)
@@ -543,8 +566,8 @@ void Editor::on_tIntersectionButton_clicked()
         addChild(treeTiles, "T-Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
     }
 }
-/*! Erstellt ein StartingPoint-Tile, falls es noch keines gibt und fügt dieses der Map hinzu */
-void Editor::on_startingPoint_clicked()
+
+void Editor::on_startingPointButton_clicked()
 {
     if(m == nullptr)
     {
@@ -564,12 +587,11 @@ void Editor::on_startingPoint_clicked()
         //Füge es dem Tree mit position hinzu
         addChild(treeTiles, "StartingPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
 
-        ui->startingPoint->setEnabled(false);
+        ui->startingPointButton->setEnabled(false);
     }
 }
 
-/*! Erstellt ein EndingPoint-Tile, falls es noch keines gibt und fügt dieses der Map hinzu */
-void Editor::on_endingPoint_clicked()
+void Editor::on_endingPointButton_clicked()
 {
     if(m == nullptr)
     {
@@ -589,6 +611,26 @@ void Editor::on_endingPoint_clicked()
         //Füge es dem Tree mit position hinzu
         addChild(treeTiles, "EndingPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
 
-        ui->endingPoint->setEnabled(false);
+        ui->endingPointButton->setEnabled(false);
+    }
+}
+
+void Editor::on_actionSimulation_starten_triggered()
+{
+    if(m->getStartingTile()!=0)
+    {
+    //SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, int y)
+    sv = new SmartVehicle(0,2,3,m->getStartingTile()->pos().x()+20, m->getStartingTile()->pos().y()+20);
+    scene->addItem(sv);
+
+    //Erstelle die 3 Timer für geradeaus/link/rechts um diese voneinander unabhängig zu steuern
+    timer = new QTimer;
+    leftTimer = new QTimer;
+    rightTimer = new QTimer;
+
+    //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
+    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    connect(leftTimer, QTimer::timeout, [this]{ sv->left(); });
+    connect(rightTimer, QTimer::timeout, [this]{ sv->right(); });
     }
 }

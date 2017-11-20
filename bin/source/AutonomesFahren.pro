@@ -36,7 +36,8 @@ SOURCES += \
     intersection.cpp \
     tintersection.cpp \
     startingtile.cpp \
-    endingtile.cpp
+    endingtile.cpp \
+    smartvehicle.cpp
 
 HEADERS += \
         editor.h \
@@ -49,7 +50,8 @@ HEADERS += \
     intersection.h \
     tintersection.h \
     startingtile.h \
-    endingtile.h
+    endingtile.h \
+    smartvehicle.h
 
 FORMS += \
         editor.ui

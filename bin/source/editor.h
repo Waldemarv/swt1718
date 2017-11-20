@@ -12,6 +12,8 @@
 #include <QtXml>
 #include <QtGui>
 #include <QMainWindow>
+#include <QTimer>
+#include <QKeyEvent>
 
 namespace Ui {
 /*! Stellt grundlegende Funktionen zum Erstellen und bearbeiten von Maps in einer graphischen Oberfläche zur Verfügung */
@@ -46,6 +48,11 @@ public:
 
     void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 
+
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+
+
 private slots:
     void on_actionNeue_Map_triggered();
 
@@ -61,28 +68,32 @@ private slots:
 
     void on_staticObstacle_clicked();
 
-    void on_deleteSelectedTile_clicked();
+    void on_deleteTileButton_clicked();
 
-    void on_deleteSelectedObstacle_clicked();
+    void on_deleteObstacleButton_clicked();
 
     void on_intersectionButton_clicked();
 
     void on_tIntersectionButton_clicked();
 
-    void on_startingPoint_clicked();
+    void on_startingPointButton_clicked();
 
-    void on_endingPoint_clicked();
+    void on_endingPointButton_clicked();
 
-    void on_treeWidget_itemClicked(QTreeWidgetItem *item, int column);
+    void on_actionSimulation_starten_triggered();
 
 private:
     Ui::Editor *ui;
     Map* m;
+    SmartVehicle* sv;
     QGraphicsScene *scene;
     QTreeWidgetItem* treeRoot;
     QTreeWidgetItem* treeObstacles;
     QTreeWidgetItem* treeTiles;
     QTreeWidgetItem* treePoints;
+    QTimer *timer;
+    QTimer *leftTimer;
+    QTimer *rightTimer;
 };
 
 #endif // EDITOR_H

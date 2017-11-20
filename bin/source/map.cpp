@@ -31,6 +31,8 @@ Map::~Map()
 
     delete &endingPoint;
     delete &startingPoint;
+    delete startingTile;
+    delete endingTile;
 }
 /*! Gibt die Anzahl der Tiles auf der Map zurück
     \return Anzahl der Tiles auf der Map*/
@@ -56,11 +58,11 @@ int Map::getGridSize() { return gridSize; }
 /*! Setzt den Startpunkt des Fahrzeuges
  * \param x x-Koordinate des Startpunktes
  * \param y y-Koordinate des Startpunktes */
-void Map::setStartingPoint(int x, int y) { startingPoint = new Point(x,y); }
+void Map::setStartingPoint(int x, int y) { startingPoint.setX(x); startingPoint.setY(y); }
 /*! Setzt den Endpunkt des Fahrzeuges
  * \param x x-Koordinate des Endpunktes
  * \param y y-Koordinate des Endpunktes */
-void Map::setEndingPoint(int x, int y) { endingPoint = new Point(x,y); }
+void Map::setEndingPoint(int x, int y) { endingPoint.setX(x); endingPoint.setY(y); }
 
 /*! Verändert die Größe einer Map
  * \param x neue Größe der Map in x-Richtung
