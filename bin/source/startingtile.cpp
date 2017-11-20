@@ -28,10 +28,8 @@ Startingtile *Startingtile::createStartingTile()
 {
     if(startingTilePointer == 0)
     {
-        qDebug()<<"Kein Tile";
         startingTilePointer = new Startingtile();
     }
-    qDebug()<<"Ein Tile";
     return startingTilePointer;
 }
 

@@ -590,7 +590,7 @@ void Editor::on_startingPointButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "StartingPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "StartingTile", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
 
         ui->startingPointButton->setEnabled(false);
     }
@@ -614,7 +614,7 @@ void Editor::on_endingPointButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "EndingPoint", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "EndingTile", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
 
         ui->endingPointButton->setEnabled(false);
     }
@@ -637,5 +637,7 @@ void Editor::on_actionSimulation_starten_triggered()
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     connect(leftTimer, QTimer::timeout, [this]{ sv->left(); });
     connect(rightTimer, QTimer::timeout, [this]{ sv->right(); });
+    ui->treeWidget->setEnabled(false);
+    ui->tabWidget->setEnabled(false);
     }
 }
