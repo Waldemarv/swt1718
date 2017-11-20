@@ -100,9 +100,10 @@ void Tile::setAscent(double nAscent)
  * \return Position des Tile */
 Point* Tile::getPosition() { return position; }
 
-/*! Rotiert das Tile um 90 Grad */
+/*! Rotiert das Tile */
 void Tile::rotate() {}
 
+/*! Bei Doppelklick wird das Tile rotiert */
 void Tile::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     rotate();

@@ -9,6 +9,7 @@
 #include "tintersection.h"
 #include "startingtile.h"
 #include "endingtile.h"
+#include "smartvehicle.h"
 #include <vector>
 
 

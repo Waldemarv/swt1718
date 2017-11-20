@@ -7,6 +7,7 @@ class Endingtile : public Tile
 {
 private:
     Endingtile();
+    ~Endingtile();
     static Endingtile* endingTilePointer;
 
 public:

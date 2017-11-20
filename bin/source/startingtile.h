@@ -7,6 +7,7 @@ class Startingtile : public Tile
 {
 private:
     Startingtile();
+    ~Startingtile();
     static Startingtile* startingTilePointer;
 
 public:
