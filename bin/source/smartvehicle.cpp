@@ -29,10 +29,13 @@ QRectF SmartVehicle::boundingRect() const
 
 void SmartVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF rec = boundingRect();
     QBrush brush (Qt::green);
+    QRectF rec = boundingRect();
+
     painter->fillRect(rec, brush);
     painter->drawRect(rec);
+
+
 }
 
 void SmartVehicle::right()
