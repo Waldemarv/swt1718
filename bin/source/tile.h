@@ -30,7 +30,6 @@ public:
     Tile();
     Tile(double x, double y, double ascent);
 
-    bool released;
     bool selected;
 
     virtual QRectF boundingRect() const;
@@ -38,13 +37,15 @@ public:
     virtual QString getType();
 
     double getAscent();
-    int getIndex();
+    int getDirection();
 
     void fitIntoGrid();
     void setIndex(int i);
 
     void setPosition(double x, double y);
     void setAscent(double Ascent);
+    void setDirection(double ndirection);
+
     virtual void rotate();
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

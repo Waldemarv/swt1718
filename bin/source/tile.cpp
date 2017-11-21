@@ -4,7 +4,6 @@
 Tile::Tile() {
     position = new Point();
     setFlag(QGraphicsItem::ItemIsMovable);
-    released = true;
     selected = false;
 }
 /*! Erstellt ein Tile
@@ -14,7 +13,6 @@ Tile::Tile() {
 Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
     position = new Point(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
-    released = true;
     selected = false;
 }
 
@@ -41,6 +39,11 @@ void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 /*! Gibt die Steigung des Tile zurück
  * \return Steigung des Tile */
 double Tile::getAscent(){ return ascent; }
+
+int Tile::getDirection()
+{
+    return direction;
+}
 
 void Tile::fitIntoGrid()
 {
@@ -96,6 +99,11 @@ void Tile::setAscent(double nAscent)
     ascent = nAscent;
 }
 
+void Tile::setDirection(double ndirection)
+{
+    direction = ndirection;
+}
+
 /*! Gibt die Position des Tile zurück
  * \return Position des Tile */
 Point* Tile::getPosition() { return position; }
@@ -113,7 +121,6 @@ void Tile::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 /*! Wählt das angeklickte Tile aus */
 void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    released=false;
     if(selected){
        selected = false;
     } else {
@@ -125,7 +132,6 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Tile::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    released=true;
     fitIntoGrid();
     QGraphicsItem::mouseReleaseEvent(event);
 }

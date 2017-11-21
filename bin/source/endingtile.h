@@ -7,6 +7,7 @@ class Endingtile : public Tile
 {
 private:
     Endingtile();
+    Endingtile(int nx, int ny, double nascent, int ndirection);
     ~Endingtile();
     static Endingtile* endingTilePointer;
 
@@ -15,7 +16,7 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
 
-    static Endingtile* createEndingTile();
+    static Endingtile* createEndingTile(int nx, int ny, double nascent, int ndirection);
 
     void rotate();
 };

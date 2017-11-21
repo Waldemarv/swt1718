@@ -8,7 +8,7 @@ class straight : public Tile
 {
 public:
     straight();
-    straight(double x, double y, double ascent);
+    straight(double nx, double ny, double nascent, int ndirection);
 
     QRectF boundingRect() const;
     QString getType();

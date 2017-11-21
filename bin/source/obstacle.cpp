@@ -74,7 +74,6 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
     setFlag(QGraphicsItem::ItemIsMovable);
     released = true;
     selected = false;
-    //setPos(x,y);
 }
 
 /*! Verändert die Position des Obstacle

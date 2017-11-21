@@ -2,11 +2,13 @@
 
 Startingtile::Startingtile()
 {
-    QRectF rec = boundingRect();
-    topLeft = rec.topLeft();
-    topRight = rec.topRight();
-    bottomLeft = rec.bottomLeft();
-    bottomRight = rec.bottomRight();
+}
+
+Startingtile::Startingtile(int nx, int ny, double nascent, int ndirection)
+{
+    setPos(nx,ny);
+    setAscent(nascent);
+    setDirection(ndirection);
 }
 
 /*! Erstellt den Startabschnitt der Strecke*/
@@ -30,11 +32,11 @@ QString Startingtile::getType()
 
 /*! Prüft ob die Map schon einen Startabschnitt hat, falls nicht, wird einer Erzeugt
 \returns Pointer der auf den Startabschnitt zeigt*/
-Startingtile *Startingtile::createStartingTile()
+Startingtile *Startingtile::createStartingTile(int nx, int ny, double nascent, int ndireciton)
 {
     if(startingTilePointer == 0)
     {
-        startingTilePointer = new Startingtile();
+        startingTilePointer = new Startingtile(nx, ny, nascent, ndireciton);
     }
     return startingTilePointer;
 }
@@ -59,9 +61,32 @@ void Startingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     mainPen.setWidth(2);
     painter->setPen(mainPen);
 
-    painter->drawLine(topLeft, topRight);
-    painter->drawLine(bottomLeft,bottomRight);
-    painter->drawLine(topLeft, bottomLeft);
+    QRectF rec = boundingRect();
+
+    if (direction == 0)
+    {
+        painter->drawLine(rec.topLeft(), rec.topRight());
+        painter->drawLine(rec.bottomLeft(),rec.bottomRight());
+        painter->drawLine(rec.topLeft(), rec.bottomLeft());
+    }
+    else if (direction == 1)
+    {
+        painter->drawLine(rec.topLeft(), rec.bottomLeft());
+        painter->drawLine(rec.topLeft(),rec.topRight());
+        painter->drawLine(rec.topRight(), rec.bottomRight());
+    }
+    else if(direction == 2)
+    {
+        painter->drawLine(rec.topLeft(), rec.topRight());
+        painter->drawLine(rec.bottomLeft(),rec.bottomRight());
+        painter->drawLine(rec.topRight(), rec.bottomRight());
+    }
+    else if (direction == 3)
+    {
+        painter->drawLine(rec.topLeft(), rec.bottomLeft());
+        painter->drawLine(rec.bottomLeft(),rec.bottomRight());
+        painter->drawLine(rec.topRight(), rec.bottomRight());
+    }
 }
 
 /*! Rotiert das Tile */
@@ -71,11 +96,6 @@ void Startingtile::rotate()
     if(direction==4){
     direction = 0;
     }
-    QPointF temp = topLeft;
-    topLeft = topRight;
-    topRight = bottomRight;
-    bottomRight = bottomLeft;
-    bottomLeft = temp;
 
     update();
 }

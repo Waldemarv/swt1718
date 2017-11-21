@@ -126,94 +126,100 @@ void Editor::saveMap()
             tr("Dateipfad wählen..."),
             "C:/MyMap.xml",
             tr("Extensible Markup Language Files (*.xml)")
-    );
-    //Prüfen ob Dialog erfolgreich Wert zurückgeliefert hat (bspw. Fenster geschlossen?)
-    if (filename != NULL) {
-        //File erstellen
-        QFile file(filename);
+);
+    if(filename != NULL)
+    {
+    //File erstellen
+    QFile file(filename);
 
-        //Document erstellen
-        QDomDocument document;
+    //Document erstellen
+    QDomDocument document;
 
-        //root (Map) festlegen
-        QDomElement root = document.createElement("Map");
+    //root (Map) festlegen
+    QDomElement root = document.createElement("Map");
 
-        //root dem document hinzufügen
-        document.appendChild(root);
+    //root dem document hinzufügen
+    document.appendChild(root);
 
-        //Daten der Map Einfügen
-        QDomElement data = document.createElement("Data");
-        root.appendChild(data);
+    //Daten der Map Einfügen
+    QDomElement data = document.createElement("Data");
+    root.appendChild(data);
 
-        //Mapgröße als Node Einfügen
-        QDomElement size = document.createElement("MapSize");
-        size.setAttribute("X:", QString::number(m->getSizeX()));
-        size.setAttribute("Y:",QString::number(m->getSizeY()));
-        data.appendChild(size);
+    //Mapgröße als Node Einfügen
+    QDomElement size = document.createElement("MapSize");
+    size.setAttribute("X:", QString::number(m->getSizeX()));
+    size.setAttribute("Y:",QString::number(m->getSizeY()));
+    data.appendChild(size);
 
-        //Unterkategorie Points einfügen
-        QDomElement points = document.createElement("Points");
-        root.appendChild(points);
+    //Unterkategorie Points einfügen
+    QDomElement points = document.createElement("Points");
+    root.appendChild(points);
 
-        //Start- und Endingpoints als nodes dem document hinzufügen
-        QDomElement start = document.createElement("StartingPoint");
-        start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()+20));
-        start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()+20));
-        points.appendChild(start);
+    //Start- und Endingpoints als nodes dem document hinzufügen
+    QDomElement start = document.createElement("StartingPoint");
+    start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()+20));
+    start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()+20));
+    points.appendChild(start);
 
-        QDomElement end = document.createElement("EndingPoint");
-        end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()+20));
-        end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
-        points.appendChild(end);
+    QDomElement end = document.createElement("EndingPoint");
+    end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()+20));
+    end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
+    points.appendChild(end);
 
-        //QDomElement smartVehicle = document.createElement("SmartVehicle");
-        //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
+    //QDomElement smartVehicle = document.createElement("SmartVehicle");
+    //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
 
-        //Unterkategorie für obstacles
-        QDomElement obstacles = document.createElement("Obstacles");
-        root.appendChild(obstacles);
+    //Unterkategorie für obstacles
+    QDomElement obstacles = document.createElement("Obstacles");
+    root.appendChild(obstacles);
 
-        //Obstacles als nodes dem unterpunkt hinzufügen
-        for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
-        {
-            QDomElement node = document.createElement("Obstacle");
-            node.setAttribute("ID:", QString::number(i));
-            node.setAttribute("Typ:", m->getObstacle(i)->getType());
-            node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
-            node.setAttribute("lenght:", QString::number(m->getObstacle(i)->getlength()));
-            node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
-            node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
-            obstacles.appendChild(node);
-        }
+    //Obstacles als nodes dem unterpunkt hinzufügen
+    for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
+    {
+        QDomElement node = document.createElement("Obstacle");
+        node.setAttribute("ID:", QString::number(i));
+        node.setAttribute("Typ:", m->getObstacle(i)->getType());
+        node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
+        node.setAttribute("length:", QString::number(m->getObstacle(i)->getlength()));
+        node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
+        node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
+        obstacles.appendChild(node);
+    }
 
-        //Unterpunkt für tiles hinzufügen
-        QDomElement tiles = document.createElement("Tiles");
-        root.appendChild(tiles);
+    //Unterpunkt für tiles hinzufügen
+    QDomElement tiles = document.createElement("Tiles");
+    root.appendChild(tiles);
 
-        //Tiles als nodes dem document hinzufügen
-        for(unsigned int i=0; i < m->getNumberOfTiles(); i++)
-        {
-            QDomElement node = document.createElement("Tile");
-            node.setAttribute("Typ:", m->getTile(i)->getType());
-            node.setAttribute("ID:", QString::number(i));
-            node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
-            node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
-            node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
-            tiles.appendChild(node);
-        }
+    //Tiles als nodes dem document hinzufügen
+    for(unsigned int i=0; i < m->getNumberOfTiles(); i++)
+    {
+        QDomElement node = document.createElement("Tile");
+        node.setAttribute("Typ:", m->getTile(i)->getType());
+        node.setAttribute("ID:", QString::number(i));
+        node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
+        node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
+        node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
+        node.setAttribute("direction:", QString::number(m->getTile(i)->getDirection()));
+        tiles.appendChild(node);
+    }
 
-        //Die zu schreibene Datei erstellen/öffnen
-        file.open(QIODevice::WriteOnly | QIODevice::Text);
+    //Die zu schreibene Datei erstellen/öffnen
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
 
-        //Dokument schreiben.
-        QTextStream stream(&file);
-        stream<<document.toString();
-        }
+    //Dokument schreiben.
+    QTextStream stream(&file);
+    stream<<document.toString();
+    }
     }
 }
 /*! Lädt eine Map-Datei und öffnet die Map im Editor */
 void Editor::loadMap()
 {
+    if(m==nullptr) {
+
+    scene = new QGraphicsScene(this);
+    ui->graphicsView->setScene(scene);
+
     //Dokument für Datei erstellen
     QDomDocument document;
     //Pfad für die zu ladene Map wählen
@@ -224,7 +230,8 @@ void Editor::loadMap()
                 tr("Extensible Markup Language Files (*.xml)")
                 );
 
-    if (filename != NULL) {
+    if(filename != NULL)
+    {
         //Ausgewählte Datei öffnen
         QFile file(filename);
         if(!file.open(QIODevice::ReadOnly)) {
@@ -235,15 +242,134 @@ void Editor::loadMap()
         document.setContent(&file);
         file.close();
 
-        //Mapgröße auslesen
-        //TODO ->
-        //QDomElement docElem = document.documentElement();
-        // QDomAttr x = docElem.attributeNode("X:");
-        //double mx = x.value().toDouble();
+        //Root erstellen
+        QDomElement root = document.firstChildElement();
+        //Liste aller sich im root befindenden Nodes erstellen
+        QDomNodeList allNodes = root.childNodes();
+        //Data als erstes darunterliegendes Node der liste erstellen
+        QDomNode data = allNodes.at(0);
+        //Mapsize als Element erstellen
+        QDomElement mapSize = data.firstChild().toElement();
+        //Attribute auslesen
+        int sizeX = mapSize.attribute("X:").toInt();
+        int sizeY = mapSize.attribute("Y:").toInt();
+        //map erstellen
+        m = new Map(sizeX, sizeY);
+        //Scenegröße definieren
+        scene->setSceneRect(0,0,sizeX, sizeY);
+        //GridLayoutZeichnen
+        drawGridLayout(sizeX,sizeY);
 
-        //qDebug() << "X:" << mx;
-        //Map Erstellen
-        //Map* m = new Map(mx,mx);
+        //Points als zweite darunterliegende Liste erstellen
+        QDomNodeList points = allNodes.at(1).childNodes();
+        //start und endpunkte als darunterliegende elemente erstellen
+        QDomElement startingPoint = points.at(0).toElement();
+        QDomElement endingPoint = points.at(1).toElement();
+
+        //X und Y herausfinden
+        int startingPointX = startingPoint.attribute("X:").toInt();
+        int startingPointY = startingPoint.attribute("Y:").toInt();
+        //setzen
+        m->setStartingPoint(startingPointX,startingPointY);
+
+        int endingPointX = endingPoint.attribute("X:").toInt();
+        int endingPointY = endingPoint.attribute("Y:").toInt();
+
+        m->setEndingPoint(endingPointX, endingPointY);
+
+        QDomNodeList obstacles = allNodes.at(2).childNodes();
+
+        for(int i = 0; i<obstacles.count(); i++)
+        {
+            QDomElement obstaclesAt = obstacles.at(i).toElement();
+
+            int obstacleX = obstaclesAt.attribute("X:").toInt();
+            int obstacleY = obstaclesAt.attribute("Y:").toInt();
+            int obstacleWidth = obstaclesAt.attribute("width:").toInt();
+            int obstacleLength = obstaclesAt.attribute("length:").toInt();
+
+            if(obstaclesAt.attribute("Typ:") == "staticObstacle")
+            {
+            Obstacle *o = new Obstacle(obstacleX, obstacleY, obstacleWidth,obstacleLength);
+            scene->addItem(o);
+            }
+            //elseif(obstaclesAt.attribute("Typ:" == "dynamicObstacle") TODO: Für dynamic Obstacle ergänzen
+
+        }
+
+        QDomNodeList tiles = allNodes.at(3).childNodes();
+
+        for(int i = 0; i<tiles.count(); i++)
+        {
+            QDomElement tilesAt = tiles.at(i).toElement();
+
+            int tileX = tilesAt.attribute("X:").toInt();
+            int tileY = tilesAt.attribute("Y:").toInt();
+            int tileAscent = tilesAt.attribute("ascent:").toInt();
+            int tileDirection = tilesAt.attribute("direction:").toInt();
+
+            qDebug()<<tileDirection;
+
+            if(tilesAt.attribute("Typ:") == "StartingTile"){
+                Tile* t = Startingtile::createStartingTile(tileX, tileY, tileAscent, tileDirection);
+                scene->addItem(t);
+            }
+
+            else if(tilesAt.attribute("Typ:") == "EndingTile"){
+                Tile* t = Endingtile::createEndingTile(tileX, tileY, tileAscent, tileDirection);
+                scene->addItem(t);
+            }
+
+            else if(tilesAt.attribute("Typ:") == "straight"){
+                Tile* t = new straight(tileX, tileY, tileAscent, tileDirection);
+                scene->addItem(t);
+            }
+
+            else if(tilesAt.attribute("Typ:") == "turn"){
+                Tile* t = new turn(tileX, tileY, tileAscent, tileDirection);
+                scene->addItem(t);
+            }
+
+            else if(tilesAt.attribute("Typ:") == "T-Intersection"){
+                Tile* t = new Tintersection(tileX, tileY, tileAscent, tileDirection);
+                scene->addItem(t);
+            }
+
+            else if(tilesAt.attribute("Typ:") == "Intersection"){
+                Tile* t = new Intersection(tileX, tileY, tileAscent);
+                scene->addItem(t);
+            }
+
+            }
+        }
+    }
+    else
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Vor dem schliessen speichern?", "Möchten Sie das Projekt vor dem schließen speichern?",
+                                      QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+        if (reply == QMessageBox::Yes) {
+            //speicher die Map
+            saveMap();
+            //lösche alle Elemente im TreeWidet
+            clearTree();
+            //Lösche die Map
+            deleteMap();
+            //Lösch die Zeichnung
+            delete scene;
+            //erstelle eine neue Map
+            loadMap();
+        }
+        else if(reply == QMessageBox::No) {
+            //lösche alle Elemente im TreeWidet
+            clearTree();
+            //Lösche die Map
+            deleteMap();
+            //Lösch die Zeichnung
+            delete scene;
+            //erstelle eine neue Map
+            loadMap();
+        }
     }
 }
 /*! Löscht die geoffnete Map */
@@ -300,6 +426,7 @@ void Editor::updateMapValues(int x, int y)
     scene->setSceneRect(0,0,x*m->getGridSize(),y*m->getGridSize());
     //Zeichne die Linien für das neue GridLayout
     drawGridLayout(x,y);
+
 }
 /*! Erstellt Überschriftelemente für das TreeView */
 void Editor::addTreeItems()
@@ -418,8 +545,6 @@ void Editor::on_actionSchliessen_triggered()
       else if(reply == QMessageBox::No) {
           QApplication::quit();
       }
-      else {
-      }
 }
 
 /*! Erstellt ein neues Straigt-Tile und fügt dieses der Map hinzu */
@@ -433,7 +558,7 @@ void Editor::on_straightButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0);
+        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0,0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -455,7 +580,7 @@ void Editor::on_turnButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0);
+        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0,0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -531,6 +656,7 @@ void Editor::on_deleteTileButton_clicked()
                 treeTiles->removeChild(treeTiles->child(treeTiles->childCount()-1));
             }
     }
+    scene->update();
 }
 
 /*! Löscht alle markierten Obstacles, falls keins markiert ist, das letzte (Zummaenfügung von beiden delete Funktionen) */
@@ -565,6 +691,7 @@ void Editor::on_deleteObstacleButton_clicked()
                 treeObstacles->removeChild(treeObstacles->child(treeObstacles->childCount()-1));
             }
     }
+    scene->update();
 }
 
 void Editor::on_intersectionButton_clicked()
@@ -597,7 +724,7 @@ void Editor::on_tIntersectionButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new Tintersection((m->getNumberOfTiles()*50),0, 0);
+        Tile *t = new Tintersection((m->getNumberOfTiles()*50),0, 0,0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -617,7 +744,7 @@ void Editor::on_startingPointButton_clicked()
     }
     else
     {
-        Tile *s = Startingtile::createStartingTile();
+        Tile *s = Startingtile::createStartingTile(0,0,0,0);
         //setze aktuelles starting Tile
         m->setStartingTile(s);
         //Füge es der Map hinzu
@@ -641,7 +768,7 @@ void Editor::on_endingPointButton_clicked()
     }
     else
     {
-        Tile *e = Endingtile::createEndingTile();
+        Tile *e = Endingtile::createEndingTile(0,300,0,0);
         //Setze aktuelles Ending Tile
         m->setEndingTile(e);
         //Füge es der Map hinzu
