@@ -8,7 +8,7 @@ class Tintersection : public Tile
 {
 public:
     Tintersection();
-    Tintersection(double x, double y, double ascent);
+    Tintersection(double nx, double ny, double nascent, int ndirection);
 
     QRectF boundingRect() const;
     QString getType();

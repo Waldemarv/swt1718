@@ -8,7 +8,7 @@ class turn : public Tile
 {
 public:
     turn();
-    turn(double x, double y, double ascent);
+    turn(double nx, double ny, double nascent, int ndirection);
 
     QRectF boundingRect() const;
     QString getType();

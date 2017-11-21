@@ -8,26 +8,18 @@ turn::turn()
  * \param x x-Position der Kurve
  * \param y y-Position der Kurve
  * \param ascent Steigung der Kurve */
-turn::turn(double x, double y, double ascent)
+turn::turn(double nx, double ny, double nascent, int ndirection)
 {
-    position->setX(x);
-    position->setY(y);
-    setAscent(ascent);
+    position->setX(nx);
+    position->setY(ny);
+    setAscent(nascent);
+    setDirection(ndirection);
 
-    setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
-
-    QRectF rec = boundingRect();
-    topLeft = rec.topLeft();
-    topRight = rec.topRight();
-    bottomLeft = rec.bottomLeft();
-    bottomRight = rec.bottomRight();
-    topCenter = QPointF(rec.center().x(), rec.center().y()-50);
-    bottomCenter = QPointF(rec.center().x(), rec.center().y()+50);
-    leftCenter = QPointF(rec.center().x()-50, rec.center().y());
-    rightCenter = QPointF(rec.center().x()+50, rec.center().y());
+    setPos(nx,ny); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
     direction=0;
 
     // Pfad für Standardausrichtung der Kurve wird gezeichnet.
+    QRectF rec = boundingRect();
     QPainterPath path;
     path.moveTo(bottomRight);
     path.arcTo(rec,0,90);
@@ -66,16 +58,9 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     QRectF rec = boundingRect();
     QBrush brush(Qt::red);
 
-    painter->drawPath(this->path);
-}
-
-void turn::rotate()
-{
-    direction++;
-    QRectF rec = boundingRect();
     QPainterPath newPath;
 
-    if (direction%4 == 0) {
+    if (direction == 0) {
         newPath.moveTo(rec.bottomRight());
         newPath.arcTo(rec,0,90);
         newPath.lineTo(rec.topLeft());
@@ -84,7 +69,7 @@ void turn::rotate()
         newPath.lineTo(rec.center().x(), rec.center().y()+50);
         direction=0;
     }
-    else if (direction% 4 == 1) {
+    else if (direction == 1) {
         newPath.moveTo(rec.center().x()+50, rec.center().y());
         newPath.arcTo(rec,0,-90);
         newPath.moveTo(rec.center().x()+50, rec.center().y());
@@ -96,7 +81,7 @@ void turn::rotate()
         newPath.moveTo(rec.center().x(), rec.center().y()+50);
         newPath.lineTo(rec.bottomLeft());
     }
-    else if(direction%4 == 2) {
+    else if(direction == 2) {
         newPath.moveTo(rec.center().x()-50, rec.center().y());
         newPath.arcTo(rec,-180,90);
         newPath.lineTo(rec.bottomRight());
@@ -107,7 +92,7 @@ void turn::rotate()
         newPath.lineTo(rec.center().x()+50, rec.center().y());
         newPath.moveTo(rec.center().x(), rec.center().y()+50);
     }
-    else if(direction%4 == 3) {
+    else if(direction == 3) {
         newPath.moveTo(rec.bottomLeft());
         newPath.arcTo(rec,-180,-90);
         newPath.lineTo(rec.topRight());
@@ -117,8 +102,15 @@ void turn::rotate()
     }
     this->path = newPath;
 
-    update();
+    painter->drawPath(this->path);
+}
 
+void turn::rotate()
+{
+    direction++;
+    if(direction == 4)
+        direction = 0;
+    update();
 }
 
 /*! Gibt den Typen des Tile zurück

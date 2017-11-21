@@ -8,13 +8,14 @@ Tintersection::Tintersection()
  * \param x x-Koordinate der T-Kreuzung
  * \param y y-Koordinate der T-Kreuzung
  * \param ascent Steigung der T-Kreuzung */
-Tintersection::Tintersection(double x, double y, double ascent)
+Tintersection::Tintersection(double nx, double ny, double nascent, int ndirection)
 {
-    position->setX(x);
-    position->setY(y);
-    setAscent(ascent);
+    position->setX(nx);
+    position->setY(ny);
+    setAscent(nascent);
+    setDirection(ndirection);
 
-    setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
+    setPos(nx,ny); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
 
     QRectF rec = boundingRect();
     topLeft = rec.topLeft();
@@ -75,13 +76,6 @@ void Tintersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     QRectF rec = boundingRect();
     QBrush brush(Qt::red);
 
-    painter->drawPath(this->path);
-}
-
-/*! Rotiert das Tile */
-void Tintersection::rotate()
-{
-    this->direction++;
     QPainterPath newPath;
 
     //Für jede Ausrichtung muss das Tile neu gezeichnet werden.
@@ -96,7 +90,7 @@ void Tintersection::rotate()
         newPath.lineTo(bottomLeft.x(),bottomLeft.y()-50);
         direction = 0;
     }
-    else if(direction%4 == 1) {
+    else if(direction == 1) {
         QRectF rect = boundingRect();
         newPath.moveTo(rect.topRight());
         newPath.lineTo(rect.bottomRight());
@@ -107,7 +101,7 @@ void Tintersection::rotate()
         newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+100);
         newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+150);
     }
-    else if(direction%4 == 2) {
+    else if(direction == 2) {
         QRectF rect = boundingRect();
         newPath.moveTo(rect.bottomLeft());
         newPath.lineTo(rect.bottomRight());
@@ -118,7 +112,7 @@ void Tintersection::rotate()
         newPath.lineTo(rect.topLeft().x()+100,rect.topLeft().y()+50);
         newPath.lineTo(rect.topLeft().x()+150,rect.topLeft().y()+50);
     }
-    else if(direction%4 == 3) {
+    else if(direction == 3) {
         QRectF rect = boundingRect();
         newPath.moveTo(rect.topLeft());
         newPath.lineTo(rect.bottomLeft());
@@ -131,7 +125,15 @@ void Tintersection::rotate()
     }
 
     this->path=newPath;
-    update();
+    painter->drawPath(this->path);
+}
+
+/*! Rotiert das Tile */
+void Tintersection::rotate()
+{
+    this->direction++;
+    if(direction == 4)
+        direction=0;
 }
 
 

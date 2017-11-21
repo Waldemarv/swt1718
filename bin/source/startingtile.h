@@ -7,6 +7,7 @@ class Startingtile : public Tile
 {
 private:
     Startingtile();
+    Startingtile(int nx, int ny, double nascent, int ndirection);
     ~Startingtile();
     static Startingtile* startingTilePointer;
 
@@ -15,7 +16,7 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
 
-    static Startingtile* createStartingTile();
+    static Startingtile* createStartingTile(int nx, int ny, double nascent, int ndirection);
 
     void rotate();
 };
