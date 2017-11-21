@@ -126,86 +126,89 @@ void Editor::saveMap()
             tr("Dateipfad wählen..."),
             "C:/MyMap.xml",
             tr("Extensible Markup Language Files (*.xml)")
-);
-    //File erstellen
-    QFile file(filename);
+    );
+    //Prüfen ob Dialog erfolgreich Wert zurückgeliefert hat (bspw. Fenster geschlossen?)
+    if (filename != NULL) {
+        //File erstellen
+        QFile file(filename);
 
-    //Document erstellen
-    QDomDocument document;
+        //Document erstellen
+        QDomDocument document;
 
-    //root (Map) festlegen
-    QDomElement root = document.createElement("Map");
+        //root (Map) festlegen
+        QDomElement root = document.createElement("Map");
 
-    //root dem document hinzufügen
-    document.appendChild(root);
+        //root dem document hinzufügen
+        document.appendChild(root);
 
-    //Daten der Map Einfügen
-    QDomElement data = document.createElement("Data");
-    root.appendChild(data);
+        //Daten der Map Einfügen
+        QDomElement data = document.createElement("Data");
+        root.appendChild(data);
 
-    //Mapgröße als Node Einfügen
-    QDomElement size = document.createElement("MapSize");
-    size.setAttribute("X:", QString::number(m->getSizeX()));
-    size.setAttribute("Y:",QString::number(m->getSizeY()));
-    data.appendChild(size);
+        //Mapgröße als Node Einfügen
+        QDomElement size = document.createElement("MapSize");
+        size.setAttribute("X:", QString::number(m->getSizeX()));
+        size.setAttribute("Y:",QString::number(m->getSizeY()));
+        data.appendChild(size);
 
-    //Unterkategorie Points einfügen
-    QDomElement points = document.createElement("Points");
-    root.appendChild(points);
+        //Unterkategorie Points einfügen
+        QDomElement points = document.createElement("Points");
+        root.appendChild(points);
 
-    //Start- und Endingpoints als nodes dem document hinzufügen
-    QDomElement start = document.createElement("StartingPoint");
-    start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()+20));
-    start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()+20));
-    points.appendChild(start);
+        //Start- und Endingpoints als nodes dem document hinzufügen
+        QDomElement start = document.createElement("StartingPoint");
+        start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()+20));
+        start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()+20));
+        points.appendChild(start);
 
-    QDomElement end = document.createElement("EndingPoint");
-    end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()+20));
-    end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
-    points.appendChild(end);
+        QDomElement end = document.createElement("EndingPoint");
+        end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()+20));
+        end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
+        points.appendChild(end);
 
-    //QDomElement smartVehicle = document.createElement("SmartVehicle");
-    //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
+        //QDomElement smartVehicle = document.createElement("SmartVehicle");
+        //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
 
-    //Unterkategorie für obstacles
-    QDomElement obstacles = document.createElement("Obstacles");
-    root.appendChild(obstacles);
+        //Unterkategorie für obstacles
+        QDomElement obstacles = document.createElement("Obstacles");
+        root.appendChild(obstacles);
 
-    //Obstacles als nodes dem unterpunkt hinzufügen
-    for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
-    {
-        QDomElement node = document.createElement("Obstacle");
-        node.setAttribute("ID:", QString::number(i));
-        node.setAttribute("Typ:", m->getObstacle(i)->getType());
-        node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
-        node.setAttribute("lenght:", QString::number(m->getObstacle(i)->getlength()));
-        node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
-        node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
-        obstacles.appendChild(node);
-    }
+        //Obstacles als nodes dem unterpunkt hinzufügen
+        for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
+        {
+            QDomElement node = document.createElement("Obstacle");
+            node.setAttribute("ID:", QString::number(i));
+            node.setAttribute("Typ:", m->getObstacle(i)->getType());
+            node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
+            node.setAttribute("lenght:", QString::number(m->getObstacle(i)->getlength()));
+            node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
+            node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
+            obstacles.appendChild(node);
+        }
 
-    //Unterpunkt für tiles hinzufügen
-    QDomElement tiles = document.createElement("Tiles");
-    root.appendChild(tiles);
+        //Unterpunkt für tiles hinzufügen
+        QDomElement tiles = document.createElement("Tiles");
+        root.appendChild(tiles);
 
-    //Tiles als nodes dem document hinzufügen
-    for(unsigned int i=0; i < m->getNumberOfTiles(); i++)
-    {
-        QDomElement node = document.createElement("Tile");
-        node.setAttribute("Typ:", m->getTile(i)->getType());
-        node.setAttribute("ID:", QString::number(i));
-        node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
-        node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
-        node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
-        tiles.appendChild(node);
-    }
+        //Tiles als nodes dem document hinzufügen
+        for(unsigned int i=0; i < m->getNumberOfTiles(); i++)
+        {
+            QDomElement node = document.createElement("Tile");
+            node.setAttribute("Typ:", m->getTile(i)->getType());
+            node.setAttribute("ID:", QString::number(i));
+            node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
+            node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
+            node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
+            tiles.appendChild(node);
+        }
 
-    //Die zu schreibene Datei erstellen/öffnen
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
+        //Die zu schreibene Datei erstellen/öffnen
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
 
-    //Dokument schreiben.
-    QTextStream stream(&file);
-    stream<<document.toString();
+        //Dokument schreiben.
+        QTextStream stream(&file);
+        stream<<document.toString();
+        }
     }
 }
 /*! Lädt eine Map-Datei und öffnet die Map im Editor */
