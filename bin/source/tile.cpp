@@ -100,7 +100,7 @@ void Tile::setAscent(double nAscent)
  * \return Position des Tile */
 Point* Tile::getPosition() { return position; }
 
-/*! Rotiert das Tile */
+/*! Rotiert das Tile um 90 Grad */
 void Tile::rotate() {}
 
 /*! Bei Doppelklick wird das Tile rotiert */

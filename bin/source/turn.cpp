@@ -69,7 +69,6 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawPath(this->path);
 }
 
-/*! Rotiert das Tile */
 void turn::rotate()
 {
     direction++;
@@ -77,45 +76,44 @@ void turn::rotate()
     QPainterPath newPath;
 
     if (direction%4 == 0) {
-        newPath.moveTo(bottomRight);
+        newPath.moveTo(rec.bottomRight());
         newPath.arcTo(rec,0,90);
-        newPath.lineTo(topLeft);
-        newPath.moveTo(leftCenter);
+        newPath.lineTo(rec.topLeft());
+        newPath.moveTo(rec.center().x()-50, rec.center().y());
         newPath.lineTo(rec.center());
-        newPath.lineTo(bottomCenter);
+        newPath.lineTo(rec.center().x(), rec.center().y()+50);
         direction=0;
     }
     else if (direction% 4 == 1) {
-        newPath.moveTo(bottomLeft);
-        newPath.arcTo(rec,-180,-90);
-        newPath.lineTo(topRight);
-        newPath.moveTo(rightCenter);
-        newPath.lineTo(rec.center());
-        newPath.lineTo(bottomCenter);
+        newPath.moveTo(rec.center().x()+50, rec.center().y());
+        newPath.arcTo(rec,0,-90);
+        newPath.moveTo(rec.center().x()+50, rec.center().y());
+        newPath.lineTo(rec.topRight());
+        newPath.moveTo(rec.center());
+        newPath.lineTo(rec.center().x(), rec.center().y()-50);
+        newPath.moveTo(rec.center());
+        newPath.lineTo(rec.center().x()-50, rec.center().y());
+        newPath.moveTo(rec.center().x(), rec.center().y()+50);
+        newPath.lineTo(rec.bottomLeft());
     }
     else if(direction%4 == 2) {
-        newPath.moveTo(rightCenter);
-        newPath.arcTo(rec,0,-90);
-        newPath.moveTo(rightCenter);
-        newPath.lineTo(topRight);
-        newPath.moveTo(rec.center());
-        newPath.lineTo(topCenter);
-        newPath.moveTo(rec.center());
-        newPath.lineTo(leftCenter);
-        newPath.moveTo(bottomCenter);
-        newPath.lineTo(bottomLeft);
+        newPath.moveTo(rec.center().x()-50, rec.center().y());
+        newPath.arcTo(rec,-180,90);
+        newPath.lineTo(rec.bottomRight());
+        newPath.moveTo(rec.center().x()-50, rec.center().y());
+        newPath.lineTo(rec.topLeft());
+        newPath.moveTo(rec.center().x(), rec.center().y()-50);
+        newPath.lineTo(rec.center());
+        newPath.lineTo(rec.center().x()+50, rec.center().y());
+        newPath.moveTo(rec.center().x(), rec.center().y()+50);
     }
     else if(direction%4 == 3) {
-        newPath.moveTo(leftCenter);
-        newPath.arcTo(rec,-180,90);
-        newPath.lineTo(bottomRight);
-        newPath.moveTo(leftCenter);
-        newPath.lineTo(topLeft);
-        newPath.moveTo(topCenter);
+        newPath.moveTo(rec.bottomLeft());
+        newPath.arcTo(rec,-180,-90);
+        newPath.lineTo(rec.topRight());
+        newPath.moveTo(rec.center().x()+50, rec.center().y());
         newPath.lineTo(rec.center());
-        newPath.lineTo(rightCenter);
-        newPath.moveTo(bottomCenter);
-
+        newPath.lineTo(rec.center().x(), rec.center().y()+50);
     }
     this->path = newPath;
 

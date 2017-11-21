@@ -9,21 +9,27 @@ Startingtile::Startingtile()
     bottomRight = rec.bottomRight();
 }
 
+/*! Erstellt den Startabschnitt der Strecke*/
 Startingtile::~Startingtile()
 {
     startingTilePointer = 0;
 }
 
+/*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF Startingtile::boundingRect() const
 {
     return QRectF(0,0,50,50);
 }
 
+/*! Gibt den Typen des Tile zurück
+* \return Typ des Tile */
 QString Startingtile::getType()
 {
     return "StartingTile";
 }
 
+/*! Prüft ob die Map schon einen Startabschnitt hat, falls nicht, wird einer Erzeugt
+\returns Pointer der auf den Startabschnitt zeigt*/
 Startingtile *Startingtile::createStartingTile()
 {
     if(startingTilePointer == 0)
@@ -33,6 +39,10 @@ Startingtile *Startingtile::createStartingTile()
     return startingTilePointer;
 }
 
+/*! Zeichnet das Tile
+* \param painter Painter der zum Zeichnen benutzt wird
+* \param option Optionen für das Zeichnen
+* \param widget Widget in welches gezeichnet wird */
 void Startingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     //Hightlight when Selected
@@ -54,8 +64,13 @@ void Startingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawLine(topLeft, bottomLeft);
 }
 
+/*! Rotiert das Tile */
 void Startingtile::rotate()
 {
+    direction++;
+    if(direction==4){
+    direction = 0;
+    }
     QPointF temp = topLeft;
     topLeft = topRight;
     topRight = bottomRight;
