@@ -110,3 +110,26 @@ void Obstacle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseReleaseEvent(event);
 }
 
+void Obstacle::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+       QGraphicsItem::mouseMoveEvent(event);
+
+       if (x() < 0)
+       {
+           setPos(0, y());
+       }
+       else if (x() + boundingRect().right() > scene()->width())
+       {
+           setPos(scene()->width() - boundingRect().width(), y());
+       }
+
+       if (y() < 0)
+       {
+           setPos(x(), 0);
+       }
+       else if ( y()+ boundingRect().bottom() > scene()->height())
+       {
+           setPos(x(), scene()->height() - boundingRect().height());
+       }
+}
+

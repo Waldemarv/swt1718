@@ -7,6 +7,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QMessageBox>
+#include <QGraphicsScene>
 
 /*! Realisiert Streckenelemente einer Map */
 class Tile : public QGraphicsItem  {
@@ -48,6 +49,8 @@ public:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+
     Point* getPosition();
 
 
