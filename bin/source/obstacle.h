@@ -4,6 +4,7 @@
 #include "point.h"
 #include <QString>
 #include <QGraphicsItem>
+#include <QGraphicsScene>
 #include <QPainter>
 #include <QDebug>
 
@@ -21,6 +22,7 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     double getwidth();
     double getlength();

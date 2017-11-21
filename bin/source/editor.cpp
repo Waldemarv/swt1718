@@ -43,7 +43,7 @@ void Editor::createMap()
         //scene (graphisches Fenster zum letztendlichen zeichnen) erstellen und in das GraphicWidget setzen
         scene = new QGraphicsScene(this);
         //Verbindungsstück der Veränderung der scene
-        connect(scene, QGraphicsScene::changed, [this]{
+        connect(scene, &QGraphicsScene::changed, [this]{
             for(unsigned int i=0; i<m->getNumberOfTiles();i++)
                 setTreeTilesPosition(m->getTile(i)->scenePos(), i);
 
@@ -667,8 +667,8 @@ void Editor::on_actionSimulation_starten_triggered()
 
     //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    connect(leftTimer, QTimer::timeout, [this]{ sv->left(); });
-    connect(rightTimer, QTimer::timeout, [this]{ sv->right(); });
+    connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
+    connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
     ui->treeWidget->setEnabled(false);
     ui->tabWidget->setEnabled(false);
     }
