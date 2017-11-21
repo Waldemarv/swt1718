@@ -224,25 +224,27 @@ void Editor::loadMap()
                 tr("Extensible Markup Language Files (*.xml)")
                 );
 
-    //Ausgewählte Datei öffnen
-    QFile file(filename);
-    if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(this,tr("Datei kann nicht geöffnet werden."),file.errorString());
-        return;
+    if (filename != NULL) {
+        //Ausgewählte Datei öffnen
+        QFile file(filename);
+        if(!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::information(this,tr("Datei kann nicht geöffnet werden."),file.errorString());
+            return;
+        }
+        //File in QDomDocument laden und file wieder schließen
+        document.setContent(&file);
+        file.close();
+
+        //Mapgröße auslesen
+        //TODO ->
+        //QDomElement docElem = document.documentElement();
+        // QDomAttr x = docElem.attributeNode("X:");
+        //double mx = x.value().toDouble();
+
+        //qDebug() << "X:" << mx;
+        //Map Erstellen
+        //Map* m = new Map(mx,mx);
     }
-    //File in QDomDocument laden und file wieder schließen
-    document.setContent(&file);
-    file.close();
-
-    //Mapgröße auslesen
-    //TODO ->
-    //QDomElement docElem = document.documentElement();
-    // QDomAttr x = docElem.attributeNode("X:");
-    //double mx = x.value().toDouble();
-
-    //qDebug() << "X:" << mx;
-    //Map Erstellen
-    //Map* m = new Map(mx,mx);
 }
 /*! Löscht die geoffnete Map */
 void Editor::deleteMap()
