@@ -53,9 +53,13 @@ void straight::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->drawLine(bottomLeft,bottomRight);
 }
 
-/*! Rotiert das Tile */
+/*! Rotiert das Tile um 90 Grad */
 void straight::rotate()
 {
+    direction++;
+    if(direction==2){
+        direction = 0;
+    }
     QPointF temp = topLeft;
     topLeft = topRight;
     topRight = bottomRight;
@@ -70,3 +74,4 @@ QString straight::getType()
 {
     return "straight";
 }
+

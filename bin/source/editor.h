@@ -66,7 +66,7 @@ private slots:
 
     void on_turnButton_clicked();
 
-    void on_staticObstacle_clicked();
+    void on_staticObstacleButton_clicked();
 
     void on_deleteTileButton_clicked();
 
@@ -81,6 +81,8 @@ private slots:
     void on_endingPointButton_clicked();
 
     void on_actionSimulation_starten_triggered();
+
+
 
 private:
     Ui::Editor *ui;

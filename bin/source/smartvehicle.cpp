@@ -2,7 +2,6 @@
 
 void SmartVehicle::collision()
 {
-
 }
 
 SmartVehicle::SmartVehicle()

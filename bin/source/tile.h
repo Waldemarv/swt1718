@@ -14,7 +14,7 @@ protected:
     Point* position;
     double ascent;
     QPainterPath path;
-    int direction;
+    int direction = 0;
 
     QPointF topLeft;
     QPointF topRight;
@@ -49,6 +49,8 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     Point* getPosition();
+
+
 };
 
 #endif

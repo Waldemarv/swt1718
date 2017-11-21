@@ -26,7 +26,7 @@ Editor::~Editor()
     delete ui;
     delete m;
 }
-/*! Erstellt eine leere Map und oeffnet diese. */
+/*! Erstellt eine leere Map und öffnet diese. */
 void Editor::createMap()
 {
     //Wenn keine Map vorhanden :
@@ -109,7 +109,7 @@ void Editor::createMap()
         }
     }
 }
-/*! Speichert die geoeffnete Map in einer XML-Datei */
+/*! Speichert die geöffnete Map in einer XML-Datei */
 void Editor::saveMap()
 {
     //Map vorhanden?
@@ -138,6 +138,16 @@ void Editor::saveMap()
 
     //root dem document hinzufügen
     document.appendChild(root);
+
+    //Daten der Map Einfügen
+    QDomElement data = document.createElement("Data");
+    root.appendChild(data);
+
+    //Mapgröße als Node Einfügen
+    QDomElement size = document.createElement("MapSize");
+    size.setAttribute("X:", QString::number(m->getSizeX()));
+    size.setAttribute("Y:",QString::number(m->getSizeY()));
+    data.appendChild(size);
 
     //Unterkategorie Points einfügen
     QDomElement points = document.createElement("Points");
@@ -198,9 +208,11 @@ void Editor::saveMap()
     stream<<document.toString();
     }
 }
-/*! Laedt eine Map-Datei und oeffnet die Map im Editor */
+/*! Lädt eine Map-Datei und öffnet die Map im Editor */
 void Editor::loadMap()
 {
+    //Dokument für Datei erstellen
+    QDomDocument document;
     //Pfad für die zu ladene Map wählen
     QString filename = QFileDialog::getOpenFileName(
                 this,
@@ -208,8 +220,28 @@ void Editor::loadMap()
                 "C:/",
                 tr("Extensible Markup Language Files (*.xml)")
                 );
+
+    //Ausgewählte Datei öffnen
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(this,tr("Datei kann nicht geöffnet werden."),file.errorString());
+        return;
+    }
+    //File in QDomDocument laden und file wieder schließen
+    document.setContent(&file);
+    file.close();
+
+    //Mapgröße auslesen
+    //TODO ->
+    //QDomElement docElem = document.documentElement();
+    // QDomAttr x = docElem.attributeNode("X:");
+    //double mx = x.value().toDouble();
+
+    //qDebug() << "X:" << mx;
+    //Map Erstellen
+    //Map* m = new Map(mx,mx);
 }
-/*! Loescht die geoffnete Map */
+/*! Löscht die geoffnete Map */
 void Editor::deleteMap()
 {
     //Lösche m
@@ -243,14 +275,14 @@ void Editor::updateTreeNumberOfObstacles()
     //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Obstacles
     treeObstacles->setText(1, QString::number(m->getNumberOfObstacles()));
 }
-/*! Aktualisiert die Groesse der Map im TreeView */
+/*! Aktualisiert die Größe der Map im TreeView */
 void Editor::updateTreeMapSize()
 {
     //Setze die Größe der Map neu im Tree
     treeRoot->setText(1, QString::number(m->getSizeX()));
     treeRoot->setText(2, QString::number(m->getSizeY()));
 }
-/*! Aendert die Größe der Map und zeichnet diese neu
+/*! Ändert die Größe der Map und zeichnet diese neu
     \param x neuer x-Wert der Map
     \param y neuer y-Wert der Map*/
 void Editor::updateMapValues(int x, int y)
@@ -264,7 +296,7 @@ void Editor::updateMapValues(int x, int y)
     //Zeichne die Linien für das neue GridLayout
     drawGridLayout(x,y);
 }
-/*! Erstellt Ueberschriftelemente für das TreeView */
+/*! Erstellt Überschriftelemente für das TreeView */
 void Editor::addTreeItems()
 {
     //Erstelle Tiles als Child von Map
@@ -281,7 +313,7 @@ void Editor::addTreeItems()
 
     //Weiterehinzufügen (SmartVehicle, Points, etc.)
 }
-/*! Setzt die geoeffnete Map als Hauptelement des TreeView */
+/*! Setzt die geöffnete Map als Hauptelement des TreeView */
 void Editor::addTreeMap(double x, double y)
 {
     //Setze Map als root des Trees
@@ -291,13 +323,13 @@ void Editor::addTreeMap(double x, double y)
     treeRoot->setText(2,QString::number(y));
     ui->treeWidget->addTopLevelItem(treeRoot);
 }
-/*! Loescht alle Elemente des TreeView */
+/*! Löscht alle Elemente des TreeView */
 void Editor::clearTree()
 {
     //Lösche root und alle Childs
     delete ui->treeWidget->topLevelItem(0);
 }
-/*! Fuegt dem TreeView ein Kindelement hinzu.
+/*! Fügt dem TreeView ein Kindelement hinzu.
  *  \param *param zeigt auf das TreeView
  *  \param name Typ des Elementes (Tile,Obstacle..)
  *  \param posX x-Position des Elementes
@@ -432,7 +464,7 @@ void Editor::on_turnButton_clicked()
 }
 
 /*! Erstellt ein statisches Obstacle und fügt dieses der Map hinzu*/
-void Editor::on_staticObstacle_clicked()
+void Editor::on_staticObstacleButton_clicked()
 {
     if(m == nullptr)
     {
