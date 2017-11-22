@@ -26,7 +26,6 @@ Tintersection::Tintersection(double nx, double ny, double nascent, int ndirectio
     bottomCenter = QPointF(rec.center().x(), rec.center().y()+50);
     leftCenter = QPointF(rec.center().x()-50, rec.center().y());
     rightCenter = QPointF(rec.center().x()+50, rec.center().y());
-    direction=0;
 
     // Pfad für Standardausrichtung der Kurve wird gezeichnet.
     QPainterPath path;

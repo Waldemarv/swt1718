@@ -16,7 +16,6 @@ turn::turn(double nx, double ny, double nascent, int ndirection)
     setDirection(ndirection);
 
     setPos(nx,ny); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
-    direction=0;
 
     // Pfad für Standardausrichtung der Kurve wird gezeichnet.
     QRectF rec = boundingRect();

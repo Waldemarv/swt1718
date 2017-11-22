@@ -256,7 +256,7 @@ void Editor::loadMap()
         //map erstellen
         m = new Map(sizeX, sizeY);
         //Scenegröße definieren
-        scene->setSceneRect(0,0,sizeX, sizeY);
+        scene->setSceneRect(0,0,sizeX*m->getGridSize(), sizeY*m->getGridSize());
         //GridLayoutZeichnen
         drawGridLayout(sizeX,sizeY);
 
@@ -308,8 +308,6 @@ void Editor::loadMap()
             int tileAscent = tilesAt.attribute("ascent:").toInt();
             int tileDirection = tilesAt.attribute("direction:").toInt();
 
-            qDebug()<<tileDirection;
-
             if(tilesAt.attribute("Typ:") == "StartingTile"){
                 Tile* t = Startingtile::createStartingTile(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
@@ -327,6 +325,7 @@ void Editor::loadMap()
 
             else if(tilesAt.attribute("Typ:") == "turn"){
                 Tile* t = new turn(tileX, tileY, tileAscent, tileDirection);
+                qDebug()<<t->getDirection();
                 scene->addItem(t);
             }
 
@@ -789,7 +788,7 @@ void Editor::on_actionSimulation_starten_triggered()
     if(m->getStartingTile()!=0)
     {
     //SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, int y)
-    sv = new SmartVehicle(0,2,3,m->getStartingTile()->pos().x()+20, m->getStartingTile()->pos().y()+20);
+    sv = new SmartVehicle(0,1,2,m->getStartingPoint().getX(), m->getStartingPoint().getY());
     scene->addItem(sv);
 
     //Erstelle die 3 Timer für geradeaus/link/rechts um diese voneinander unabhängig zu steuern
