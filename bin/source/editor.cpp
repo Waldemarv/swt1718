@@ -120,6 +120,16 @@ void Editor::saveMap()
         QMessageBox::about(this, "Keine Elemente in der Map", "Bitte fügen Sie mindestens ein Objekt hinzu!");
     }
     else{
+        if(m->getStartingTile() == NULL)
+        {
+            QMessageBox::about(this, "Kein Startpunkt", "Bitte erstellen Sie vor dem Speichern einen Startpunkt!");
+        }
+        else if(m->getEndingTile() == NULL)
+        {
+            QMessageBox::about(this, "Kein Endpunkt", "Bitte erstellen Sie vor dem Speichern einen Endpunkt!");
+        }
+        else
+        {
     //Pfad zum speichern wählen
     QString filename = QFileDialog::getSaveFileName(
             this,
@@ -209,6 +219,7 @@ void Editor::saveMap()
     //Dokument schreiben.
     QTextStream stream(&file);
     stream<<document.toString();
+    }
     }
     }
 }
