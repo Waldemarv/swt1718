@@ -8,25 +8,21 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
     ui->setupUi(this);
     if(&nm == nullptr) {
         //TODO : Egal was geklickt wird : Es muss eine Map geladen werden
-        qDebug() << "Leerer Simulator geöffnet" << endl;
     }
     else {
         this->m = nm;
-        qDebug() << "Simulator mit Map geöffnet" << endl;
         //Scene erstellen
         scene = new QGraphicsScene(this);
         ui->graphicsView->setScene(scene);
         //Größe der Scene setzen
         scene->setSceneRect(0,0,m.getSizeX()*m.getGridSize(),m.getSizeY()*m.getGridSize());
         ui->graphicsView->setScene(scene);
-        qDebug() << "Szene gesetzt";
         //Gesamtpfad der Map bestimmen und zeichnen
         this->mapPath = m.getMapPath();
         scene->addPath(mapPath);
-        qDebug() << "Map gezeichnet";
 
         // Autonomes Fahrzeug hinzufügen
-        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x()+25, m.getStartingPoint().y()+25);
+        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x()+20, m.getStartingPoint().y()+20);
         scene->addItem(sv);
     }
 }
@@ -51,7 +47,6 @@ SimulatorWindow::~SimulatorWindow()
 
 void SimulatorWindow::on_actionSimulation_starten_triggered()
 {
-    qDebug() << "Simulation gestartet!";
     // Timer erstellen
     timer = new QTimer();
     leftTimer = new QTimer();

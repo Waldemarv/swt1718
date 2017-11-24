@@ -303,6 +303,7 @@ void Editor::loadMap()
             {
             Obstacle *o = new Obstacle(obstacleX, obstacleY, obstacleWidth,obstacleLength);
             scene->addItem(o);
+            m->addObstacle(o);
             }
             //elseif(obstaclesAt.attribute("Typ:" == "dynamicObstacle") TODO: Für dynamic Obstacle ergänzen
 
@@ -321,33 +322,42 @@ void Editor::loadMap()
 
             if(tilesAt.attribute("Typ:") == "StartingTile"){
                 Tile* t = Startingtile::createStartingTile(tileX, tileY, tileAscent, tileDirection);
+                ui->startingPointButton->setEnabled(false);
+                m->setStartingTile(t);
+                m->addTile(t);
                 scene->addItem(t);
             }
 
             else if(tilesAt.attribute("Typ:") == "EndingTile"){
                 Tile* t = Endingtile::createEndingTile(tileX, tileY, tileAscent, tileDirection);
+                ui->endingPointButton->setEnabled(false);
+                m->addTile(t);
+                m->setEndingTile(t);
                 scene->addItem(t);
             }
 
             else if(tilesAt.attribute("Typ:") == "straight"){
                 Tile* t = new straight(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
+                m->addTile(t);
             }
 
             else if(tilesAt.attribute("Typ:") == "turn"){
                 Tile* t = new turn(tileX, tileY, tileAscent, tileDirection);
-                qDebug()<<t->getDirection();
                 scene->addItem(t);
+                m->addTile(t);
             }
 
             else if(tilesAt.attribute("Typ:") == "T-Intersection"){
                 Tile* t = new Tintersection(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
+                m->addTile(t);
             }
 
             else if(tilesAt.attribute("Typ:") == "Intersection"){
                 Tile* t = new Intersection(tileX, tileY, tileAscent);
                 scene->addItem(t);
+                m->addTile(t);
             }
 
             }

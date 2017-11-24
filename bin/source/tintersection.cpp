@@ -2,7 +2,6 @@
 
 Tintersection::Tintersection()
 {
-
 }
 /*! Erstellt eine T-Kreuzung und fügt sie dem Editor hinzu.
  * \param x x-Koordinate der T-Kreuzung
@@ -10,22 +9,9 @@ Tintersection::Tintersection()
  * \param ascent Steigung der T-Kreuzung */
 Tintersection::Tintersection(double nx, double ny, double nascent, int ndirection)
 {
-    position->setX(nx);
-    position->setY(ny);
     setAscent(nascent);
     setDirection(ndirection);
-
     setPos(nx,ny); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
-
-    QRectF rec = boundingRect();
-    topLeft = rec.topLeft();
-    topRight = rec.topRight();
-    bottomLeft = rec.bottomLeft();
-    bottomRight = rec.bottomRight();
-    topCenter = QPointF(rec.center().x(), rec.center().y()-50);
-    bottomCenter = QPointF(rec.center().x(), rec.center().y()+50);
-    leftCenter = QPointF(rec.center().x()-50, rec.center().y());
-    rightCenter = QPointF(rec.center().x()+50, rec.center().y());
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
@@ -45,6 +31,9 @@ QRectF Tintersection::boundingRect() const
  * \param widget Widget in welches gezeichnet wird */
 void Tintersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
+
     //Hightligh when Selected
     if(selected){
 
@@ -59,56 +48,52 @@ void Tintersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     mainPen.setColor(Qt::black);
     mainPen.setWidth(2);
     painter->setPen(mainPen);
+    QBrush brush(Qt::red);
+    QPainterPath newPath;
 
     QRectF rec = boundingRect();
-    QBrush brush(Qt::red);
-
-    QPainterPath newPath;
 
     //Für jede Ausrichtung muss das Tile neu gezeichnet werden.
     if(direction%4 == 0) {
-        newPath.moveTo(topLeft);
-        newPath.lineTo(topRight);
-        newPath.moveTo(bottomRight.x()-50,bottomRight.y());
-        newPath.lineTo(bottomRight.x()-50,bottomRight.y()-50);
-        newPath.lineTo(bottomRight.x(),bottomRight.y()-50);
-        newPath.moveTo(bottomLeft.x()+50,bottomLeft.y());
-        newPath.lineTo(bottomLeft.x()+50,bottomLeft.y()-50);
-        newPath.lineTo(bottomLeft.x(),bottomLeft.y()-50);
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.topRight());
+        newPath.moveTo(rec.bottomRight().x()-50,rec.bottomRight().y());
+        newPath.lineTo(rec.bottomRight().x()-50,rec.bottomRight().y()-50);
+        newPath.lineTo(rec.bottomRight().x(),rec.bottomRight().y()-50);
+        newPath.moveTo(rec.bottomLeft().x()+50,rec.bottomLeft().y());
+        newPath.lineTo(rec.bottomLeft().x()+50,rec.bottomLeft().y()-50);
+        newPath.lineTo(rec.bottomLeft().x(),rec.bottomLeft().y()-50);
         direction = 0;
     }
     else if(direction == 1) {
-        QRectF rect = boundingRect();
-        newPath.moveTo(rect.topRight());
-        newPath.lineTo(rect.bottomRight());
-        newPath.moveTo(rect.topLeft().x(),rect.topLeft().y()+50);
-        newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+50);
-        newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y());
-        newPath.moveTo(rect.topLeft().x(),rect.topLeft().y()+100);
-        newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+100);
-        newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+150);
+        newPath.moveTo(rec.topRight());
+        newPath.lineTo(rec.bottomRight());
+        newPath.moveTo(rec.topLeft().x(),rec.topLeft().y()+50);
+        newPath.lineTo(rec.topLeft().x()+50,rec.topLeft().y()+50);
+        newPath.lineTo(rec.topLeft().x()+50,rec.topLeft().y());
+        newPath.moveTo(rec.topLeft().x(),rec.topLeft().y()+100);
+        newPath.lineTo(rec.topLeft().x()+50,rec.topLeft().y()+100);
+        newPath.lineTo(rec.topLeft().x()+50,rec.topLeft().y()+150);
     }
     else if(direction == 2) {
-        QRectF rect = boundingRect();
-        newPath.moveTo(rect.bottomLeft());
-        newPath.lineTo(rect.bottomRight());
-        newPath.moveTo(rect.topLeft().x()+50,rect.topLeft().y());
-        newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+50);
-        newPath.lineTo(rect.topLeft().x(),rect.topLeft().y()+50);
-        newPath.moveTo(rect.topLeft().x()+100,rect.topLeft().y());
-        newPath.lineTo(rect.topLeft().x()+100,rect.topLeft().y()+50);
-        newPath.lineTo(rect.topLeft().x()+150,rect.topLeft().y()+50);
+        newPath.moveTo(rec.bottomLeft());
+        newPath.lineTo(rec.bottomRight());
+        newPath.moveTo(rec.topLeft().x()+50,rec.topLeft().y());
+        newPath.lineTo(rec.topLeft().x()+50,rec.topLeft().y()+50);
+        newPath.lineTo(rec.topLeft().x(),rec.topLeft().y()+50);
+        newPath.moveTo(rec.topLeft().x()+100,rec.topLeft().y());
+        newPath.lineTo(rec.topLeft().x()+100,rec.topLeft().y()+50);
+        newPath.lineTo(rec.topLeft().x()+150,rec.topLeft().y()+50);
     }
     else if(direction == 3) {
-        QRectF rect = boundingRect();
-        newPath.moveTo(rect.topLeft());
-        newPath.lineTo(rect.bottomLeft());
-        newPath.moveTo(rect.topLeft().x()+50,rect.topLeft().y());
-        newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+50);
-        newPath.lineTo(rect.topLeft().x()+100,rect.topLeft().y()+50);
-        newPath.moveTo(rect.topLeft().x()+50,rect.topLeft().y()+150);
-        newPath.lineTo(rect.topLeft().x()+50,rect.topLeft().y()+100);
-        newPath.lineTo(rect.topLeft().x()+100,rect.topLeft().y()+100);
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.bottomLeft());
+        newPath.moveTo(rec.topLeft().x()+50,rec.topLeft().y());
+        newPath.lineTo(rec.topLeft().x()+50,rec.topLeft().y()+50);
+        newPath.lineTo(rec.topLeft().x()+100,rec.topLeft().y()+50);
+        newPath.moveTo(rec.topLeft().x()+50,rec.topLeft().y()+150);
+        newPath.lineTo(rec.topLeft().x()+50,rec.topLeft().y()+100);
+        newPath.lineTo(rec.topLeft().x()+100,rec.topLeft().y()+100);
     }
 
     this->path=newPath;

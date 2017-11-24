@@ -57,7 +57,7 @@ void Startingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     }
 
     QPen mainPen;
-    mainPen.setColor(Qt::green);
+    mainPen.setColor(Qt::blue);
     mainPen.setWidth(2);
     painter->setPen(mainPen);
 

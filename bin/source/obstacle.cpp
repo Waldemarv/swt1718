@@ -20,6 +20,9 @@ QRectF Obstacle::boundingRect() const
  * \param widget Widget in welches gezeichnet wird */
 void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
     //Nur zum Testen
     QRectF rec = boundingRect();
 
@@ -57,9 +60,7 @@ QPointF* Obstacle::getPosition() { return position; }
 Obstacle::Obstacle(){
     position = new QPointF();
     setFlag(QGraphicsItem::ItemIsMovable);
-    released = true;
     selected = false;
-
 }
 
 /*! Erstellt ein neues Obstacle
@@ -71,7 +72,6 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
 {
     position = new QPointF(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
-    released = true;
     selected = false;
 }
 
@@ -87,8 +87,6 @@ void Obstacle::setPosition(double x, double y)
 /*! Wählt ein Obstacle an, wenn es angeklickt wurde */
 void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    released=false;
-
     if(selected){
        selected = false;
     } else {
@@ -101,7 +99,6 @@ void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Obstacle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    released=true;
     update();
     QGraphicsItem::mouseReleaseEvent(event);
 }

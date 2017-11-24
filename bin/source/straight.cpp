@@ -58,6 +58,7 @@ void straight::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         newPath.moveTo(rec.topRight());
         newPath.lineTo(rec.bottomRight());
     }
+
     this->path = newPath;
 
     painter->drawPath(this->path);

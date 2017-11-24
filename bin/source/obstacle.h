@@ -13,11 +13,10 @@ class Obstacle :public QGraphicsItem {
 
 private:
     QPointF* position;
-	double width;
-	double length;
+    double width;
+    double length;
 
 public:
-    bool released;
     bool selected;
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren

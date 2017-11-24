@@ -10,8 +10,6 @@ turn::turn()
  * \param ascent Steigung der Kurve */
 turn::turn(double nx, double ny, double nascent, int ndirection)
 {
-    position->setX(nx);
-    position->setY(ny);
     setAscent(nascent);
     setDirection(ndirection);
 
@@ -29,6 +27,9 @@ QRectF turn::boundingRect() const
  * \param widget Widget in welches gezeichnet wird */
 void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
+
     //Hightligh when Selected
     if(selected){
         QPen pen;

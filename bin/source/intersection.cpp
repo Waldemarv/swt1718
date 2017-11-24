@@ -12,14 +12,6 @@ Intersection::Intersection(double x, double y , double ascent)
     setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
 
     QRectF rec = boundingRect();
-    topLeft = rec.topLeft();
-    topRight = rec.topRight();
-    bottomLeft = rec.bottomLeft();
-    bottomRight = rec.bottomRight();
-    topCenter = QPointF(rec.center().x(), rec.center().y()-75);
-    bottomCenter = QPointF(rec.center().x(), rec.center().y()+75);
-    leftCenter = QPointF(rec.center().x()-75, rec.center().y());
-    rightCenter = QPointF(rec.center().x()+75, rec.center().y());
     direction=0;
 
     // Pfad für Kreuzung wird gezeichnet
@@ -44,7 +36,7 @@ Intersection::Intersection(double x, double y , double ascent)
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF Intersection::boundingRect() const
 {
-    return QRectF(x(),y(),150,150);
+    return QRectF(0,0,150,150);
 }
 
 /*! Zeichnet das Tile
