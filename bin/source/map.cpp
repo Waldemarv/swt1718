@@ -140,6 +140,8 @@ void Map::setMapPath() {
     QPainterPath newMapPath;
 
     for(unsigned int i = 0; i<tiles.size(); i++) {
+        newMapPath.moveTo(tiles.at(i)->scenePos());
+        qDebug () << "Zu Position" << tiles.at(i)->scenePos();
         newMapPath += (tiles.at(i)->getPath());
         qDebug() << "Element " << i << "in Path aufgenommen" << endl;
     }

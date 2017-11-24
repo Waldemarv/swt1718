@@ -20,7 +20,7 @@ Endingtile::~Endingtile()
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF Endingtile::boundingRect() const
 {
-    return QRectF(x(),y(),50,50);
+    return QRectF(0,0,50,50);
 }
 
 /*! Gibt den Typen des Tile zurück
