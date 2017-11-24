@@ -24,6 +24,10 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         this->mapPath = m.getMapPath();
         scene->addPath(mapPath);
         qDebug() << "Map gezeichnet";
+
+        // Autonomes Fahrzeug hinzufügen
+        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x()+25, m.getStartingPoint().y()+25);
+        scene->addItem(sv);
     }
 }
 
@@ -43,4 +47,53 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 SimulatorWindow::~SimulatorWindow()
 {
     delete ui;
+}
+
+void SimulatorWindow::on_actionSimulation_starten_triggered()
+{
+    qDebug() << "Simulation gestartet!";
+    // Timer erstellen
+    timer = new QTimer();
+    leftTimer = new QTimer();
+    rightTimer = new QTimer();
+
+    //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
+    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
+    connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
+
+    simulationStarted = true;
+}
+
+void SimulatorWindow::keyPressEvent(QKeyEvent *event)
+{
+    while(simulationStarted) {
+        //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
+        if(event->key() == Qt::Key_Up) {
+            timer->start(10);
+        }
+        else if(event->key() == Qt::Key_Left) {
+            leftTimer->start(10);
+        }
+
+        else if(event->key() == Qt::Key_Right) {
+            rightTimer->start(10);
+        }
+        QWidget::keyPressEvent(event);
+    }
+}
+
+void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    while(simulationStarted) {
+        //Schalte Timer wieder aus, wenn Knopf losgelassen wird
+        if(event->key() == Qt::Key_Up)
+            timer->stop();
+        else if(event->key() == Qt::Key_Left)
+            leftTimer->stop();
+        else if(event->key() == Qt::Key_Right)
+            rightTimer->stop();
+
+        QWidget::keyReleaseEvent(event);
+    }
 }

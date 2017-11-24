@@ -486,35 +486,6 @@ void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
     parent->addChild(item);
 }
 
-void Editor::keyPressEvent(QKeyEvent *event)
-{
-    //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
-    if(event->key() == Qt::Key_Up) {
-        timer->start(10);
-    }
-    else if(event->key() == Qt::Key_Left) {
-        leftTimer->start(10);
-    }
-
-    else if(event->key() == Qt::Key_Right) {
-        rightTimer->start(10);
-    }
-    QWidget::keyPressEvent(event);
-}
-
-void Editor::keyReleaseEvent(QKeyEvent *event)
-{
-    //Schalte Timer wieder aus, wenn Knopf losgelassen wird
-    if(event->key() == Qt::Key_Up)
-        timer->stop();
-    else if(event->key() == Qt::Key_Left)
-        leftTimer->stop();
-    else if(event->key() == Qt::Key_Right)
-        rightTimer->stop();
-
-    QWidget::keyReleaseEvent(event);
-}
-
 void Editor::setTreeTilesPosition(QPointF position, int index)
 {
     treeTiles->child(index)->setText(1, QString::number(position.x()));
@@ -797,30 +768,14 @@ void Editor::on_endingPointButton_clicked()
 
 void Editor::on_actionSimulation_starten_triggered()
 {
+    if(m->getStartingTile()== 0 || m->getEndingTile() == 0) {
+        //TODO Fenster, dass Tiles erstellt werden müssen
+    }
+    else {
     m->setMapPath();
     SimulatorWindow* sim = new SimulatorWindow(*m);
     sim->show();
     this->hide();
-
-    /*
-    if(m->getStartingTile()!=0)
-    {
-    //SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, int y)
-    sv = new SmartVehicle(0,1,2,m->getStartingPoint().getX()+25, m->getStartingPoint().getY()+25);
-    scene->addItem(sv);
-
-    //Erstelle die 3 Timer für geradeaus/link/rechts um diese voneinander unabhängig zu steuern
-    timer = new QTimer;
-    leftTimer = new QTimer;
-    rightTimer = new QTimer;
-
-    //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
-    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
-    connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
-    ui->treeWidget->setEnabled(false);
-    ui->tabWidget->setEnabled(false);
     }
-    */
 }
 
