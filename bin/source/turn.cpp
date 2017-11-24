@@ -16,22 +16,11 @@ turn::turn(double nx, double ny, double nascent, int ndirection)
     setDirection(ndirection);
 
     setPos(nx,ny); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
-
-    // Pfad für Standardausrichtung der Kurve wird gezeichnet.
-    QRectF rec = boundingRect();
-    QPainterPath path;
-    path.moveTo(bottomRight);
-    path.arcTo(rec,0,90);
-    path.lineTo(topLeft);
-    path.moveTo(leftCenter);
-    path.lineTo(rec.center());
-    path.lineTo(bottomCenter);
-    this->path = path;
 }
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF turn::boundingRect() const
 {
-    return QRectF(0,0,100,100);
+    return QRectF(x(),y(),100,100);
 }
 
 /*! Zeichnet das Tile
@@ -66,7 +55,6 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         newPath.moveTo(rec.center().x()-50, rec.center().y());
         newPath.lineTo(rec.center());
         newPath.lineTo(rec.center().x(), rec.center().y()+50);
-        direction=0;
     }
     else if (direction == 1) {
         newPath.moveTo(rec.center().x()+50, rec.center().y());

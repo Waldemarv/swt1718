@@ -12,7 +12,7 @@
 class Obstacle :public QGraphicsItem {
 
 private:
-    Point* position;
+    QPointF* position;
 	double width;
 	double length;
 
@@ -37,7 +37,7 @@ public:
     Obstacle();
     Obstacle(double x, double y, double width, double length);
 
-    Point* getPosition();
+    QPointF* getPosition();
 };
 
 #endif

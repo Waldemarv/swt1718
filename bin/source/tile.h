@@ -12,7 +12,7 @@
 /*! Realisiert Streckenelemente einer Map */
 class Tile : public QGraphicsItem  {
 protected:
-    Point* position;
+    QPointF* position;
     double ascent;
     QPainterPath path;
     int direction = 0;
@@ -32,7 +32,7 @@ public:
 
     bool selected;
 
-    virtual QRectF boundingRect() const;
+    virtual QRectF boundingRect();
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
 
@@ -52,7 +52,8 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
-    Point* getPosition();
+    QPainterPath getPath();
+    QPointF* getPosition();
 
 
 };

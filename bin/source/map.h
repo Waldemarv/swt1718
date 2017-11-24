@@ -1,6 +1,5 @@
 #ifndef MAP_H
 #define MAP_H
-#include "point.h"
 #include "tile.h"
 #include "straight.h"
 #include "turn.h"
@@ -25,12 +24,13 @@ private:
     int sizeX;
     int sizeY;
 
-    Point startingPoint;
-    Point endingPoint;
+    QPointF startingPoint;
+    QPointF endingPoint;
 
     Tile* startingTile;
     Tile* endingTile;
 
+    QPainterPath mapPath;
 public:
     Map();
     Map(int x, int y);
@@ -59,8 +59,8 @@ public:
     void deleteCurrentTile();
     void deleteCurrentObstacle();
 
-    Point getStartingPoint();
-    Point getEndingPoint();
+    QPointF getStartingPoint();
+    QPointF getEndingPoint();
 
     unsigned int getNumberOfTiles();
     unsigned int getNumberOfObstacles();
@@ -70,6 +70,8 @@ public:
     unsigned int getSizeY();
     int getGridSize();
 
+    void setMapPath();
+    QPainterPath getMapPath();
     //TODO createMemento
     //TODO setMemento
 };

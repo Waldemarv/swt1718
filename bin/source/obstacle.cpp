@@ -51,11 +51,11 @@ double Obstacle::getwidth() {return width; }
 
 /*! Gibt die Position des Obstacle zurück
  * \return Position des Obstacle */
-Point* Obstacle::getPosition() { return position; }
+QPointF* Obstacle::getPosition() { return position; }
 
 /*! Erstellt ein neues Obstacle ohne Größe und Position auf der Map */
 Obstacle::Obstacle(){
-    position = new Point();
+    position = new QPointF();
     setFlag(QGraphicsItem::ItemIsMovable);
     released = true;
     selected = false;
@@ -69,8 +69,7 @@ Obstacle::Obstacle(){
  * \param length Höhe des Obstacle */
 Obstacle::Obstacle(double x, double y, double width, double length) : width(width), length(length)
 {
-    position = new Point(x,y);
-    setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
+    position = new QPointF(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
     released = true;
     selected = false;
@@ -81,9 +80,7 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
  * \param y neue y-Koordinate des Obstacle */
 void Obstacle::setPosition(double x, double y)
 {
-    position->setX(x);
-    position->setY(y);
-    //setPos(x,y);
+    setPos(x,y);
 }
 
 // Mouse Event Handlers

@@ -11,8 +11,6 @@ straight::straight()
  * \param ascent Steigung der Geraden */
 straight::straight(double nx, double ny, double nascent, int ndirection)
 {
-    position->setX(nx);
-    position->setY(ny);
     setAscent(nascent);
     setDirection(ndirection);
 
@@ -22,7 +20,7 @@ straight::straight(double nx, double ny, double nascent, int ndirection)
  * \return Begrenzungsrechteck für das Tile */
 QRectF straight::boundingRect() const
 {
-    return QRectF(0,0,50,50);
+    return QRectF(x(),y(),50,50);
 }
 /*! Zeichnet das Tile
  * \param painter Painter der zum Zeichnen benutzt wird
@@ -45,16 +43,24 @@ void straight::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     mainPen.setWidth(2);
     painter->setPen(mainPen);
 
+    QPainterPath newPath;
     if(direction == 0)
     {
-        painter->drawLine(rec.topLeft(), rec.topRight());
-        painter->drawLine(rec.bottomLeft(),rec.bottomRight());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.topRight());
+        newPath.moveTo(rec.bottomLeft());
+        newPath.lineTo(rec.bottomRight());
     }
     else if(direction == 1)
     {
-        painter->drawLine(rec.topLeft(), rec.bottomLeft());
-        painter->drawLine(rec.topRight(), rec.bottomRight());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.bottomLeft());
+        newPath.moveTo(rec.topRight());
+        newPath.lineTo(rec.bottomRight());
     }
+    this->path = newPath;
+
+    painter->drawPath(this->path);
 }
 
 /*! Rotiert das Tile um 90 Grad */
