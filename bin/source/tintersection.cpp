@@ -32,10 +32,10 @@ Tintersection::Tintersection(double nx, double ny, double nascent, int ndirectio
 QRectF Tintersection::boundingRect() const
 { //Unterschiedliches BoundingRect je nach Ausrichtung des Tiles
     if(this->direction%4 == 0 || this->direction%4==2) {
-    return QRectF(x(),y(),150,100);
+    return QRectF(0,0,150,100);
     }
     else {
-    return QRectF(x(),y(),100,150);
+    return QRectF(0,0,100,150);
     }
 }
 

@@ -20,7 +20,7 @@ straight::straight(double nx, double ny, double nascent, int ndirection)
  * \return Begrenzungsrechteck für das Tile */
 QRectF straight::boundingRect() const
 {
-    return QRectF(x(),y(),50,50);
+    return QRectF(0,0,50,50);
 }
 /*! Zeichnet das Tile
  * \param painter Painter der zum Zeichnen benutzt wird

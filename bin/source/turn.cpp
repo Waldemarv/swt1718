@@ -20,7 +20,7 @@ turn::turn(double nx, double ny, double nascent, int ndirection)
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF turn::boundingRect() const
 {
-    return QRectF(x(),y(),100,100);
+    return QRectF(0,0,100,100);
 }
 
 /*! Zeichnet das Tile
