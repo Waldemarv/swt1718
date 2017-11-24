@@ -45,6 +45,7 @@ public:
     void setPosition(double x, double y);
     void setAscent(double Ascent);
     void setDirection(double ndirection);
+    void setPath(QPainterPath p);
 
     virtual void rotate();
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);

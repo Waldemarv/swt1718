@@ -2,7 +2,6 @@
 
 /*! Erstellt ein Tile im Koordinatenursprung */
 Tile::Tile() {
-    position = new QPointF();
     setFlag(QGraphicsItem::ItemIsMovable);
     selected = false;
 }
@@ -20,7 +19,7 @@ Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
  * \return Begrenzungsrechteck für das Tile */
 QRectF Tile::boundingRect()
 {
-    return QRectF(x(),y(),50,50);
+    return QRectF(0,0,50,50);
 }
 
 /*! Zeichnet das Tile
@@ -29,6 +28,9 @@ QRectF Tile::boundingRect()
  * \param widget Widget in welches gezeichnet wird */
 void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
     //Nur zum Testen
     QRectF rec = boundingRect();
     QBrush brush(Qt::green);
@@ -102,6 +104,11 @@ void Tile::setAscent(double nAscent)
 void Tile::setDirection(double ndirection)
 {
     direction = ndirection;
+}
+
+void Tile::setPath(QPainterPath p)
+{
+    this->path = p;
 }
 
 /*! Gibt die Position des Tile zurück
