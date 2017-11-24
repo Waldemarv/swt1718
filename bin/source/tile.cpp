@@ -2,7 +2,7 @@
 
 /*! Erstellt ein Tile im Koordinatenursprung */
 Tile::Tile() {
-    position = new Point();
+    position = new QPointF();
     setFlag(QGraphicsItem::ItemIsMovable);
     selected = false;
 }
@@ -11,16 +11,16 @@ Tile::Tile() {
  * \param y y-Position des Tile
  * \param ascent Steigung des Tile */
 Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
-    position = new Point(x,y);
+    position = new QPointF(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
     selected = false;
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
  * \return Begrenzungsrechteck für das Tile */
-QRectF Tile::boundingRect() const
+QRectF Tile::boundingRect()
 {
-    return QRectF(position->getX(),position->getY(),50,50);
+    return QRectF(x(),y(),50,50);
 }
 
 /*! Zeichnet das Tile
@@ -52,26 +52,26 @@ void Tile::fitIntoGrid()
      * Mit dem ModuloOperator ist es möglich Die Objekte genau Auf diese 4 Quadranten Abzubilden.
      * Danach wird entschieden welchem Quadranten das Objekt zugeordnet wird und dementsprechend die osition gesetzt. */
 
-    if(((int)scenePos().x() % 50) < 25)
+    if(((int)x() % 50) < 25)
     {
-        if(((int)scenePos().y() % 50) < 25)
+        if(((int)y() % 50) < 25)
         {
-            setPos((scenePos().x()-((int)scenePos().x()%50)), (scenePos().y()-((int)scenePos().y()%50)));
+            setPos((x()-((int)x()%50)), (y()-((int)y()%50)));
         }
         else
         {
-            setPos(scenePos().x()-((int)scenePos().x()%50), scenePos().y() + (50-((int)scenePos().y()%50)));
+            setPos(x()-((int)x()%50), y() + (50-((int)y()%50)));
         }
     }
     else
     {
-        if(((int)scenePos().y() % 50) <25)
+        if(((int)y() % 50) <25)
         {
-            setPos(scenePos().x() + (50 - (int)scenePos().x()%50), scenePos().y()-((int)scenePos().y()%50));
+            setPos(x() + (50 - (int)x()%50), y()-((int)y()%50));
         }
         else
         {
-            setPos(scenePos().x() + (50 - (int)scenePos().x()%50), scenePos().y() + (50 - (int)scenePos().y()%50));
+            setPos(x() + (50 - (int)x()%50), y() + (50 - (int)y()%50));
         }
     }
 }
@@ -106,7 +106,7 @@ void Tile::setDirection(double ndirection)
 
 /*! Gibt die Position des Tile zurück
  * \return Position des Tile */
-Point* Tile::getPosition() { return position; }
+QPointF* Tile::getPosition() { return position; }
 
 /*! Rotiert das Tile um 90 Grad */
 void Tile::rotate() {}
@@ -158,4 +158,10 @@ void Tile::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
        {
            setPos(x(), scene()->height() - boundingRect().height());
        }
+}
+
+/*! Gibt den Path des Tile zurück
+ * \returns Path des Tiles */
+QPainterPath Tile::getPath(){
+    return this->path;
 }

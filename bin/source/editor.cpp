@@ -489,15 +489,16 @@ void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
 void Editor::keyPressEvent(QKeyEvent *event)
 {
     //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
-    if(event->key() == Qt::Key_Up)
+    if(event->key() == Qt::Key_Up) {
         timer->start(10);
-
-    else if(event->key() == Qt::Key_Left)
+    }
+    else if(event->key() == Qt::Key_Left) {
         leftTimer->start(10);
+    }
 
-    else if(event->key() == Qt::Key_Right)
+    else if(event->key() == Qt::Key_Right) {
         rightTimer->start(10);
-
+    }
     QWidget::keyPressEvent(event);
 }
 
@@ -568,7 +569,7 @@ void Editor::on_straightButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new straight((m->getNumberOfTiles()*50),0, 0,0);
+        Tile *t = new straight((m->getNumberOfTiles()*m->getGridSize()),0, 0,0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -576,7 +577,7 @@ void Editor::on_straightButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "straight", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "straight", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 }
 
@@ -590,7 +591,7 @@ void Editor::on_turnButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new turn((m->getNumberOfTiles()*50),0, 0,0);
+        Tile *t = new turn((m->getNumberOfTiles()*m->getGridSize()),0, 0,0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -598,7 +599,7 @@ void Editor::on_turnButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "turn", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "turn", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 
 }
@@ -612,13 +613,13 @@ void Editor::on_staticObstacleButton_clicked()
     }
     else
     {
-        Obstacle *o = new Obstacle(m->getNumberOfObstacles()*20, 0, 20, 20);
+        Obstacle *o = new Obstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 20, 20);
         m->addObstacle(o);
         scene->addItem(o);
 
 
         updateTreeNumberOfObstacles();
-        addChild(treeObstacles, "staticObstacle", m->getCurrentObstacle()->getPosition()->getX(), m->getCurrentObstacle()->getPosition()->getY());
+        addChild(treeObstacles, "staticObstacle", m->getCurrentObstacle()->x(), m->getCurrentObstacle()->y());
     }
 }
 
@@ -713,7 +714,7 @@ void Editor::on_intersectionButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new Intersection((m->getNumberOfTiles()*50),0, 0);
+        Tile *t = new Intersection((m->getNumberOfTiles()*m->getGridSize()),0, 0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -721,7 +722,7 @@ void Editor::on_intersectionButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "Intersection", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 }
 
@@ -734,7 +735,7 @@ void Editor::on_tIntersectionButton_clicked()
     else
     {
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
-        Tile *t = new Tintersection((m->getNumberOfTiles()*50),0, 0,0);
+        Tile *t = new Tintersection((m->getNumberOfTiles()*m->getGridSize()),0, 0,0);
         //Füge es der Map hinzu
         m->addTile(t);
         //Füge es der scene hinzu und lass es damit zeichnen
@@ -742,7 +743,7 @@ void Editor::on_tIntersectionButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "T-Intersection", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "T-Intersection", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 }
 
@@ -764,7 +765,7 @@ void Editor::on_startingPointButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "StartingTile", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "StartingTile", m->getCurrentTile()->x(), m->getCurrentTile()->y());
 
         ui->startingPointButton->setEnabled(false);
     }
@@ -788,7 +789,7 @@ void Editor::on_endingPointButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "EndingTile", m->getCurrentTile()->getPosition()->getX(), m->getCurrentTile()->getPosition()->getY());
+        addChild(treeTiles, "EndingTile", m->getCurrentTile()->x(), m->getCurrentTile()->y());
 
         ui->endingPointButton->setEnabled(false);
     }
@@ -796,10 +797,16 @@ void Editor::on_endingPointButton_clicked()
 
 void Editor::on_actionSimulation_starten_triggered()
 {
+    m->setMapPath();
+    SimulatorWindow* sim = new SimulatorWindow(*m);
+    sim->show();
+    this->hide();
+
+    /*
     if(m->getStartingTile()!=0)
     {
     //SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, int y)
-    sv = new SmartVehicle(0,1,2,m->getStartingPoint().getX(), m->getStartingPoint().getY());
+    sv = new SmartVehicle(0,1,2,m->getStartingPoint().getX()+25, m->getStartingPoint().getY()+25);
     scene->addItem(sv);
 
     //Erstelle die 3 Timer für geradeaus/link/rechts um diese voneinander unabhängig zu steuern
@@ -814,4 +821,6 @@ void Editor::on_actionSimulation_starten_triggered()
     ui->treeWidget->setEnabled(false);
     ui->tabWidget->setEnabled(false);
     }
+    */
 }
+

@@ -3,7 +3,7 @@
 
 #include "map.h"
 #include "ui_editor.h"
-
+#include "simulatorwindow.h"
 #include <QtCore>
 #include <QGraphicsItem>
 #include <QInputDialog>
@@ -81,7 +81,6 @@ private slots:
     void on_endingPointButton_clicked();
 
     void on_actionSimulation_starten_triggered();
-
 
 
 private:

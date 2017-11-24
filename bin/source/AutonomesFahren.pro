@@ -28,7 +28,6 @@ SOURCES += \
         main.cpp \
         editor.cpp \
         map.cpp \
-        point.cpp \
         tile.cpp \
         obstacle.cpp \
         straight.cpp \
@@ -37,7 +36,8 @@ SOURCES += \
     tintersection.cpp \
     startingtile.cpp \
     endingtile.cpp \
-    smartvehicle.cpp
+    smartvehicle.cpp \
+    simulatorwindow.cpp
 
 HEADERS += \
         editor.h \
@@ -51,10 +51,12 @@ HEADERS += \
     tintersection.h \
     startingtile.h \
     endingtile.h \
-    smartvehicle.h
+    smartvehicle.h \
+    simulatorwindow.h
 
 FORMS += \
-        editor.ui
+        editor.ui \
+    simulatorwindow.ui
 
 RESOURCES += \
         icons.qrc

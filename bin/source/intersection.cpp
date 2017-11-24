@@ -7,8 +7,6 @@ Intersection::Intersection(){}
  * \param ascent Steigung der Kreuzung */
 Intersection::Intersection(double x, double y , double ascent)
 {
-    position->setX(x);
-    position->setY(y);
     setAscent(ascent);
 
     setPos(x,y); //Hier Position festlegen *BUGFIX Position in treeView und saveMap*
@@ -46,7 +44,7 @@ Intersection::Intersection(double x, double y , double ascent)
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF Intersection::boundingRect() const
 {
-    return QRectF(0,0,150,150);
+    return QRectF(x(),y(),150,150);
 }
 
 /*! Zeichnet das Tile

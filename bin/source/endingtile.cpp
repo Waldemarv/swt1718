@@ -20,7 +20,7 @@ Endingtile::~Endingtile()
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF Endingtile::boundingRect() const
 {
-    return QRectF(0,0,50,50);
+    return QRectF(x(),y(),50,50);
 }
 
 /*! Gibt den Typen des Tile zurück
@@ -63,30 +63,41 @@ void Endingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
     QRectF rec = boundingRect();
 
-    if(direction == 0)
+    QPainterPath newPath;
+    if (direction == 0)
     {
-        painter->drawLine(rec.topLeft(), rec.topRight());
-        painter->drawLine(rec.bottomLeft(),rec.bottomRight());
-        painter->drawLine(rec.topRight(), rec.bottomRight());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.topRight());
+        newPath.moveTo(rec.bottomLeft());
+        newPath.lineTo(rec.bottomRight());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.bottomLeft());
     }
     else if (direction == 1)
     {
-        painter->drawLine(rec.topLeft(), rec.bottomLeft());
-        painter->drawLine(rec.bottomLeft(),rec.bottomRight());
-        painter->drawLine(rec.topRight(), rec.bottomRight());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.bottomLeft());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.topRight());
+        newPath.lineTo(rec.bottomRight());
     }
-    else if (direction == 2)
+    else if(direction == 2)
     {
-        painter->drawLine(rec.topLeft(), rec.topRight());
-        painter->drawLine(rec.bottomLeft(),rec.bottomRight());
-        painter->drawLine(rec.topLeft(), rec.bottomLeft());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.topRight());
+        newPath.moveTo(rec.bottomLeft());
+        newPath.lineTo(rec.bottomRight());
+        newPath.lineTo(rec.topRight());
     }
     else if (direction == 3)
     {
-        painter->drawLine(rec.topLeft(), rec.bottomLeft());
-        painter->drawLine(rec.topLeft(),rec.topRight());
-        painter->drawLine(rec.topRight(), rec.bottomRight());
+        newPath.moveTo(rec.topLeft());
+        newPath.lineTo(rec.bottomLeft());
+        newPath.lineTo(rec.bottomRight());
+        newPath.lineTo(rec.topRight());
     }
+    this->path=newPath;
+    painter->drawPath(path);
 }
 
 /*! Rotiert das Tile */

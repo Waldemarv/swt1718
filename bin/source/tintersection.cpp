@@ -26,28 +26,16 @@ Tintersection::Tintersection(double nx, double ny, double nascent, int ndirectio
     bottomCenter = QPointF(rec.center().x(), rec.center().y()+50);
     leftCenter = QPointF(rec.center().x()-50, rec.center().y());
     rightCenter = QPointF(rec.center().x()+50, rec.center().y());
-
-    // Pfad für Standardausrichtung der Kurve wird gezeichnet.
-    QPainterPath path;
-    path.moveTo(topLeft);
-    path.lineTo(topRight);
-    path.moveTo(bottomRight.x()-50,bottomRight.y());
-    path.lineTo(bottomRight.x()-50,bottomRight.y()-50);
-    path.lineTo(bottomRight.x(),bottomRight.y()-50);
-    path.moveTo(bottomLeft.x()+50,bottomLeft.y());
-    path.lineTo(bottomLeft.x()+50,bottomLeft.y()-50);
-    path.lineTo(bottomLeft.x(),bottomLeft.y()-50);
-    this->path = path;
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt */
 QRectF Tintersection::boundingRect() const
 { //Unterschiedliches BoundingRect je nach Ausrichtung des Tiles
     if(this->direction%4 == 0 || this->direction%4==2) {
-    return QRectF(0,0,150,100);
+    return QRectF(x(),y(),150,100);
     }
     else {
-    return QRectF(0,0,100,150);
+    return QRectF(x(),y(),100,150);
     }
 }
 

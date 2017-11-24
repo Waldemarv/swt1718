@@ -5,7 +5,7 @@ Map::Map()
     sizeX=0;
     sizeY=0;
 
-    gridSize = 50;
+    gridSize = 25;
 }
 /*! Erstellt eine leere Map
     \param x Größe der Map in x-Richtung
@@ -92,10 +92,10 @@ void Map::deleteObstacle(int i) {   obstacles.erase(obstacles.begin()+i); }
 
 /*! Gibt den Startpunkt des autonomen Fahrzeugs zurück
  * \return Startpunkt des Fahrzeuges */
-Point Map::getStartingPoint() { return startingPoint; }
+QPointF Map::getStartingPoint() { return startingPoint; }
 /*! Gibt den Endpunkt des autonomen Fahrzeugs zurück
  * \return Endpunkt des Fahrzeuges */
-Point Map::getEndingPoint() { return endingPoint; }
+QPointF Map::getEndingPoint() { return endingPoint; }
 
 /*! Gibt gewähltes Tile zurück
  * \param i Position des Tiles im Tile-Vektor
@@ -133,4 +133,20 @@ void Map::setStartingTile(Tile *t)
 void Map::setEndingTile(Tile *t)
 {
     endingTile = t;
+}
+
+/*! Fügt die einzelnen Begrenzungen der Tiles zu einem Gesamtpfad zusammen */
+void Map::setMapPath() {
+    QPainterPath newMapPath;
+
+    for(unsigned int i = 0; i<tiles.size(); i++) {
+        newMapPath += (tiles.at(i)->getPath());
+        qDebug() << "Element " << i << "in Path aufgenommen" << endl;
+    }
+    this->mapPath=newMapPath;
+}
+
+/*! Gibt die Begrenzungen der Map zurück */
+QPainterPath Map::getMapPath() {
+    return this->mapPath;
 }
