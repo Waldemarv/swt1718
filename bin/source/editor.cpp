@@ -784,7 +784,7 @@ void Editor::on_actionSimulation_starten_triggered()
     else {
     m->setMapPath();
     SimulatorWindow* sim = new SimulatorWindow(*m);
-    sim->show();
+    sim->showFullScreen();
     this->hide();
     }
 }

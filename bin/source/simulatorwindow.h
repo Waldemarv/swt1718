@@ -20,6 +20,7 @@ public:
     void keyReleaseEvent(QKeyEvent *event);
 private slots:
     void on_actionSimulation_starten_triggered();
+    void collisionDetection();
 
 private:
     Map m;
@@ -30,6 +31,7 @@ private:
     QTimer *timer;
     QTimer *leftTimer;
     QTimer *rightTimer;
+    QTimer *collisionDetectionTimer;
     bool simulationStarted;
 };
 

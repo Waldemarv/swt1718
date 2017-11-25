@@ -19,6 +19,8 @@ SmartVehicle::SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, in
     speed = nspeed;
     rotationSpeed = nrotationSpeed;
     setPos(x,y);
+
+    color = Qt::green;
 }
 
 QRectF SmartVehicle::boundingRect() const
@@ -27,20 +29,24 @@ QRectF SmartVehicle::boundingRect() const
 }
 
 void SmartVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    QBrush brush (Qt::green);
+{   
+    QBrush brush (color);
     QRectF rec = boundingRect();
 
     painter->fillRect(rec, brush);
     painter->drawRect(rec);
-
-
 }
 
 void SmartVehicle::right()
 {
     angle+=rotationSpeed;
     setRotation(angle);
+}
+
+void SmartVehicle::setColor(QColor c)
+{
+    color = c;
+    update();
 }
 
 void SmartVehicle::left()
