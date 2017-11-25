@@ -12,6 +12,8 @@ private:
     int rotationSpeed;
     int speed;
 
+    QColor color;
+
     void collision();
 
 public:
@@ -23,6 +25,8 @@ public:
 
     void left();
     void right();
+
+    void setColor(QColor c);
 
 protected:
     void advance(int phase);

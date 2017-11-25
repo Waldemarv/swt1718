@@ -13,7 +13,6 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         this->m = nm;
         //Scene erstellen
         scene = new QGraphicsScene(this);
-        ui->graphicsView->setScene(scene);
         //Größe der Scene setzen
         scene->setSceneRect(0,0,m.getSizeX()*m.getGridSize(),m.getSizeY()*m.getGridSize());
         ui->graphicsView->setScene(scene);
@@ -22,24 +21,28 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         scene->addPath(mapPath);
 
         // Autonomes Fahrzeug hinzufügen
-        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x()+20, m.getStartingPoint().y()+20);
+        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x()+25, m.getStartingPoint().y()+25);
         scene->addItem(sv);
     }
 }
 
 // Für Simulator umänderns
-/*void Editor::collisionDetection() {
+void SimulatorWindow::collisionDetection() {
     QGraphicsPathItem mapBoundaries;
-    mapBoundaries.setPath(m->getMapPath());
+    mapBoundaries.setPath(m.getMapPath());
 
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
 
-
-    if(mapBoundaries.collidesWithItem(sv,mode)) {
-        qDebug() << "Kollision!" << endl;
+    if(!mapBoundaries.collidesWithItem(sv,mode)) {
+        sv->setColor(Qt::green);
+    }
+    else {
+        sv->setColor(Qt::red);
+        timer->stop();
+        qDebug()<<"Kollision";
     }
 }
-*/
+
 SimulatorWindow::~SimulatorWindow()
 {
     delete ui;
@@ -51,18 +54,20 @@ void SimulatorWindow::on_actionSimulation_starten_triggered()
     timer = new QTimer();
     leftTimer = new QTimer();
     rightTimer = new QTimer();
+    collisionDetectionTimer = new QTimer();
 
     //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
     connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
+    connect(collisionDetectionTimer, &QTimer::timeout, [this] {collisionDetection();});
 
-    simulationStarted = true;
+    collisionDetectionTimer->start();
+    timer->start(10);
 }
 
 void SimulatorWindow::keyPressEvent(QKeyEvent *event)
 {
-    while(simulationStarted) {
         //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
         if(event->key() == Qt::Key_Up) {
             timer->start(10);
@@ -74,13 +79,12 @@ void SimulatorWindow::keyPressEvent(QKeyEvent *event)
         else if(event->key() == Qt::Key_Right) {
             rightTimer->start(10);
         }
+
         QWidget::keyPressEvent(event);
-    }
 }
 
 void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    while(simulationStarted) {
         //Schalte Timer wieder aus, wenn Knopf losgelassen wird
         if(event->key() == Qt::Key_Up)
             timer->stop();
@@ -90,5 +94,5 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
             rightTimer->stop();
 
         QWidget::keyReleaseEvent(event);
-    }
+
 }
