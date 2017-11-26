@@ -21,7 +21,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         scene->addPath(mapPath);
 
         // Autonomes Fahrzeug hinzufügen
-        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x()+25, m.getStartingPoint().y()+25);
+        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
         scene->addItem(sv);
     }
 }
@@ -39,6 +39,8 @@ void SimulatorWindow::collisionDetection() {
     else {
         sv->setColor(Qt::red);
         timer->stop();
+        leftTimer->stop();
+        rightTimer->stop();
         qDebug()<<"Kollision";
     }
 }
@@ -64,6 +66,7 @@ void SimulatorWindow::on_actionSimulation_starten_triggered()
 
     collisionDetectionTimer->start();
     timer->start(10);
+    //leftTimer->start(10);
 }
 
 void SimulatorWindow::keyPressEvent(QKeyEvent *event)
