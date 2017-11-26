@@ -50,8 +50,11 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     QPainterPath newPath;
 
     if (direction == 0) {
-        newPath.moveTo(rec.bottomRight());
+        newPath.moveTo(rec.center().x()+50, rec.center().y());
         newPath.arcTo(rec,0,90);
+        newPath.moveTo(rec.bottomRight());
+        newPath.lineTo(rec.center().x()+50, rec.center().y());
+        newPath.moveTo(rec.center().x(), rec.center().y()-50);
         newPath.lineTo(rec.topLeft());
         newPath.moveTo(rec.center().x()-50, rec.center().y());
         newPath.lineTo(rec.center());
@@ -81,12 +84,16 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         newPath.moveTo(rec.center().x(), rec.center().y()+50);
     }
     else if(direction == 3) {
-        newPath.moveTo(rec.bottomLeft());
+        newPath.moveTo(rec.center().x()-50, rec.center().y());
         newPath.arcTo(rec,-180,-90);
+        newPath.moveTo(rec.center().x(), rec.center().y()-50);
         newPath.lineTo(rec.topRight());
-        newPath.moveTo(rec.center().x()+50, rec.center().y());
+        newPath.moveTo(rec.center().x()-50, rec.center().y());
+        newPath.lineTo(rec.bottomLeft());
+        newPath.moveTo(rec.center().x(), rec.center().y()+50);
         newPath.lineTo(rec.center());
-        newPath.lineTo(rec.center().x(), rec.center().y()+50);
+        newPath.moveTo(rec.center());
+        newPath.lineTo(rec.center().x()+50, rec.center().y());
     }
     this->path = newPath;
 
