@@ -20,9 +20,21 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         this->mapPath = m.getMapPath();
         scene->addPath(mapPath);
 
-        // Autonomes Fahrzeug hinzufügen
-        sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
-        scene->addItem(sv);
+        sv=0;
+
+        // Timer erstellen
+        timer = new QTimer();
+        leftTimer = new QTimer();
+        rightTimer = new QTimer();
+        collisionDetectionTimer = new QTimer();
+
+        //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
+        connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+        connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
+        connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
+        connect(collisionDetectionTimer, &QTimer::timeout, [this] {collisionDetection();});
+
+        ui->graphicsView->setEnabled(false);
     }
 }
 
@@ -41,7 +53,6 @@ void SimulatorWindow::collisionDetection() {
         timer->stop();
         leftTimer->stop();
         rightTimer->stop();
-        qDebug()<<"Kollision";
     }
 }
 
@@ -52,21 +63,19 @@ SimulatorWindow::~SimulatorWindow()
 
 void SimulatorWindow::on_actionSimulation_starten_triggered()
 {
-    // Timer erstellen
-    timer = new QTimer();
-    leftTimer = new QTimer();
-    rightTimer = new QTimer();
-    collisionDetectionTimer = new QTimer();
-
-    //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
-    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
-    connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
-    connect(collisionDetectionTimer, &QTimer::timeout, [this] {collisionDetection();});
+    if(sv != 0)
+    {
+        qDebug()<<"Fahrzeug bereits vorhanden.";
+        delete sv;
+        timer->stop();
+        leftTimer->stop();
+        rightTimer->stop();
+    }
+    // Autonomes Fahrzeug hinzufügen
+    sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
+    scene->addItem(sv);
 
     collisionDetectionTimer->start();
-    timer->start(10);
-    //leftTimer->start(10);
 }
 
 void SimulatorWindow::keyPressEvent(QKeyEvent *event)

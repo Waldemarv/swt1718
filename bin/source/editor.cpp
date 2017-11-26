@@ -18,7 +18,7 @@ Editor::Editor(QWidget *parent) :
 
     ui->treeWidget->setColumnWidth(0,140);
     ui->treeWidget->setColumnWidth(1,60);
-    ui->treeWidget->setColumnWidth(2,60);    
+    ui->treeWidget->setColumnWidth(2,60);
 }
 
 Editor::~Editor()
@@ -253,6 +253,25 @@ void Editor::loadMap()
         document.setContent(&file);
         file.close();
 
+        connect(scene, &QGraphicsScene::changed, [this]{
+            for(unsigned int i=0; i<m->getNumberOfTiles();i++)
+                setTreeTilesPosition(m->getTile(i)->scenePos(), i);
+
+            for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
+                setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
+
+            scene->update();
+        });
+
+        connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
+            bool oki;
+            int f = QInputDialog::getInt(this, tr("Größe Ändern"), tr("Neue Mapgröße festlegen:"), 32, 16, 64, 1, &oki);
+
+            if(oki) {
+                updateMapValues(f,f);
+            }
+        });
+
         //Root erstellen
         QDomElement root = document.firstChildElement();
         //Liste aller sich im root befindenden Nodes erstellen
@@ -266,6 +285,9 @@ void Editor::loadMap()
         int sizeY = mapSize.attribute("Y:").toInt();
         //map erstellen
         m = new Map(sizeX, sizeY);
+        //TreeView hinzufügen
+        addTreeMap(sizeX,sizeY);
+        addTreeItems();
         //Scenegröße definieren
         scene->setSceneRect(0,0,sizeX*m->getGridSize(), sizeY*m->getGridSize());
         //GridLayoutZeichnen
@@ -304,9 +326,11 @@ void Editor::loadMap()
             Obstacle *o = new Obstacle(obstacleX, obstacleY, obstacleWidth,obstacleLength);
             scene->addItem(o);
             m->addObstacle(o);
+            addChild(treeObstacles, "StaticObstacle", obstacleX, obstacleY);
             }
             //elseif(obstaclesAt.attribute("Typ:" == "dynamicObstacle") TODO: Für dynamic Obstacle ergänzen
 
+            updateTreeNumberOfObstacles();
         }
 
         QDomNodeList tiles = allNodes.at(3).childNodes();
@@ -326,6 +350,7 @@ void Editor::loadMap()
                 m->setStartingTile(t);
                 m->addTile(t);
                 scene->addItem(t);
+                addChild(treeTiles, "StartingTile", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "EndingTile"){
@@ -334,32 +359,37 @@ void Editor::loadMap()
                 m->addTile(t);
                 m->setEndingTile(t);
                 scene->addItem(t);
+                addChild(treeTiles, "EndingTile", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "straight"){
                 Tile* t = new straight(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
+                addChild(treeTiles, "Straight", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "turn"){
                 Tile* t = new turn(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
+                addChild(treeTiles, "Turn", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "T-Intersection"){
                 Tile* t = new Tintersection(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
+                addChild(treeTiles, "T-Intersection", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "Intersection"){
                 Tile* t = new Intersection(tileX, tileY, tileAscent);
                 scene->addItem(t);
                 m->addTile(t);
+                addChild(treeTiles, "Intersection", tileX, tileY);
             }
-
+            updateTreeNumberOfTiles();
             }
         }
     }
@@ -778,15 +808,21 @@ void Editor::on_endingPointButton_clicked()
 
 void Editor::on_actionSimulation_starten_triggered()
 {
-    if(m->getStartingTile()== 0 || m->getEndingTile() == 0) {
-        //TODO Fenster, dass Tiles erstellt werden müssen
+    if(m!=0)
+    {
+        if(m->getStartingTile()== 0 || m->getEndingTile() == 0) {
+            QMessageBox::about(this, "Kein Start- oder Endpunkt vorhanden", "Bitte erstellen Sie vor der Simulation einen Start- und Endpunkt");        }
+        else {
+            m->setMapPath();
+            m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
+            SimulatorWindow* sim = new SimulatorWindow(*m);
+            sim->show();
+            this->hide();
+        }
     }
-    else {
-    m->setMapPath();
-    m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
-    SimulatorWindow* sim = new SimulatorWindow(*m);
-    sim->showFullScreen();
-    this->hide();
+    else
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor der Simulation eine Map!");
     }
 }
 
