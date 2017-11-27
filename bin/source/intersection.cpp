@@ -46,7 +46,7 @@ QRectF Intersection::boundingRect() const
 void Intersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     //Hightligh when Selected
-    if(selected){
+    if(isSelected()){
         QPen pen;
         pen.setColor(Qt::red);
         pen.setWidth(3);

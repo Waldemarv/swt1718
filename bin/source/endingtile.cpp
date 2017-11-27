@@ -48,7 +48,7 @@ Endingtile *Endingtile::createEndingTile(int nx, int ny, double nascent, int ndi
 void Endingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     //Hightlight when Selected
-    if(selected){
+    if(isSelected()){
         QPen pen;
         pen.setColor(Qt::red);
         pen.setWidth(3);

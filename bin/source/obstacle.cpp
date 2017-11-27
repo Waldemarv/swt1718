@@ -27,7 +27,7 @@ void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     QRectF rec = boundingRect();
 
     //Hightligh when Selected
-    if(selected){
+    if(isSelected()){
         QPen pen;
         pen.setColor(Qt::red);
         pen.setWidth(3);
@@ -60,7 +60,8 @@ QPointF* Obstacle::getPosition() { return position; }
 Obstacle::Obstacle(){
     position = new QPointF();
     setFlag(QGraphicsItem::ItemIsMovable);
-    selected = false;
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsFocusable);
 }
 
 /*! Erstellt ein neues Obstacle
@@ -72,7 +73,8 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
 {
     position = new QPointF(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
-    selected = false;
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsFocusable);
 }
 
 /*! Verändert die Position des Obstacle
@@ -87,10 +89,10 @@ void Obstacle::setPosition(double x, double y)
 /*! Wählt ein Obstacle an, wenn es angeklickt wurde */
 void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(selected){
-       selected = false;
+    if(isSelected()){
+       setSelected(false);
     } else {
-       selected = true;
+       setSelected(true);
     }
 
     update();

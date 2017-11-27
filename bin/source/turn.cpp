@@ -31,7 +31,7 @@ void turn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     Q_UNUSED(option);
 
     //Hightligh when Selected
-    if(selected){
+    if(isSelected()){
         QPen pen;
         pen.setColor(Qt::red);
         pen.setWidth(3);
