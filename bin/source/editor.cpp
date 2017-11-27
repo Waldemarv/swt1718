@@ -45,7 +45,10 @@ void Editor::createMap()
         //Verbindungsstück der Veränderung der scene
         connect(scene, &QGraphicsScene::changed, [this]{
             for(unsigned int i=0; i<m->getNumberOfTiles();i++)
+            {
+                m->getTile(i)->fitIntoGrid();
                 setTreeTilesPosition(m->getTile(i)->scenePos(), i);
+            }
 
             for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
                 setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
@@ -255,7 +258,10 @@ void Editor::loadMap()
 
         connect(scene, &QGraphicsScene::changed, [this]{
             for(unsigned int i=0; i<m->getNumberOfTiles();i++)
+            {
+                m->getTile(i)->fitIntoGrid();
                 setTreeTilesPosition(m->getTile(i)->scenePos(), i);
+            }
 
             for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
                 setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
@@ -646,7 +652,7 @@ void Editor::on_deleteTileButton_clicked()
     else {
         bool isOneTileSelected = false;
         for(unsigned int i = 0; i < m->getNumberOfTiles() ; i++){
-            if(m->getTile(i)->selected){
+            if(m->getTile(i)->isSelected()){
                 //Falls End oder Start Tiles gelöscht wurden, button wieder enabled um neue zu erstellen
                 if(m->getTile(i)->getType() == "StartingTile")
                     ui->startingPointButton->setEnabled(true);
@@ -693,7 +699,7 @@ void Editor::on_deleteObstacleButton_clicked()
     else {
         bool isOneObstacleSelected = false;
         for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++){
-            if(m->getObstacle(i)->selected){
+            if(m->getObstacle(i)->isSelected()){
                 scene->removeItem(m->getObstacle(i));
                 scene->update();
                 m->deleteObstacle(i);

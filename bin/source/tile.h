@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 
 /*! Realisiert Streckenelemente einer Map */
 class Tile : public QGraphicsItem  {
@@ -30,8 +31,6 @@ public:
     Tile();
     Tile(double x, double y, double ascent);
 
-    bool selected;
-
     virtual QRectF boundingRect();
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
@@ -50,7 +49,6 @@ public:
     virtual void rotate();
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
     QPainterPath getPath();

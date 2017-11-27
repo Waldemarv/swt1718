@@ -3,7 +3,8 @@
 /*! Erstellt ein Tile im Koordinatenursprung */
 Tile::Tile() {
     setFlag(QGraphicsItem::ItemIsMovable);
-    selected = false;
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsFocusable);
 }
 /*! Erstellt ein Tile
  * \param x x-Position des Tile
@@ -12,7 +13,8 @@ Tile::Tile() {
 Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
     position = new QPointF(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
-    selected = false;
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsFocusable);
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
@@ -128,25 +130,27 @@ void Tile::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 /*! Wählt das angeklickte Tile aus */
 void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(selected){
-       selected = false;
-    } else {
-       selected = true;
+    if(event->button() == Qt::RightButton)
+    {
+        if(isSelected() == true)
+        {
+            setSelected(false);
+            qDebug()<<isSelected();
+        }
+        else if(isSelected() == false)
+        {
+            setSelected(true);
+            qDebug()<<isSelected();
+        }
     }
     update();
     QGraphicsItem::mousePressEvent(event);
 }
 
-void Tile::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    fitIntoGrid();
-    QGraphicsItem::mouseReleaseEvent(event);
-}
-
 /* Item soll nicht außerhalb der Scene bewegbar sein */
 void Tile::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-        QGraphicsItem::mouseMoveEvent(event);
+       QGraphicsItem::mouseMoveEvent(event);
 
        if (x() < 0)
        {

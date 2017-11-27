@@ -35,7 +35,7 @@ void Tintersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(option);
 
     //Hightligh when Selected
-    if(selected){
+    if(isSelected()){
 
         QPen pen;
         pen.setColor(Qt::red);
