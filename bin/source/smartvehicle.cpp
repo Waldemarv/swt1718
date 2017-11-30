@@ -17,9 +17,7 @@ SmartVehicle::SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, in
     angle = nangle%360;
     setRotation(angle);
     speed = nspeed;
-    qDebug()<<"speed: "<<speed;
     rotationSpeed = nrotationSpeed;
-    qDebug()<<"rotation speed: "<<rotationSpeed;
     setPos(x,y);
 
     color = Qt::green;

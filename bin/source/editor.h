@@ -13,6 +13,7 @@
 #include <QtGui>
 #include <QMainWindow>
 #include <vector>
+#include <QUndoCommand>
 
 
 namespace Ui {
@@ -50,6 +51,9 @@ public:
 
     Memento* getMemento();
     void setMemento(Memento* m);
+
+    void connectScene();
+    void connectTreeWidget();
 
 private slots:
     void on_actionNeue_Map_triggered();

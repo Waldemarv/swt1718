@@ -42,20 +42,10 @@ void Editor::createMap()
 
         //scene (graphisches Fenster zum letztendlichen zeichnen) erstellen und in das GraphicWidget setzen
         scene = new QGraphicsScene(this);
-        //Verbindungsstück der Veränderung der scene
-        connect(scene, &QGraphicsScene::changed, [this]{
-            for(unsigned int i=0; i<m->getNumberOfTiles();i++)
-            {
-                m->getTile(i)->fitIntoGrid();
-                m->getTile(i)->fitIntoScene();
-                setTreeTilesPosition(m->getTile(i)->scenePos(), i);
-            }
-
-            for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
-                setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
-
-            scene->update();
-        });
+        //Verbindungsstelle der scene
+        connectScene();
+        //Verbindungsstelle des treeWidget
+        connectTreeWidget();
 
         ui->graphicsView->setScene(scene);
 
@@ -65,15 +55,6 @@ void Editor::createMap()
         drawGridLayout(x,x);
         }
 
-        //Verbinde das tree Widget bei doppelclick mit einer LambdaFunktion, die ein QInputDialog öffnet und die Map Values mit der neuen Zahl updatet
-        connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
-            bool oki;
-            int f = QInputDialog::getInt(this, tr("Größe Ändern"), tr("Neue Mapgröße festlegen:"), 32, 16, 64, 1, &oki);
-
-            if(oki) {
-                updateMapValues(f,f);
-            }
-        });
         //Wenn alte Map vorhanden war, müssen die Buttons für startingPoint/endingPoint wieder enabled werden
         if(!ui->startingPointButton->isEnabled())
             ui->startingPointButton->setEnabled(true);
@@ -257,28 +238,11 @@ void Editor::loadMap()
         document.setContent(&file);
         file.close();
 
-        connect(scene, &QGraphicsScene::changed, [this]{
-            for(unsigned int i=0; i<m->getNumberOfTiles();i++)
-            {
-                m->getTile(i)->fitIntoGrid();
-                m->getTile(i)->fitIntoScene();
-                setTreeTilesPosition(m->getTile(i)->scenePos(), i);
-            }
+        //Verbindungsstelle für scene
+        connectScene();
 
-            for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
-                setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
-
-            scene->update();
-        });
-
-        connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
-            bool oki;
-            int f = QInputDialog::getInt(this, tr("Größe Ändern"), tr("Neue Mapgröße festlegen:"), 32, 16, 64, 1, &oki);
-
-            if(oki) {
-                updateMapValues(f,f);
-            }
-        });
+        //Verbindungsstelle für treeWidget
+        connectTreeWidget();
 
         //Root erstellen
         QDomElement root = document.firstChildElement();
@@ -500,8 +464,6 @@ void Editor::addTreeItems()
     treeObstacles->setText(0, "Obstacles");
     treeObstacles->setText(1,QString::number(treeObstacles->childCount()));
     treeRoot->addChild(treeObstacles);
-
-    //Weiterehinzufügen (SmartVehicle, Points, etc.)
 }
 /*! Setzt die geöffnete Map als Hauptelement des TreeView */
 void Editor::addTreeMap(double x, double y)
@@ -542,6 +504,35 @@ Memento *Editor::getMemento()
 void Editor::setMemento(Memento *m)
 {
     mem.push_back(m);
+}
+
+void Editor::connectScene()
+{
+    connect(scene, &QGraphicsScene::changed, [this]{
+        for(unsigned int i=0; i<m->getNumberOfTiles();i++)
+        {
+            m->getTile(i)->fitIntoGrid();
+            m->getTile(i)->fitIntoScene();
+            setTreeTilesPosition(m->getTile(i)->scenePos(), i);
+        }
+
+        for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
+            setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
+
+        scene->update();
+    });
+}
+
+void Editor::connectTreeWidget()
+{
+    connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
+        bool oki;
+        int f = QInputDialog::getInt(this, tr("Größe Ändern"), tr("Neue Mapgröße festlegen:"), 32, 16, 64, 1, &oki);
+
+        if(oki) {
+            updateMapValues(f,f);
+        }
+    });
 }
 
 void Editor::setTreeTilesPosition(QPointF position, int index)
@@ -868,12 +859,16 @@ void Editor::on_actionSimulation_starten_triggered()
 
 void Editor::on_actionUndo_triggered()
 {
+    //Wenn es ein Memento gibt
     if(mem.size() > 0)
     {
+        //Entferne alle alten Tiles aus der scene
         for(int i = 0; i<m->getNumberOfTiles();i++)
             scene->removeItem(m->getTile(i));
 
+        //setze das neue memento als aktuelle Map
         m->setMemento(this->getMemento());
+        //lösche das letzte memento (speicherreservierung)
         mem.pop_back();
 
         bool b_endingTile = false;
@@ -881,17 +876,22 @@ void Editor::on_actionUndo_triggered()
 
         for(int i = 0; i<m->getNumberOfTiles();i++)
         {
+            //Falls start- oder endpunkte betroffen speichere ob sie behalten werden
             if(m->getTile(i)->getType() == "StartingTile")
                b_startingTile = true;
             if(m->getTile(i)->getType() == "EndingTile")
                b_endingTile = true;
 
+            //Füge die Elemente der scene hinzu
             scene->addItem(m->getTile(i));
         }
 
-
+        //Setze die entsprechenden buttons wieder auf enabled
         ui->startingPointButton->setEnabled(!b_startingTile);
         ui->endingPointButton->setEnabled(!b_endingTile);
+
+        updateTreeNumberOfTiles();
+        updateTreeNumberOfObstacles();
 
         scene->update();
     }
