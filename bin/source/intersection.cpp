@@ -59,7 +59,6 @@ void Intersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     mainPen.setWidth(2);
     painter->setPen(mainPen);
 
-    QRectF rec = boundingRect();
     QBrush brush(Qt::red);
 
     painter->drawPath(this->path);

@@ -5,6 +5,7 @@ Tile::Tile() {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
+    stay=true;
 }
 /*! Erstellt ein Tile
  * \param x x-Position des Tile
@@ -15,6 +16,7 @@ Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
+    stay = true;
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
@@ -77,6 +79,27 @@ void Tile::fitIntoGrid()
         {
             setPos(x() + (50 - (int)x()%50), y() + (50 - (int)y()%50));
         }
+    }
+}
+
+void Tile::fitIntoScene()
+{
+    if (x() < 0)
+    {
+        setPos(0, y());
+    }
+    else if (x() + boundingRect().right() > scene()->width())
+    {
+        setPos(scene()->width() - boundingRect().width(), y());
+    }
+
+    if (y() < 0)
+    {
+        setPos(x(), 0);
+    }
+    else if ( y()+ boundingRect().bottom() > scene()->height())
+    {
+        setPos(x(), scene()->height() - boundingRect().height());
     }
 }
 
@@ -143,6 +166,7 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
             qDebug()<<isSelected();
         }
     }
+
     update();
     QGraphicsItem::mousePressEvent(event);
 }
@@ -150,25 +174,7 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 /* Item soll nicht außerhalb der Scene bewegbar sein */
 void Tile::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-       QGraphicsItem::mouseMoveEvent(event);
-
-       if (x() < 0)
-       {
-           setPos(0, y());
-       }
-       else if (x() + boundingRect().right() > scene()->width())
-       {
-           setPos(scene()->width() - boundingRect().width(), y());
-       }
-
-       if (y() < 0)
-       {
-           setPos(x(), 0);
-       }
-       else if ( y()+ boundingRect().bottom() > scene()->height())
-       {
-           setPos(x(), scene()->height() - boundingRect().height());
-       }
+    QGraphicsItem::mouseMoveEvent(event);
 }
 
 /*! Gibt den Path des Tile zurück

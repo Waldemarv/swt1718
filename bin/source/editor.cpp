@@ -47,6 +47,7 @@ void Editor::createMap()
             for(unsigned int i=0; i<m->getNumberOfTiles();i++)
             {
                 m->getTile(i)->fitIntoGrid();
+                m->getTile(i)->fitIntoScene();
                 setTreeTilesPosition(m->getTile(i)->scenePos(), i);
             }
 
@@ -260,6 +261,7 @@ void Editor::loadMap()
             for(unsigned int i=0; i<m->getNumberOfTiles();i++)
             {
                 m->getTile(i)->fitIntoGrid();
+                m->getTile(i)->fitIntoScene();
                 setTreeTilesPosition(m->getTile(i)->scenePos(), i);
             }
 
@@ -532,6 +534,16 @@ void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
     parent->addChild(item);
 }
 
+Memento *Editor::getMemento()
+{
+    return mem.back();
+}
+
+void Editor::setMemento(Memento *m)
+{
+    mem.push_back(m);
+}
+
 void Editor::setTreeTilesPosition(QPointF position, int index)
 {
     treeTiles->child(index)->setText(1, QString::number(position.x()));
@@ -585,6 +597,9 @@ void Editor::on_straightButton_clicked()
     }
     else
     {
+        //Für Undo
+        setMemento(m->createMemento());
+
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new straight((m->getNumberOfTiles()*m->getGridSize()),0, 0,0);
         //Füge es der Map hinzu
@@ -607,6 +622,8 @@ void Editor::on_turnButton_clicked()
     }
     else
     {
+        //Für Undo
+        setMemento(m->createMemento());
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new turn((m->getNumberOfTiles()*m->getGridSize()),0, 0,0);
         //Füge es der Map hinzu
@@ -630,6 +647,8 @@ void Editor::on_staticObstacleButton_clicked()
     }
     else
     {
+        //Für Undo
+        setMemento(m->createMemento());
         Obstacle *o = new Obstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 20, 20);
         m->addObstacle(o);
         scene->addItem(o);
@@ -650,6 +669,9 @@ void Editor::on_deleteTileButton_clicked()
         QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
     }
     else {
+        //Für Undo
+        setMemento(m->createMemento());
+
         bool isOneTileSelected = false;
         for(unsigned int i = 0; i < m->getNumberOfTiles() ; i++){
             if(m->getTile(i)->isSelected()){
@@ -697,6 +719,9 @@ void Editor::on_deleteObstacleButton_clicked()
         QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
     }
     else {
+        //Für Undo
+        setMemento(m->createMemento());
+
         bool isOneObstacleSelected = false;
         for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++){
             if(m->getObstacle(i)->isSelected()){
@@ -719,6 +744,7 @@ void Editor::on_deleteObstacleButton_clicked()
                 treeObstacles->removeChild(treeObstacles->child(treeObstacles->childCount()-1));
             }
     }
+    setMemento(m->createMemento());
     scene->update();
 }
 
@@ -730,6 +756,8 @@ void Editor::on_intersectionButton_clicked()
     }
     else
     {
+        //Für Undo
+        setMemento(m->createMemento());
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new Intersection((m->getNumberOfTiles()*m->getGridSize()),0, 0);
         //Füge es der Map hinzu
@@ -751,6 +779,8 @@ void Editor::on_tIntersectionButton_clicked()
     }
     else
     {
+        //Für Undo
+        setMemento(m->createMemento());
         //Erstelle ein neues Tile mit Tile(x,y,ascent)
         Tile *t = new Tintersection((m->getNumberOfTiles()*m->getGridSize()),0, 0,0);
         //Füge es der Map hinzu
@@ -772,6 +802,8 @@ void Editor::on_startingPointButton_clicked()
     }
     else
     {
+        //Für Undo
+        setMemento(m->createMemento());
         Tile *s = Startingtile::createStartingTile(0,0,0,0);
         //setze aktuelles starting Tile
         m->setStartingTile(s);
@@ -796,6 +828,8 @@ void Editor::on_endingPointButton_clicked()
     }
     else
     {
+        //Für Undo
+        setMemento(m->createMemento());
         Tile *e = Endingtile::createEndingTile(0,300,0,0);
         //Setze aktuelles Ending Tile
         m->setEndingTile(e);
@@ -829,6 +863,41 @@ void Editor::on_actionSimulation_starten_triggered()
     else
     {
         QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor der Simulation eine Map!");
+    }
+}
+
+void Editor::on_actionUndo_triggered()
+{
+    if(mem.size() > 0)
+    {
+        for(int i = 0; i<m->getNumberOfTiles();i++)
+            scene->removeItem(m->getTile(i));
+
+        m->setMemento(this->getMemento());
+        mem.pop_back();
+
+        bool b_endingTile = false;
+        bool b_startingTile = false;
+
+        for(int i = 0; i<m->getNumberOfTiles();i++)
+        {
+            if(m->getTile(i)->getType() == "StartingTile")
+               b_startingTile = true;
+            if(m->getTile(i)->getType() == "EndingTile")
+               b_endingTile = true;
+
+            scene->addItem(m->getTile(i));
+        }
+
+
+        ui->startingPointButton->setEnabled(!b_startingTile);
+        ui->endingPointButton->setEnabled(!b_endingTile);
+
+        scene->update();
+    }
+    else
+    {
+        QMessageBox::about(this, "Kein Memento", "Vor dem Rückgängig machen bitte erst etwas erstellen !");
     }
 }
 

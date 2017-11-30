@@ -12,6 +12,7 @@
 #include <QtXml>
 #include <QtGui>
 #include <QMainWindow>
+#include <vector>
 
 
 namespace Ui {
@@ -47,6 +48,8 @@ public:
 
     void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 
+    Memento* getMemento();
+    void setMemento(Memento* m);
 
 private slots:
     void on_actionNeue_Map_triggered();
@@ -77,6 +80,7 @@ private slots:
 
     void on_actionSimulation_starten_triggered();
 
+    void on_actionUndo_triggered();
 
 private:
     Ui::Editor *ui;
@@ -86,6 +90,7 @@ private:
     QTreeWidgetItem* treeObstacles;
     QTreeWidgetItem* treeTiles;
     QTreeWidgetItem* treePoints;
+    std::vector<Memento*> mem;
 };
 
 #endif // EDITOR_H
