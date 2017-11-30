@@ -31,6 +31,8 @@ public:
     Tile();
     Tile(double x, double y, double ascent);
 
+    bool stay;
+
     virtual QRectF boundingRect();
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
@@ -39,6 +41,7 @@ public:
     int getDirection();
 
     void fitIntoGrid();
+    void fitIntoScene();
     void setIndex(int i);
 
     void setPosition(double x, double y);

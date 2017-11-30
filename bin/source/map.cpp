@@ -152,3 +152,21 @@ void Map::setMapPath() {
 QPainterPath Map::getMapPath() {
     return this->mapPath;
 }
+
+Memento *Map::createMemento()
+{
+    return new Memento(tiles, obstacles, gridSize, sizeX, sizeY, startingPoint, endingPoint, startingTile, endingTile);
+}
+
+void Map::setMemento(Memento *m)
+{
+    tiles = m->tiles;
+    obstacles = m->obstacles;
+    gridSize = m->gridSize;
+    sizeX = m->sizeX;
+    sizeY = m->sizeY;
+    startingPoint = m->startingPoint;
+    endingPoint = m->endingPoint;
+    startingTile = m->startingTile;
+    endingTile = m->endingTile;
+}

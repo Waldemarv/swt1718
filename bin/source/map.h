@@ -9,7 +9,9 @@
 #include "startingtile.h"
 #include "endingtile.h"
 #include "smartvehicle.h"
+#include "memento.h"
 #include <vector>
+#include <QGraphicsScene>
 
 
 /*! Speichert die relevanten Daten einer Map und erlaubt das hinzufügen und bearbeiten von Elementen auf dieser */
@@ -72,8 +74,9 @@ public:
 
     void setMapPath();
     QPainterPath getMapPath();
-    //TODO createMemento
-    //TODO setMemento
+
+    Memento* createMemento();
+    void setMemento(Memento* m);
 };
 
 #endif // MAP_H

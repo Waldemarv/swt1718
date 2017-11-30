@@ -271,6 +271,8 @@
    <addaction name="actionMap_Laden"/>
    <addaction name="separator"/>
    <addaction name="actionSimulation_starten"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNeue_Map">
@@ -353,6 +355,21 @@
   <action name="action_ber">
    <property name="text">
     <string>&amp;Über</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/img/icon/undo.svg</normaloff>:/img/icon/undo.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
    </property>
   </action>
  </widget>
