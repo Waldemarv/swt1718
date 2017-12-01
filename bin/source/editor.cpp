@@ -420,13 +420,13 @@ void Editor::drawGridLayout(int x, int y)
 void Editor::updateTreeNumberOfTiles()
 {
     //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Tiles
-    treeTiles->setText(1, QString::number(m->getNumberOfTiles()));
+    treeTiles->setText(0, "Tiles [" + QString::number(m->getNumberOfTiles()) + "]");
 }
 /*! Aktualisiert die Anzahl der Obstacles im TreeView */
 void Editor::updateTreeNumberOfObstacles()
 {
     //Setze in der ersten Spalte neben dem Namen die Aktuelle anzahl von Obstacles
-    treeObstacles->setText(1, QString::number(m->getNumberOfObstacles()));
+    treeObstacles->setText(0, "Obstacles [" + QString::number(m->getNumberOfObstacles()) + "]");
 }
 /*! Aktualisiert die Größe der Map im TreeView */
 void Editor::updateTreeMapSize()
@@ -456,13 +456,13 @@ void Editor::addTreeItems()
     //Erstelle Tiles als Child von Map
     treeTiles = new QTreeWidgetItem();
     treeTiles->setText(0, "Tiles");
-    treeTiles->setText(1,QString::number(treeTiles->childCount()));
+    //treeTiles->setText(1,QString::number(treeTiles->childCount()));
     treeRoot->addChild(treeTiles);
 
     //Erstelle Obstacles als Child von Map
     treeObstacles = new QTreeWidgetItem();
     treeObstacles->setText(0, "Obstacles");
-    treeObstacles->setText(1,QString::number(treeObstacles->childCount()));
+    //treeObstacles->setText(1,QString::number(treeObstacles->childCount()));
     treeRoot->addChild(treeObstacles);
 }
 /*! Setzt die geöffnete Map als Hauptelement des TreeView */
@@ -834,7 +834,7 @@ void Editor::on_endingPointButton_clicked()
         addChild(treeTiles, "EndingTile", m->getCurrentTile()->x(), m->getCurrentTile()->y());
 
         ui->endingPointButton->setEnabled(false);
-    }
+    }// TODO
 }
 
 void Editor::on_actionSimulation_starten_triggered()
@@ -864,7 +864,10 @@ void Editor::on_actionUndo_triggered()
     {
         //Entferne alle alten Tiles aus der scene
         for(int i = 0; i<m->getNumberOfTiles();i++)
+        {
             scene->removeItem(m->getTile(i));
+        }
+
 
         //setze das neue memento als aktuelle Map
         m->setMemento(this->getMemento());
@@ -897,7 +900,7 @@ void Editor::on_actionUndo_triggered()
     }
     else
     {
-        QMessageBox::about(this, "Kein Memento", "Vor dem Rückgängig machen bitte erst etwas erstellen !");
+        QMessageBox::about(this, "Kein Memento", "Vor dem Rückgängig machen bitte erst etwas erstellen!");
     }
 }
 

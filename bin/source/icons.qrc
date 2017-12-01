@@ -9,8 +9,8 @@
         <file>img/icon/simulator.svg</file>
         <file>img/icon/tacho.svg</file>
         <file>img/icon/wrench-screwdriver.svg</file>
-    </qresource>
-    <qresource prefix="/">
         <file>img/icon/undo.svg</file>
+        <file>img/icon/startingpoint.svg</file>
+        <file>img/icon/endingpoint.svg</file>
     </qresource>
 </RCC>

@@ -84,15 +84,41 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QPushButton" name="startingPointButton">
+            <property name="toolTip">
+             <string>Startpunkt</string>
+            </property>
             <property name="text">
-             <string>StartingPoint</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/icon/img/icon/startingpoint.svg</normaloff>:/icon/img/icon/startingpoint.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="endingPointButton">
+            <property name="toolTip">
+             <string>Zielpunkt</string>
+            </property>
             <property name="text">
-             <string>EndingPoint</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/icon/img/icon/endingpoint.svg</normaloff>:/icon/img/icon/endingpoint.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -218,7 +244,7 @@
      <x>0</x>
      <y>0</y>
      <width>1500</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -363,10 +389,13 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/img/icon/undo.svg</normaloff>:/img/icon/undo.svg</iconset>
+     <normaloff>:/icon/img/icon/undo.svg</normaloff>:/icon/img/icon/undo.svg</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Den letzten Schritt rückgängig machen...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
