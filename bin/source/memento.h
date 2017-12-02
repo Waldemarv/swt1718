@@ -14,6 +14,8 @@ public:
 
     std::vector<Tile*> tiles;
     std::vector<Obstacle*> obstacles;
+    std::vector<QPointF> tilesPositions;
+    std::vector<QPointF> obstaclesPositions;
 
     int gridSize;
 

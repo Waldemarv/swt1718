@@ -182,7 +182,7 @@
            <string>staticObstacle</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="deleteObstaclButton">
+         <widget class="QPushButton" name="deleteObstacleButton">
           <property name="geometry">
            <rect>
             <x>100</x>
@@ -244,7 +244,7 @@
      <x>0</x>
      <y>0</y>
      <width>1500</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

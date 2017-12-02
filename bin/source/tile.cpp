@@ -5,7 +5,6 @@ Tile::Tile() {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
-    stay=true;
 }
 /*! Erstellt ein Tile
  * \param x x-Position des Tile
@@ -16,7 +15,6 @@ Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
-    stay = true;
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
@@ -169,12 +167,6 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     update();
     QGraphicsItem::mousePressEvent(event);
-}
-
-/* Item soll nicht außerhalb der Scene bewegbar sein */
-void Tile::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsItem::mouseMoveEvent(event);
 }
 
 /*! Gibt den Path des Tile zurück

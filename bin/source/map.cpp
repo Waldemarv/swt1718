@@ -162,6 +162,12 @@ void Map::setMemento(Memento *m)
 {
     tiles = m->tiles;
     obstacles = m->obstacles;
+
+    for(auto i = 0; i<tiles.size(); i++)
+        tiles.at(i)->setPos(m->tilesPositions.at(i));
+    for(auto i = 0; i<obstacles.size(); i++)
+        obstacles.at(i)->setPos(m->obstaclesPositions.at(i));
+
     gridSize = m->gridSize;
     sizeX = m->sizeX;
     sizeY = m->sizeY;
