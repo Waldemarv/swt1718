@@ -38,7 +38,8 @@ SOURCES += \
     endingtile.cpp \
     smartvehicle.cpp \
     simulatorwindow.cpp \
-    memento.cpp
+    memento.cpp \
+    caretaker.cpp
 
 HEADERS += \
         editor.h \
@@ -54,7 +55,8 @@ HEADERS += \
     endingtile.h \
     smartvehicle.h \
     simulatorwindow.h \
-    memento.h
+    memento.h \
+    caretaker.h
 
 FORMS += \
         editor.ui \

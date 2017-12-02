@@ -4,6 +4,7 @@
 #include "map.h"
 #include "ui_editor.h"
 #include "simulatorwindow.h"
+#include "caretaker.h"
 #include <QtCore>
 #include <QGraphicsItem>
 #include <QInputDialog>
@@ -49,11 +50,12 @@ public:
 
     void addChild(QTreeWidgetItem *parent, QString name, int posX, int posY);
 
-    Memento* getMemento();
-    void setMemento(Memento* m);
-
     void connectScene();
     void connectTreeWidget();
+
+    void autoSave();
+
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_actionNeue_Map_triggered();
@@ -94,7 +96,8 @@ private:
     QTreeWidgetItem* treeObstacles;
     QTreeWidgetItem* treeTiles;
     QTreeWidgetItem* treePoints;
-    std::vector<Memento*> mem;
+    Caretaker* caretaker;
+    QTimer* autoSaveTimer;
 };
 
 #endif // EDITOR_H
