@@ -4,7 +4,9 @@
 #include "math.h"
 #include <QMainWindow>
 #include <QTimer>
+#include <QTime>
 #include <QKeyEvent>
+#include <QString>
 
 namespace Ui {
 class SimulatorWindow;
@@ -36,7 +38,8 @@ private:
     QTimer *leftTimer;
     QTimer *rightTimer;
     QTimer *collisionDetectionTimer;
-    bool simulationStarted;
+
+    QTime fitnessTime;
 };
 
 #endif // SIMULATORWINDOW_H

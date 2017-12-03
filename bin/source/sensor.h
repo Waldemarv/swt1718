@@ -17,13 +17,12 @@ private:
 
 public:
     Sensor();
-    Sensor(int direction, QPointF p);
+    Sensor(int nangle, QPointF p);
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     int getAngle();
-    int getDirection();
 
     void setColor(QColor c);
 };

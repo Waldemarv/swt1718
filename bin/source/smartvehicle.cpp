@@ -16,12 +16,16 @@ SmartVehicle::SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, in
     rotationSpeed = nrotationSpeed;
     setPos(x,y);
 
-    //(Front sensors)
-
-    Sensor* s = new Sensor(0, mapToScene(boundingRect().bottomRight()));
-    sensors.push_back(s);
-    Sensor* t = new Sensor(1, mapToScene(boundingRect().topRight()));
-    sensors.push_back(t);
+    /*Front sensors*/
+    //Front right
+    Sensor* r = new Sensor(50, mapToScene(boundingRect().bottomRight()));
+    sensors.push_back(r);
+    //Front left
+    Sensor* l = new Sensor(-50, mapToScene(boundingRect().topRight()));
+    sensors.push_back(l);
+    //Front mid
+    Sensor* m = new Sensor(0, mapToScene(QPointF(boundingRect().center().x(), boundingRect().right())));
+    sensors.push_back(m);
 
     color = Qt::green;
 }
@@ -55,10 +59,15 @@ void SmartVehicle::right()
 
     for(int i = 0; i<sensors.size();i++)
     {
-        if(sensors.at(i)->getDirection() == 0)
-            sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight()));
-        else if(sensors.at(i)->getDirection() ==1)
-            sensors.at(i)->setPos(mapToScene(boundingRect().topRight()));
+        switch(i)
+        {
+            //Front Right Sensor
+            case 0: sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight())); break;
+            //Front Left Sensor
+            case 1: sensors.at(i)->setPos(mapToScene(boundingRect().topRight())); break;
+            //Front Mid Sensor
+            case 2: sensors.at(i)->setPos(mapToScene(QPointF(boundingRect().right(), boundingRect().center().y()))); break;
+        }
 
         sensors.at(i)->setRotation(angle+sensors.at(i)->getAngle());
     }
@@ -82,10 +91,15 @@ void SmartVehicle::left()
 
     for(int i = 0; i<sensors.size();i++)
     {
-        if(sensors.at(i)->getDirection() == 0)
-            sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight()));
-        else if(sensors.at(i)->getDirection() ==1)
-            sensors.at(i)->setPos(mapToScene(boundingRect().topRight()));
+        switch(i)
+        {
+            //Front Right Sensor
+            case 0: sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight())); break;
+            //Front Left Sensor
+            case 1: sensors.at(i)->setPos(mapToScene(boundingRect().topRight())); break;
+            //Front Mid Sensor
+            case 2: sensors.at(i)->setPos(mapToScene(QPointF(boundingRect().right(), boundingRect().center().y()))); break;
+        }
         sensors.at(i)->setRotation(angle+sensors.at(i)->getAngle());
     }
 }
@@ -98,9 +112,14 @@ void SmartVehicle::advance(int phase)
 
     for(int i = 0; i<sensors.size();i++)
     {
-        if(sensors.at(i)->getDirection() == 0)
-            sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight()));
-        else if(sensors.at(i)->getDirection() ==1)
-            sensors.at(i)->setPos(mapToScene(boundingRect().topRight()));
+        switch(i)
+        {
+            //Front Right Sensor
+            case 0: sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight())); break;
+            //Front Left Sensor
+            case 1: sensors.at(i)->setPos(mapToScene(boundingRect().topRight())); break;
+            //Front Mid Sensor
+            case 2: sensors.at(i)->setPos(mapToScene(QPointF(boundingRect().right(), boundingRect().center().y()))); break;
+        }
     }
 }
