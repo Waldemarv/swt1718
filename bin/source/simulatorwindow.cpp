@@ -23,13 +23,13 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         sv=0;
 
         // Timer erstellen
-        timer = new QTimer();
+        frontTimer = new QTimer();
         leftTimer = new QTimer();
         rightTimer = new QTimer();
         collisionDetectionTimer = new QTimer();
 
-        //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right)
-        connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+        //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right), sowie der collisionDeteciton
+        connect(frontTimer, SIGNAL(timeout()), scene, SLOT(advance()));
         connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
         connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
@@ -45,12 +45,48 @@ void SimulatorWindow::collisionDetection() {
 
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
 
+    for(int i=0; i<sv->getNumberOfSensors(); i++)
+    {
+        if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+        {
+            sv->getSensor(i)->setColor(Qt::green);
+        }
+        else
+        {
+           sv->getSensor(i)->setColor(Qt::red);
+           if(i==0)
+           {
+               //Right Sensor
+               qDebug()<<"left";
+
+               if(!leftTimer->isActive())
+                  leftTimer->start(10);
+
+               if(rightTimer->isActive())
+                  rightTimer->stop();
+           }
+           else if(i==1)
+           {
+               //Left Sensor
+               qDebug()<<"right";
+
+               if(!rightTimer->isActive())
+                  rightTimer->start(10);
+
+               if(leftTimer->isActive())
+                  leftTimer->stop();
+           }
+        }
+    }
+
+    //Kollision vom SmartVehicle
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
         sv->setColor(Qt::green);
+
     }
     else {
         sv->setColor(Qt::red);
-        timer->stop();
+        frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
     }
@@ -71,13 +107,15 @@ void SimulatorWindow::on_actionSimulation_starten_triggered()
             delete sv->getSensor(i);
         }
         delete sv;
-        timer->stop();
+        frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
     }
     // Autonomes Fahrzeug hinzufügen
     sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
     scene->addItem(sv);
+
+    frontTimer->start(10);
 
     for(int i = 0; i<sv->getNumberOfSensors(); i++)
         scene->addItem(sv->getSensor(i));
@@ -89,7 +127,7 @@ void SimulatorWindow::keyPressEvent(QKeyEvent *event)
 {
         //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
         if(event->key() == Qt::Key_Up) {
-            timer->start(10);
+            frontTimer->start(10);
         }
         else if(event->key() == Qt::Key_Left) {
             leftTimer->start(10);
@@ -106,7 +144,7 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 {
         //Schalte Timer wieder aus, wenn Knopf losgelassen wird
         if(event->key() == Qt::Key_Up)
-            timer->stop();
+            frontTimer->stop();
         else if(event->key() == Qt::Key_Left)
             leftTimer->stop();
         else if(event->key() == Qt::Key_Right)

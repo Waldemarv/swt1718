@@ -32,7 +32,7 @@ private:
     Ui::SimulatorWindow *ui;
     QPainterPath mapPath;
     SmartVehicle* sv;
-    QTimer *timer;
+    QTimer *frontTimer;
     QTimer *leftTimer;
     QTimer *rightTimer;
     QTimer *collisionDetectionTimer;

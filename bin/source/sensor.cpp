@@ -7,6 +7,8 @@ Sensor::Sensor(int direction, QPointF p) : direction(direction)
 {
     setPos(p);
 
+    setColor(Qt::green);
+
     if(direction == 0)
     {
         //Sensor vorne rechts
@@ -23,7 +25,7 @@ Sensor::Sensor(int direction, QPointF p) : direction(direction)
 
 QRectF Sensor::boundingRect() const
 {
-    return QRectF(0,0,15,15);
+    return QRectF(0,0,20,2);
 }
 
 void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -31,7 +33,7 @@ void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     QPainterPath *newPath = new QPainterPath;
 
     QPen pen;
-    pen.setColor(Qt::green);
+    pen.setColor(color);
     pen.setWidth(2);
     painter->setPen(pen);
     newPath->moveTo(boundingRect().topLeft());
@@ -48,4 +50,9 @@ int Sensor::getAngle()
 int Sensor::getDirection()
 {
     return direction;
+}
+
+void Sensor::setColor(QColor c)
+{
+    color = c;
 }
