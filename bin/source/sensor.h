@@ -13,6 +13,7 @@ private:
     int direction;
     int angle;
     QPainterPath path;
+    QColor color;
 
 public:
     Sensor();
@@ -23,6 +24,8 @@ public:
 
     int getAngle();
     int getDirection();
+
+    void setColor(QColor c);
 };
 
 #endif // SENSOR_H
