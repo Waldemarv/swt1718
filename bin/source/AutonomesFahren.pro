@@ -39,7 +39,8 @@ SOURCES += \
     smartvehicle.cpp \
     simulatorwindow.cpp \
     memento.cpp \
-    caretaker.cpp
+    caretaker.cpp \
+    sensor.cpp
 
 HEADERS += \
         editor.h \
@@ -56,7 +57,8 @@ HEADERS += \
     smartvehicle.h \
     simulatorwindow.h \
     memento.h \
-    caretaker.h
+    caretaker.h \
+    sensor.h
 
 FORMS += \
         editor.ui \

@@ -1,9 +1,5 @@
 #include "smartvehicle.h"
 
-void SmartVehicle::collision()
-{
-}
-
 SmartVehicle::SmartVehicle()
 {
     angle = 0;
@@ -19,6 +15,13 @@ SmartVehicle::SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, in
     speed = nspeed;
     rotationSpeed = nrotationSpeed;
     setPos(x,y);
+
+    //(Front sensors)
+
+    Sensor* s = new Sensor(0, mapToScene(boundingRect().bottomRight()));
+    sensors.push_back(s);
+    Sensor* t = new Sensor(1, mapToScene(boundingRect().topRight()));
+    sensors.push_back(t);
 
     color = Qt::green;
 }
@@ -40,10 +43,25 @@ void SmartVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawRect(rec);
 }
 
+Sensor *SmartVehicle::getSensor(int i)
+{
+    return sensors.at(i);
+}
+
 void SmartVehicle::right()
 {
     angle+=rotationSpeed;
     setRotation(angle);
+
+    for(int i = 0; i<sensors.size();i++)
+    {
+        if(sensors.at(i)->getDirection() == 0)
+            sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight()));
+        else if(sensors.at(i)->getDirection() ==1)
+            sensors.at(i)->setPos(mapToScene(boundingRect().topRight()));
+
+        sensors.at(i)->setRotation(angle+sensors.at(i)->getAngle());
+    }
 }
 
 void SmartVehicle::setColor(QColor c)
@@ -52,10 +70,24 @@ void SmartVehicle::setColor(QColor c)
     update();
 }
 
+int SmartVehicle::getNumberOfSensors()
+{
+    return sensors.size();
+}
+
 void SmartVehicle::left()
 {
     angle-=rotationSpeed;
     setRotation(angle);
+
+    for(int i = 0; i<sensors.size();i++)
+    {
+        if(sensors.at(i)->getDirection() == 0)
+            sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight()));
+        else if(sensors.at(i)->getDirection() ==1)
+            sensors.at(i)->setPos(mapToScene(boundingRect().topRight()));
+        sensors.at(i)->setRotation(angle+sensors.at(i)->getAngle());
+    }
 }
 
 void SmartVehicle::advance(int phase)
@@ -63,4 +95,12 @@ void SmartVehicle::advance(int phase)
     if(!phase)
         return;
     setPos(mapToParent(speed, 0));
+
+    for(int i = 0; i<sensors.size();i++)
+    {
+        if(sensors.at(i)->getDirection() == 0)
+            sensors.at(i)->setPos(mapToScene(boundingRect().bottomRight()));
+        else if(sensors.at(i)->getDirection() ==1)
+            sensors.at(i)->setPos(mapToScene(boundingRect().topRight()));
+    }
 }

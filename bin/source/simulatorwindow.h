@@ -1,6 +1,7 @@
 #ifndef SIMULATORWINDOW_H
 #define SIMULATORWINDOW_H
 #include "map.h"
+#include "math.h"
 #include <QMainWindow>
 #include <QTimer>
 #include <QKeyEvent>
@@ -18,6 +19,9 @@ public:
     ~SimulatorWindow();
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+
+    double getLeftDist();
+
 private slots:
     void on_actionSimulation_starten_triggered();
     void collisionDetection();

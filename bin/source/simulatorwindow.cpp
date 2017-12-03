@@ -32,7 +32,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
         connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
-        connect(collisionDetectionTimer, &QTimer::timeout, [this] {collisionDetection();});
+        connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
 
         ui->graphicsView->setEnabled(false);
     }
@@ -65,7 +65,11 @@ void SimulatorWindow::on_actionSimulation_starten_triggered()
 {
     if(sv != 0)
     {
-        qDebug()<<"Fahrzeug bereits vorhanden.";
+        for(int i = 0; i<sv->getNumberOfSensors(); i++)
+        {
+            scene->removeItem(sv->getSensor(i));
+            delete sv->getSensor(i);
+        }
         delete sv;
         timer->stop();
         leftTimer->stop();
@@ -74,6 +78,9 @@ void SimulatorWindow::on_actionSimulation_starten_triggered()
     // Autonomes Fahrzeug hinzufügen
     sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
     scene->addItem(sv);
+
+    for(int i = 0; i<sv->getNumberOfSensors(); i++)
+        scene->addItem(sv->getSensor(i));
 
     collisionDetectionTimer->start();
 }
