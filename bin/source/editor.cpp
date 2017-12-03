@@ -859,7 +859,7 @@ void Editor::on_actionSimulation_starten_triggered()
             m->setMapPath();
             m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
             SimulatorWindow* sim = new SimulatorWindow(*m);
-            sim->show();
+            sim->showFullScreen();
             this->hide();
         }
     }

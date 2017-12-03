@@ -44,9 +44,27 @@ void SimulatorWindow::collisionDetection() {
     mapBoundaries.setPath(m.getMapPath());
 
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
-
+    //Alle Sensoren an
+    if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    {
+        if(leftTimer->isActive())
+            leftTimer->stop();
+        if(rightTimer->isActive())
+            rightTimer->stop();
+        if(!frontTimer->isActive())
+            frontTimer->start(10);
+    }
+    else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(1), mode))
+    {
+        if(leftTimer->isActive())
+            leftTimer->stop();
+        if(rightTimer->isActive())
+            rightTimer->stop();
+        if(!frontTimer->isActive())
+            frontTimer->start(10);
+    }
     //Rechter und mittlerer Sensor an
-    if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
     {
         if(!leftTimer->isActive())
             leftTimer->start(10);
@@ -89,6 +107,19 @@ void SimulatorWindow::collisionDetection() {
         if(!frontTimer->isActive())
             frontTimer->start(10);
     }
+    else if (mapBoundaries.collidesWithItem(sv->getSensor(1), mode))
+    {
+        //Front Sensor
+        if(!rightTimer->isActive())
+           rightTimer->start(10);
+
+        if(leftTimer->isActive())
+           leftTimer->stop();
+
+        if(frontTimer->isActive())
+            frontTimer->stop();
+    }
+
     for(int i=0; i<sv->getNumberOfSensors(); i++)
     {
         if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
@@ -103,12 +134,13 @@ void SimulatorWindow::collisionDetection() {
 
     }
     else {
-        //Collision
+        //Kollision
         sv->setColor(Qt::red);
         collisionDetectionTimer->stop();
         frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
+        startSimulation();
     }
 }
 
@@ -119,36 +151,7 @@ SimulatorWindow::~SimulatorWindow()
 
 void SimulatorWindow::on_actionSimulation_starten_triggered()
 {
-    if(sv != 0)
-    {
-        for(int i = 0; i<sv->getNumberOfSensors(); i++)
-        {
-            scene->removeItem(sv->getSensor(i));
-            delete sv->getSensor(i);
-        }
-        delete sv;
-        frontTimer->stop();
-        leftTimer->stop();
-        rightTimer->stop();
-    }
-    // Autonomes Fahrzeug hinzufügen
-    sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
-    scene->addItem(sv);
-
-    frontTimer->start(10);
-
-    for(int i = 0; i<sv->getNumberOfSensors(); i++)
-        scene->addItem(sv->getSensor(i));
-
-    collisionDetectionTimer->start();   
-
-    fitnessTime.start();
-
-    connect(collisionDetectionTimer, &QTimer::timeout, [this] {
-
-        QString time = QString("%1:%2.%3").arg(QString::number(fitnessTime.elapsed()/6000), QString::number(fitnessTime.elapsed()/1000), QString::number(fitnessTime.elapsed()%1000));
-        ui->timeLabel->setText(time);
-    });
+    startSimulation();
 }
 void SimulatorWindow::keyPressEvent(QKeyEvent *event)
 {
@@ -179,4 +182,38 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 
         QWidget::keyReleaseEvent(event);
 
+}
+
+void SimulatorWindow::startSimulation()
+{
+    if(sv != 0)
+    {
+        for(int i = 0; i<sv->getNumberOfSensors(); i++)
+        {
+            scene->removeItem(sv->getSensor(i));
+            delete sv->getSensor(i);
+        }
+        delete sv;
+        frontTimer->stop();
+        leftTimer->stop();
+        rightTimer->stop();
+    }
+    // Autonomes Fahrzeug hinzufügen
+    sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
+    scene->addItem(sv);
+
+    frontTimer->start(10);
+
+    for(int i = 0; i<sv->getNumberOfSensors(); i++)
+        scene->addItem(sv->getSensor(i));
+
+    collisionDetectionTimer->start();
+
+    fitnessTime.start();
+
+    connect(collisionDetectionTimer, &QTimer::timeout, [this] {
+
+        QString time = QString("%1:%2.%3").arg(QString::number(fitnessTime.elapsed()/6000), QString::number(fitnessTime.elapsed()/1000), QString::number(fitnessTime.elapsed()%1000));
+        ui->timeLabel->setText(time);
+    });
 }
