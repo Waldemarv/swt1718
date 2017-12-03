@@ -502,8 +502,6 @@ void Editor::connectScene()
 {
     connect(scene, &QGraphicsScene::changed, [this]{
 
-        caretaker->setMemento(m->createMemento());
-
         for(unsigned int i=0; i<m->getNumberOfTiles();i++)
         {
             m->getTile(i)->fitIntoGrid();

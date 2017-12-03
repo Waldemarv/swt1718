@@ -1,6 +1,8 @@
 #ifndef SMARTVEHICLE_H
 #define SMARTVEHICLE_H
 
+#include "sensor.h"
+#include <vector>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QPainter>
@@ -13,9 +15,9 @@ private:
     int rotationSpeed;
     int speed;
 
-    QColor color;
+    std::vector<Sensor*> sensors;
 
-    void collision();
+    QColor color;
 
 public:
     SmartVehicle();
@@ -24,11 +26,14 @@ public:
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    Sensor* getSensor(int i);
+
     void left();
     void right();
 
     void setColor(QColor c);
 
+    int getNumberOfSensors();
 protected:
     void advance(int phase);
 };
