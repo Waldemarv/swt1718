@@ -44,8 +44,8 @@ void SimulatorWindow::collisionDetection() {
     mapBoundaries.setPath(m.getMapPath());
 
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
-    //Alle Sensoren an
-    if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    //Kein Sensor an
+    if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
     {
         if(leftTimer->isActive())
             leftTimer->stop();
@@ -54,6 +54,17 @@ void SimulatorWindow::collisionDetection() {
         if(!frontTimer->isActive())
             frontTimer->start(10);
     }
+    //Alle Sensoren an
+    else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    {
+        if(leftTimer->isActive())
+            leftTimer->stop();
+        if(rightTimer->isActive())
+            rightTimer->stop();
+        if(!frontTimer->isActive())
+            frontTimer->start(10);
+    }
+    //Rechter und linker Sensor an
     else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(1), mode))
     {
         if(leftTimer->isActive())
@@ -131,7 +142,6 @@ void SimulatorWindow::collisionDetection() {
     //Kollision vom SmartVehicle
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
         sv->setColor(Qt::green);
-
     }
     else {
         //Kollision
@@ -140,7 +150,35 @@ void SimulatorWindow::collisionDetection() {
         frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
-        startSimulation();
+        //startSimulation();
+
+        //If KollisionPoint == EndingPoint
+        /*if((int)m.getEndingTile()->pos().x() > (int)sv->pos().x())
+        {
+            if((int)m.getEndingTile()->pos().y() > (int)sv->pos().y())
+            {
+                if((int)m.getEndingTile()->pos().y() % (int)sv->pos().y() < 25 && (int)m.getEndingTile()->pos().x() % (int)sv->pos().x() < 25)
+                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+            }
+            else
+            {
+                if((int)sv->pos().y() % (int)m.getEndingTile()->pos().y() < 25 && (int)m.getEndingTile()->pos().x() % (int)sv->pos().x() < 25)
+                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+            }
+        }
+        else
+        {
+            if((int)m.getEndingTile()->pos().y() > (int)sv->pos().y())
+            {
+                if((int)m.getEndingTile()->pos().y() % (int)sv->pos().y() < 25 && (int)sv->pos().x() % (int)m.getEndingTile()->pos().x() < 25)
+                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+            }
+            else
+            {
+                if((int)sv->pos().y() % (int)m.getEndingTile()->pos().y() < 25 && (int)sv->pos().x() % (int)m.getEndingTile()->pos().x() < 25)
+                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+            }
+        }*/
     }
 }
 
@@ -202,8 +240,6 @@ void SimulatorWindow::startSimulation()
     sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
     scene->addItem(sv);
 
-    frontTimer->start(10);
-
     for(int i = 0; i<sv->getNumberOfSensors(); i++)
         scene->addItem(sv->getSensor(i));
 
@@ -213,7 +249,7 @@ void SimulatorWindow::startSimulation()
 
     connect(collisionDetectionTimer, &QTimer::timeout, [this] {
 
-        QString time = QString("%1:%2.%3").arg(QString::number(fitnessTime.elapsed()/6000), QString::number(fitnessTime.elapsed()/1000), QString::number(fitnessTime.elapsed()%1000));
+        QString time = QString("%1:%2.%3").arg(QString::number(fitnessTime.elapsed()/60000), QString::number(fitnessTime.elapsed()/1000), QString::number(fitnessTime.elapsed()%1000));
         ui->timeLabel->setText(time);
     });
 }

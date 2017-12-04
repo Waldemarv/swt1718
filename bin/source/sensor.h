@@ -12,12 +12,13 @@ class Sensor : public QGraphicsItem
 private:
     int direction;
     int angle;
+    int length;
     QPainterPath path;
     QColor color;
 
 public:
     Sensor();
-    Sensor(int nangle, QPointF p);
+    Sensor(int nangle, int nlength, QPointF p);
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -3,18 +3,17 @@
 Sensor::Sensor() : direction(0)
 {}
 
-Sensor::Sensor(int nangle, QPointF p) : direction(direction)
+Sensor::Sensor(int nangle, int nlength, QPointF p) : direction(direction), angle(nangle), length(nlength)
 {
     setPos(p);
 
     setColor(Qt::green);
 
-    angle = nangle;
     setRotation(angle);
 }
 QRectF Sensor::boundingRect() const
 {
-    return QRectF(0,0,20,2);
+    return QRectF(0,0,length,2);
 }
 
 void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
