@@ -253,3 +253,9 @@ void SimulatorWindow::startSimulation()
         ui->timeLabel->setText(time);
     });
 }
+
+void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
+{
+    this->hide();
+    this->parentWidget()->show();
+}
