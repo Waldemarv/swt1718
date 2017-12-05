@@ -2,6 +2,7 @@
 #define SIMULATORWINDOW_H
 #include "map.h"
 #include "math.h"
+#include "editor.h"
 #include <QMainWindow>
 #include <QTimer>
 #include <QTime>
@@ -17,7 +18,7 @@ class SimulatorWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit SimulatorWindow(const Map &nm, QWidget *parent = 0);
+    explicit SimulatorWindow(const Map &nm, QWidget *parent);
     ~SimulatorWindow();
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
@@ -29,6 +30,8 @@ public:
 private slots:
     void on_actionSimulation_starten_triggered();
     void collisionDetection();
+
+    void on_actionZu_Editor_wechseln_triggered();
 
 private:
     Map m;

@@ -858,7 +858,7 @@ void Editor::on_actionSimulation_starten_triggered()
         else {
             m->setMapPath();
             m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
-            SimulatorWindow* sim = new SimulatorWindow(*m);
+            SimulatorWindow* sim = new SimulatorWindow(*m,this);
             sim->showFullScreen();
             this->hide();
         }
