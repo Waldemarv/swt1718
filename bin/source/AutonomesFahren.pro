@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui xml
-CONFIG   += c++11
+CONFIG   += c++11 console
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -40,7 +40,8 @@ SOURCES += \
     simulatorwindow.cpp \
     memento.cpp \
     caretaker.cpp \
-    sensor.cpp
+    sensor.cpp \
+    simulatorcmdl.cpp
 
 HEADERS += \
         editor.h \
@@ -58,7 +59,8 @@ HEADERS += \
     simulatorwindow.h \
     memento.h \
     caretaker.h \
-    sensor.h
+    sensor.h \
+    simulatorcmdl.h
 
 FORMS += \
         editor.ui \
