@@ -856,11 +856,24 @@ void Editor::on_actionSimulation_starten_triggered()
         if(m->getStartingTile()== 0 || m->getEndingTile() == 0) {
             QMessageBox::about(this, "Kein Start- oder Endpunkt vorhanden", "Bitte erstellen Sie vor der Simulation einen Start- und Endpunkt");        }
         else {
-            m->setMapPath();
-            m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
-            SimulatorWindow* sim = new SimulatorWindow(*m,this);
-            sim->showFullScreen();
-            this->hide();
+
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "Darstellung der Simulation", "Möchten Sie eine graphische Visualisierung für die Simulation?",
+                                          QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+
+            if (reply == QMessageBox::No) {
+                m->setMapPath();
+                m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
+                SimulatorCMDL *cmdl = new SimulatorCMDL(*m);
+                this->hide();
+            }
+            if (reply == QMessageBox::Yes) {
+                m->setMapPath();
+                m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
+                SimulatorWindow* sim = new SimulatorWindow(*m,this);
+                sim->showFullScreen();
+                this->hide();
+            }
         }
     }
     else

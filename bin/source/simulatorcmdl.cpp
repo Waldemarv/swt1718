@@ -42,7 +42,7 @@ void SimulatorCMDL::collisionDetection() {
 
     /*verhalten für Andere Vehicles nutzen*/
     //Kein Sensor an
-    /*if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
     {
         if(leftTimer->isActive())
             leftTimer->stop();
@@ -126,7 +126,7 @@ void SimulatorCMDL::collisionDetection() {
 
         if(frontTimer->isActive())
             frontTimer->stop();
-    }*/
+    }
 
     //Kollision vom SmartVehicle
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
@@ -138,6 +138,7 @@ void SimulatorCMDL::collisionDetection() {
         frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
+        sensorsTimer->stop();
         //startSimulation();
 
         //Abfrage ob das Smart Vehicle am Endpunkt kollidiert ist
@@ -196,7 +197,8 @@ void SimulatorCMDL::startSimulation()
 
     fitnessTime.start();
 
-    connect(sensorsTimer, &QTimer::timeout, [this] {
+    //Automatische Abstandserkennung der Senoren
+    /*connect(sensorsTimer, &QTimer::timeout, [this] {
 
     for(int i=0; i<sv->getNumberOfSensors(); i++)
     {
@@ -225,5 +227,5 @@ void SimulatorCMDL::startSimulation()
     }
     });
 
-    sensorsTimer->start(100);
+    sensorsTimer->start(100);*/
 }
