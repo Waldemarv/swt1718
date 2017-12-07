@@ -24,6 +24,7 @@ SimulatorCMDL::SimulatorCMDL(Map &nm, QObject *parent) : QObject(parent)
         leftTimer = new QTimer();
         rightTimer = new QTimer();
         collisionDetectionTimer = new QTimer();
+        sensorsTimer = new QTimer();
 
         //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right), sowie der collisionDeteciton
         connect(frontTimer, SIGNAL(timeout()), scene, SLOT(advance()));
@@ -31,16 +32,17 @@ SimulatorCMDL::SimulatorCMDL(Map &nm, QObject *parent) : QObject(parent)
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
         connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
 
+        frontTimer->start(10);
         startSimulation();
     }
 }
 
-// Für Simulator umänderns
+// Für Simulator umändern
 void SimulatorCMDL::collisionDetection() {
 
     /*verhalten für Andere Vehicles nutzen*/
     //Kein Sensor an
-    if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    /*if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
     {
         if(leftTimer->isActive())
             leftTimer->stop();
@@ -124,16 +126,7 @@ void SimulatorCMDL::collisionDetection() {
 
         if(frontTimer->isActive())
             frontTimer->stop();
-    }
-
-    for(int i=0; i<sv->getNumberOfSensors(); i++)
-    {
-        if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
-            sv->getSensor(i)->setColor(Qt::green);
-        else
-           sv->getSensor(i)->setColor(Qt::red);
-    }
-
+    }*/
 
     //Kollision vom SmartVehicle
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
@@ -202,4 +195,35 @@ void SimulatorCMDL::startSimulation()
     collisionDetectionTimer->start();
 
     fitnessTime.start();
+
+    connect(sensorsTimer, &QTimer::timeout, [this] {
+
+    for(int i=0; i<sv->getNumberOfSensors(); i++)
+    {
+        int length;
+        for(int j=0;j<1000; j=j+10)
+        {
+            sv->getSensor(i)->setLength(j);
+            if(mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+            {
+                for(int k=0; k<10; k++)
+                {
+                    if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+                    {
+                        length = j-k;
+                        break;
+                    }
+                    else
+                    {
+                        sv->getSensor(i)->setLength(j-k);
+                    }
+                }
+                break;
+            }
+        }
+        qDebug()<<"Senor: "<<i<<" , length: "<<length;
+    }
+    });
+
+    sensorsTimer->start(100);
 }

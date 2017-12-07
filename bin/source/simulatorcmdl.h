@@ -27,11 +27,13 @@ private:
     QTimer *leftTimer;
     QTimer *rightTimer;
     QTimer *collisionDetectionTimer;
+    QTimer *sensorsTimer;
 
     QGraphicsPathItem mapBoundaries;
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape;
 
     QTime fitnessTime;
+
 
 signals:
 
