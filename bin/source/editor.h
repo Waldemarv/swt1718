@@ -4,6 +4,7 @@
 #include "map.h"
 #include "ui_editor.h"
 #include "simulatorwindow.h"
+#include "simulatorcmdl.h"
 #include "caretaker.h"
 #include <QtCore>
 #include <QGraphicsItem>
