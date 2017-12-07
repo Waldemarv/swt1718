@@ -1,0 +1,54 @@
+<Map>
+ <Data>
+  <MapSize Y:="16" X:="16"/>
+ </Data>
+ <Points>
+  <StartingPoint Y:="20" X:="20"/>
+  <EndingPoint Y:="70" X:="570"/>
+ </Points>
+ <Obstacles/>
+ <Tiles>
+  <Tile direction:="0" Typ:="StartingTile" Y:="0" X:="0" ID:="0" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="0" X:="50" ID:="1" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="0" X:="100" ID:="2" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="0" X:="150" ID:="3" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="0" X:="200" ID:="4" ascent:="0"/>
+  <Tile direction:="0" Typ:="turn" Y:="0" X:="250" ID:="5" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="100" X:="300" ID:="6" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="150" X:="300" ID:="7" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="200" X:="300" ID:="8" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="250" X:="300" ID:="9" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="300" X:="0" ID:="10" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="350" X:="0" ID:="11" ascent:="0"/>
+  <Tile direction:="1" Typ:="turn" Y:="300" X:="250" ID:="12" ascent:="0"/>
+  <Tile direction:="2" Typ:="turn" Y:="300" X:="150" ID:="13" ascent:="0"/>
+  <Tile direction:="0" Typ:="turn" Y:="200" X:="100" ID:="14" ascent:="0"/>
+  <Tile direction:="3" Typ:="turn" Y:="200" X:="0" ID:="15" ascent:="0"/>
+  <Tile direction:="2" Typ:="turn" Y:="400" X:="0" ID:="16" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="450" X:="100" ID:="17" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="450" X:="150" ID:="18" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="450" X:="200" ID:="19" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="450" X:="250" ID:="20" ascent:="0"/>
+  <Tile direction:="0" Typ:="turn" Y:="450" X:="300" ID:="21" ascent:="0"/>
+  <Tile direction:="3" Typ:="turn" Y:="600" X:="200" ID:="22" ascent:="0"/>
+  <Tile direction:="1" Typ:="turn" Y:="550" X:="300" ID:="23" ascent:="0"/>
+  <Tile direction:="2" Typ:="turn" Y:="700" X:="200" ID:="24" ascent:="0"/>
+  <Tile direction:="1" Typ:="EndingTile" Y:="50" X:="550" ID:="25" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="750" X:="300" ID:="26" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="750" X:="350" ID:="27" ascent:="0"/>
+  <Tile direction:="1" Typ:="turn" Y:="700" X:="400" ID:="28" ascent:="0"/>
+  <Tile direction:="3" Typ:="turn" Y:="600" X:="450" ID:="29" ascent:="0"/>
+  <Tile direction:="1" Typ:="turn" Y:="550" X:="550" ID:="30" ascent:="0"/>
+  <Tile direction:="0" Typ:="turn" Y:="450" X:="550" ID:="31" ascent:="0"/>
+  <Tile direction:="2" Typ:="turn" Y:="400" X:="450" ID:="32" ascent:="0"/>
+  <Tile direction:="3" Typ:="turn" Y:="300" X:="450" ID:="33" ascent:="0"/>
+  <Tile direction:="0" Typ:="turn" Y:="300" X:="500" ID:="34" ascent:="0"/>
+  <Tile direction:="2" Typ:="turn" Y:="350" X:="550" ID:="35" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="250" X:="700" ID:="36" ascent:="0"/>
+  <Tile direction:="1" Typ:="straight" Y:="300" X:="700" ID:="37" ascent:="0"/>
+  <Tile direction:="0" Typ:="straight" Y:="400" X:="650" ID:="38" ascent:="0"/>
+  <Tile direction:="1" Typ:="turn" Y:="350" X:="650" ID:="39" ascent:="0"/>
+  <Tile direction:="0" Typ:="turn" Y:="150" X:="650" ID:="40" ascent:="0"/>
+  <Tile direction:="2" Typ:="turn" Y:="100" X:="550" ID:="41" ascent:="0"/>
+ </Tiles>
+</Map>
