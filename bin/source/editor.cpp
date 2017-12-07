@@ -119,7 +119,7 @@ void Editor::saveMap()
         {
     //Pfad zum speichern wählen
     QString currentPath = QDir::currentPath();
-    currentPath.append("/Maps/Map.xml");
+    currentPath.append("/source/Maps/Map.xml");
 
     QString filename = QFileDialog::getSaveFileName(
             this,
@@ -225,7 +225,7 @@ void Editor::loadMap()
     QDomDocument document;
     //Pfad für die zu ladene Map wählen
     QString currentPath = QDir::currentPath();
-    currentPath.append("/Maps");
+    currentPath.append("/source/Maps");
 
     QString filename = QFileDialog::getOpenFileName(
                 this,
@@ -862,6 +862,7 @@ void Editor::on_actionSimulation_starten_triggered()
         if(m->getStartingTile()== 0 || m->getEndingTile() == 0) {
             QMessageBox::about(this, "Kein Start- oder Endpunkt vorhanden", "Bitte erstellen Sie vor der Simulation einen Start- und Endpunkt");        }
         else {
+            //TODO: Wenn simulation offen, fragen ob man fortsetzen möchte oder eine neue Simulation starten will.
 
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "Darstellung der Simulation", "Möchten Sie eine graphische Visualisierung für die Simulation?",
@@ -877,7 +878,7 @@ void Editor::on_actionSimulation_starten_triggered()
                 m->setMapPath();
                 m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
                 SimulatorWindow *sim = new SimulatorWindow(*m,this);
-                sim->showFullScreen();
+                sim->show();
                 this->hide();
             }
         }
