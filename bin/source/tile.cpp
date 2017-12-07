@@ -156,12 +156,10 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
         if(isSelected() == true)
         {
             setSelected(false);
-            qDebug()<<isSelected();
         }
         else if(isSelected() == false)
         {
             setSelected(true);
-            qDebug()<<isSelected();
         }
     }
 

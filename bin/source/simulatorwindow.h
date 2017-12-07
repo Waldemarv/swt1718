@@ -32,6 +32,12 @@ private slots:
     void collisionDetection();
 
     void on_actionZu_Editor_wechseln_triggered();
+    void pauseSimulation();
+    void resumeSimulation();
+
+    void on_actionPause_triggered();
+
+    void on_actionResume_triggered();
 
 private:
     Map m;
@@ -45,6 +51,11 @@ private:
     QTimer *collisionDetectionTimer;
 
     QTime fitnessTime;
+    int pauseTime;
+
+    bool frontTimerWasOn;
+    bool leftTimerWasOn;
+    bool rightTimerWasOn;
 };
 
 #endif // SIMULATORWINDOW_H
