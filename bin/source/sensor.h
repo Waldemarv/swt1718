@@ -26,6 +26,7 @@ public:
     int getAngle();
 
     void setColor(QColor c);
+    void setLength(int nlength);
 };
 
 #endif // SENSOR_H

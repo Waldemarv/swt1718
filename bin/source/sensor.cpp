@@ -39,3 +39,8 @@ void Sensor::setColor(QColor c)
 {
     color = c;
 }
+
+void Sensor::setLength(int nlength)
+{
+    length = nlength;
+}
