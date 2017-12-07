@@ -20,6 +20,9 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         this->mapPath = m.getMapPath();
         scene->addPath(mapPath);
 
+        mapBoundaries.setPath(m.getMapPath());
+
+
         sv=0;
         pauseTime = 0;
 
@@ -28,6 +31,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         leftTimer = new QTimer();
         rightTimer = new QTimer();
         collisionDetectionTimer = new QTimer();
+        sensorsTimer = new QTimer();
 
         //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right), sowie der collisionDeteciton
         connect(frontTimer, SIGNAL(timeout()), scene, SLOT(advance()));
@@ -41,12 +45,8 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 
 // Für Simulator umänderns
 void SimulatorWindow::collisionDetection() {
-    QGraphicsPathItem mapBoundaries;
-    mapBoundaries.setPath(m.getMapPath());
-
-    Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
     //Kein Sensor an
-    if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    /*if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
     {
         if(leftTimer->isActive())
             leftTimer->stop();
@@ -138,7 +138,7 @@ void SimulatorWindow::collisionDetection() {
             sv->getSensor(i)->setColor(Qt::green);
         else
            sv->getSensor(i)->setColor(Qt::red);
-    }
+    }*/
 
     //Kollision vom SmartVehicle
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
@@ -146,6 +146,7 @@ void SimulatorWindow::collisionDetection() {
     }
     else {
         //Kollision
+        qDebug()<<"collision at: "<<sv->pos();
         sv->setColor(Qt::red);
         collisionDetectionTimer->stop();
         frontTimer->stop();
@@ -252,18 +253,45 @@ void SimulatorWindow::startSimulation()
         QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number((fitnessTime.elapsed()-pauseTime)/1000), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
         ui->timeLabel->setText(time);
     });
+
+    //Automatische Abstandserkennung der Senoren
+    connect(sensorsTimer, &QTimer::timeout, [this] {
+
+    for(int i=0; i<sv->getNumberOfSensors(); i++)
+    {
+        int length;
+        for(int j=0;j<1000; j=j+10)
+        {
+            sv->getSensor(i)->setLength(j);
+            if(mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+            {
+                for(int k=0; k<10; k++)
+                {
+                    if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+                    {
+                        length = j-k;
+                        break;
+                    }
+                    else
+                    {
+                        sv->getSensor(i)->setLength(j-k);
+                    }
+                }
+                break;
+            }
+        }
+        qDebug()<<"Sensor: "<<i<<" , length: "<<length;
+    }
+    });
+
+    sensorsTimer->start(100);
 }
 
 void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
 {
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Simulation beenden..", "Möchten Sie die Simulation wirklich unwiederruflich beenden und zurück zum Editor kehren?",
-                                  QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
-    if(reply == QMessageBox::Yes)
-    {
-        delete this;
-        this->parentWidget()->show();
-    }
+    this->hide();
+    pauseSimulation();
+    this->parentWidget()->show();
 }
 
 void SimulatorWindow::pauseSimulation()
