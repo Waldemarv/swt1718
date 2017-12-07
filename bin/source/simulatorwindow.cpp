@@ -21,6 +21,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         scene->addPath(mapPath);
 
         sv=0;
+        pauseTime = 0;
 
         // Timer erstellen
         frontTimer = new QTimer();
@@ -150,7 +151,6 @@ void SimulatorWindow::collisionDetection() {
         frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
-        //startSimulation();
 
         //If KollisionPoint == EndingPoint
         /*if((int)m.getEndingTile()->pos().x() > (int)sv->pos().x())
@@ -249,13 +249,74 @@ void SimulatorWindow::startSimulation()
 
     connect(collisionDetectionTimer, &QTimer::timeout, [this] {
 
-        QString time = QString("%1:%2.%3").arg(QString::number(fitnessTime.elapsed()/60000), QString::number(fitnessTime.elapsed()/1000), QString::number(fitnessTime.elapsed()%1000));
+        QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number((fitnessTime.elapsed()-pauseTime)/1000), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
         ui->timeLabel->setText(time);
     });
 }
 
 void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
 {
-    this->hide();
-    this->parentWidget()->show();
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Simulation beenden..", "Möchten Sie die Simulation wirklich unwiederruflich beenden und zurück zum Editor kehren?",
+                                  QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+    if(reply == QMessageBox::Yes)
+    {
+        delete this;
+        this->parentWidget()->show();
+    }
+}
+
+void SimulatorWindow::pauseSimulation()
+{
+    if(frontTimer->isActive())
+    {
+        frontTimerWasOn = true;
+        frontTimer->stop();
+    }
+    else
+        frontTimerWasOn = false;
+
+    if(leftTimer->isActive())
+    {
+        leftTimerWasOn = true;
+        leftTimer->stop();
+    }
+    else
+        leftTimerWasOn = false;
+
+    if(rightTimer->isActive())
+    {
+        rightTimerWasOn = true;
+        rightTimer->stop();
+    }
+    else
+        rightTimerWasOn = false;
+
+    collisionDetectionTimer->stop();
+
+    pauseTime = fitnessTime.elapsed();
+}
+
+void SimulatorWindow::resumeSimulation()
+{
+    if(rightTimerWasOn)
+        rightTimer->start(10);
+    if(leftTimerWasOn)
+        leftTimer->start(10);
+    if(frontTimerWasOn)
+        frontTimer->start(10);
+
+    pauseTime = fitnessTime.elapsed() - pauseTime;
+
+    collisionDetectionTimer->start();
+}
+
+void SimulatorWindow::on_actionPause_triggered()
+{
+    pauseSimulation();
+}
+
+void SimulatorWindow::on_actionResume_triggered()
+{
+    resumeSimulation();
 }

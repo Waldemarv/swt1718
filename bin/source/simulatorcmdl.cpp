@@ -32,7 +32,6 @@ SimulatorCMDL::SimulatorCMDL(Map &nm, QObject *parent) : QObject(parent)
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
         connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
 
-        frontTimer->start(10);
         startSimulation();
     }
 }
@@ -133,7 +132,7 @@ void SimulatorCMDL::collisionDetection() {
     }
     else {
         //Kollision
-        qDebug()<<"collision!";
+        qDebug()<<"collision at: "<<sv->pos();
         collisionDetectionTimer->stop();
         frontTimer->stop();
         leftTimer->stop();
@@ -147,12 +146,16 @@ void SimulatorCMDL::collisionDetection() {
             if((int)m.getEndingTile()->pos().y() > (int)sv->pos().y())
             {
                 if((int)m.getEndingTile()->pos().y() % (int)sv->pos().y() < 50 && (int)m.getEndingTile()->pos().x() % (int)sv->pos().x() < 50)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+                    qDebug()<<"Ziel Erreicht";
+                else
+                    qDebug()<<"Ziel nicht Erreicht";
             }
             else
             {
                 if((int)sv->pos().y() % (int)m.getEndingTile()->pos().y() < 50 && (int)m.getEndingTile()->pos().x() % (int)sv->pos().x() < 50)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+                    qDebug()<<"Ziel Erreicht";
+                else
+                    qDebug()<<"Ziel nicht Erreicht";
             }
         }
         else
@@ -160,12 +163,16 @@ void SimulatorCMDL::collisionDetection() {
             if((int)m.getEndingTile()->pos().y() > (int)sv->pos().y())
             {
                 if((int)m.getEndingTile()->pos().y() % (int)sv->pos().y() < 50 && (int)sv->pos().x() % (int)m.getEndingTile()->pos().x() < 50)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+                    qDebug()<<"Ziel Erreicht";
+                else
+                    qDebug()<<"Ziel nicht Erreicht";
             }
             else
             {
                 if((int)sv->pos().y() % (int)m.getEndingTile()->pos().y() < 50 && (int)sv->pos().x() % (int)m.getEndingTile()->pos().x() < 50)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
+                    qDebug()<<"Ziel Erreicht";
+                else
+                    qDebug()<<"Ziel nicht Erreicht";
             }
         }*/
 

@@ -118,10 +118,13 @@ void Editor::saveMap()
         else
         {
     //Pfad zum speichern wählen
+    QString currentPath = QDir::currentPath();
+    currentPath.append("/Maps/Map.xml");
+
     QString filename = QFileDialog::getSaveFileName(
             this,
             tr("Dateipfad wählen..."),
-            "C:/MyMap.xml",
+            currentPath,
             tr("Extensible Markup Language Files (*.xml)")
 );
     if(filename != NULL)
@@ -221,10 +224,13 @@ void Editor::loadMap()
     //Dokument für Datei erstellen
     QDomDocument document;
     //Pfad für die zu ladene Map wählen
+    QString currentPath = QDir::currentPath();
+    currentPath.append("/Maps");
+
     QString filename = QFileDialog::getOpenFileName(
                 this,
                 tr("Datei wählen..."),
-                "C:/",
+                currentPath,
                 tr("Extensible Markup Language Files (*.xml)")
                 );
 
@@ -870,7 +876,7 @@ void Editor::on_actionSimulation_starten_triggered()
             if (reply == QMessageBox::Yes) {
                 m->setMapPath();
                 m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
-                SimulatorWindow* sim = new SimulatorWindow(*m,this);
+                SimulatorWindow *sim = new SimulatorWindow(*m,this);
                 sim->showFullScreen();
                 this->hide();
             }
