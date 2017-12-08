@@ -32,6 +32,7 @@ public:
     void right();
 
     void setColor(QColor c);
+    void setSpeed(double nspeed);
 
     int getNumberOfSensors();
 protected:

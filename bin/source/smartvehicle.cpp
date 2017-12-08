@@ -79,6 +79,11 @@ void SmartVehicle::setColor(QColor c)
     update();
 }
 
+void SmartVehicle::setSpeed(double nspeed)
+{
+    speed = nspeed;
+}
+
 int SmartVehicle::getNumberOfSensors()
 {
     return sensors.size();

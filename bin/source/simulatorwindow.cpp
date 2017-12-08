@@ -32,12 +32,18 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         rightTimer = new QTimer();
         collisionDetectionTimer = new QTimer();
         sensorsTimer = new QTimer();
+        accelerationTimer = new QTimer();
+        breakTimer = new QTimer();
+        slowTimer = new QTimer();
 
         //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right), sowie der collisionDeteciton
         connect(frontTimer, SIGNAL(timeout()), scene, SLOT(advance()));
         connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
         connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
+
+        //Beschleunigungs- und Bremsphysik
+        connect(frontTimer, &QTimer::timeout, [this] { physics(); });
 
         ui->graphicsView->setEnabled(false);
     }
@@ -46,7 +52,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 // Für Simulator umänderns
 void SimulatorWindow::collisionDetection() {
     //Kein Sensor an
-    if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    /*if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
     {
         if(leftTimer->isActive())
             leftTimer->stop();
@@ -138,7 +144,7 @@ void SimulatorWindow::collisionDetection() {
             sv->getSensor(i)->setColor(Qt::green);
         else
            sv->getSensor(i)->setColor(Qt::red);
-    }
+    }*/
 
     //Kollision vom SmartVehicle
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
@@ -152,34 +158,10 @@ void SimulatorWindow::collisionDetection() {
         frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
-
-        //If KollisionPoint == EndingPoint
-        /*if((int)m.getEndingTile()->pos().x() > (int)sv->pos().x())
-        {
-            if((int)m.getEndingTile()->pos().y() > (int)sv->pos().y())
-            {
-                if((int)m.getEndingTile()->pos().y() % (int)sv->pos().y() < 25 && (int)m.getEndingTile()->pos().x() % (int)sv->pos().x() < 25)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
-            }
-            else
-            {
-                if((int)sv->pos().y() % (int)m.getEndingTile()->pos().y() < 25 && (int)m.getEndingTile()->pos().x() % (int)sv->pos().x() < 25)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
-            }
-        }
-        else
-        {
-            if((int)m.getEndingTile()->pos().y() > (int)sv->pos().y())
-            {
-                if((int)m.getEndingTile()->pos().y() % (int)sv->pos().y() < 25 && (int)sv->pos().x() % (int)m.getEndingTile()->pos().x() < 25)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
-            }
-            else
-            {
-                if((int)sv->pos().y() % (int)m.getEndingTile()->pos().y() < 25 && (int)sv->pos().x() % (int)m.getEndingTile()->pos().x() < 25)
-                    QMessageBox::about(this, "Gewonnen", "Herzlichen Glückwunsch !");
-            }
-        }*/
+        accelerationTimer->stop();
+        breakTimer->stop();
+        slowTimer->stop();
+        speed=0;
     }
 }
 
@@ -196,7 +178,9 @@ void SimulatorWindow::keyPressEvent(QKeyEvent *event)
 {
         //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
         if(event->key() == Qt::Key_Up) {
-            frontTimer->start(10);
+            slowTimer->stop();
+            breakTimer->stop();
+            accelerationTimer->start(10);
         }
         else if(event->key() == Qt::Key_Left) {
             leftTimer->start(10);
@@ -205,6 +189,13 @@ void SimulatorWindow::keyPressEvent(QKeyEvent *event)
         else if(event->key() == Qt::Key_Right) {
             rightTimer->start(10);
         }
+        else if(event->key() == Qt::Key_Down)
+        {
+            accelerationTimer->stop();
+            slowTimer->stop();
+            breakTimer->start(10);
+        }
+
 
         QWidget::keyPressEvent(event);
 }
@@ -213,11 +204,21 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 {
         //Schalte Timer wieder aus, wenn Knopf losgelassen wird
         if(event->key() == Qt::Key_Up)
-            frontTimer->stop();
+        {
+            accelerationTimer->stop();
+            slowTimer->start(10);
+        }
         else if(event->key() == Qt::Key_Left)
             leftTimer->stop();
         else if(event->key() == Qt::Key_Right)
             rightTimer->stop();
+
+        else if(event->key() == Qt::Key_Down)
+        {
+            accelerationTimer->stop();
+            slowTimer->start();
+            breakTimer->stop();
+        }
 
         QWidget::keyReleaseEvent(event);
 
@@ -238,23 +239,29 @@ void SimulatorWindow::startSimulation()
         frontTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
+        accelerationTimer->stop();
+        breakTimer->stop();
+        slowTimer->stop();
+        speed = 0;
     }
     // Autonomes Fahrzeug hinzufügen
-    sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
+    sv = new SmartVehicle(0,0,2,m.getStartingPoint().x(), m.getStartingPoint().y());
     scene->addItem(sv);
-
+    //Sensoren der scene hinzufügen
     for(int i = 0; i<sv->getNumberOfSensors(); i++)
         scene->addItem(sv->getSensor(i));
-
+    //Timer der die collisionsdetection Funktion aufruft starten
     collisionDetectionTimer->start();
-
+    //fitnessTime starten und aktualisieren
     fitnessTime.start();
-
     connect(collisionDetectionTimer, &QTimer::timeout, [this] {
 
         QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number((fitnessTime.elapsed()-pauseTime)/1000), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
         ui->timeLabel->setText(time);
     });
+
+    //frontTimer starten um beschleunigungs und bremssignale zu erhalten
+    frontTimer->start(10);
 
     //Automatische Abstandserkennung der Senoren
     /*connect(sensorsTimer, &QTimer::timeout, [this] {
@@ -271,7 +278,7 @@ void SimulatorWindow::startSimulation()
                 {
                     if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
                     {
-                        length = j-k;
+                        qDebug()<<(j-k);
                         break;
                     }
                     else
@@ -283,11 +290,42 @@ void SimulatorWindow::startSimulation()
             }
         }
         scene->update();
-        qDebug()<<"Sensor: "<<i<<" , length: "<<length;
     }
     });
 
-    sensorsTimer->start(100);*/
+    sensorsTimer->start(10);*/
+}
+
+void SimulatorWindow::physics()
+{
+    //Beschleunigung
+    if(accelerationTimer->isActive())
+    {
+        if(speed < 2.0)
+            speed += 0.1;
+        else if(speed >= 2.0 && speed < 3.0)
+            speed += 0.01;
+        else if(speed >= 3.0 && speed < 4.0)
+            speed += 0.001;
+    }
+    //Motorbremse ohne gas oder bremse
+    else if(slowTimer->isActive())
+    {
+        if(speed > 0)
+            speed -= 0.02;
+        else if(speed < 0)
+            speed = 0;
+    }
+    //Bremse
+    else if(breakTimer->isActive())
+    {
+        if(speed > 0)
+            speed -= 0.5;
+        else if(speed < 0)
+            speed = 0;
+    }
+
+    sv->setSpeed(speed);
 }
 
 void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
@@ -300,31 +338,17 @@ void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
 void SimulatorWindow::pauseSimulation()
 {
     if(frontTimer->isActive())
-    {
-        frontTimerWasOn = true;
         frontTimer->stop();
-    }
-    else
-        frontTimerWasOn = false;
 
     if(leftTimer->isActive())
-    {
-        leftTimerWasOn = true;
         leftTimer->stop();
-    }
-    else
-        leftTimerWasOn = false;
 
     if(rightTimer->isActive())
-    {
-        rightTimerWasOn = true;
         rightTimer->stop();
-    }
-    else
-        rightTimerWasOn = false;
 
     collisionDetectionTimer->stop();
     sensorsTimer->stop();
+
     tempTime = fitnessTime.elapsed();
 
     qDebug()<<"Simulation paused";
@@ -332,16 +356,10 @@ void SimulatorWindow::pauseSimulation()
 
 void SimulatorWindow::resumeSimulation()
 {
-    /*if(rightTimerWasOn)
-        rightTimer->start(10);
-    if(leftTimerWasOn)
-        leftTimer->start(10);
-    if(frontTimerWasOn)
-        frontTimer->start(10);*/
-
     pauseTime = pauseTime + fitnessTime.elapsed() - tempTime;
-    sensorsTimer->start();
+
     collisionDetectionTimer->start();
+    sensorsTimer->start();
 
     qDebug()<<"Simulation resumed";
 }

@@ -23,9 +23,8 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
-    void startSimulation();
-
-    double getLeftDist();
+    void startSimulation();    
+    void physics();
 
 private slots:
     void on_actionSimulation_starten_triggered();
@@ -50,6 +49,9 @@ private:
     QTimer *rightTimer;
     QTimer *collisionDetectionTimer;
     QTimer *sensorsTimer;
+    QTimer *accelerationTimer;
+    QTimer *breakTimer;
+    QTimer *slowTimer;
 
     QGraphicsPathItem mapBoundaries;
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
@@ -57,6 +59,8 @@ private:
     QTime fitnessTime;
     int tempTime;
     int pauseTime;
+
+    double speed = 0;
 };
 
 #endif // SIMULATORWINDOW_H
