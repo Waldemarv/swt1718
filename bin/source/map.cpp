@@ -28,9 +28,6 @@ Map::~Map()
 
     tiles.clear();
     obstacles.clear();
-
-    delete &endingPoint;
-    delete &startingPoint;
 }
 /*! Gibt die Anzahl der Tiles auf der Map zurück
     \return Anzahl der Tiles auf der Map*/

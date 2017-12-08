@@ -306,7 +306,6 @@ void Editor::loadMap()
             Obstacle *o = new Obstacle(obstacleX, obstacleY, obstacleWidth,obstacleLength);
             scene->addItem(o);
             m->addObstacle(o);
-            addChild(treeObstacles, "StaticObstacle", obstacleX, obstacleY);
             }
             //elseif(obstaclesAt.attribute("Typ:" == "dynamicObstacle") TODO: Für dynamic Obstacle ergänzen
 
@@ -330,7 +329,6 @@ void Editor::loadMap()
                 m->setStartingTile(t);
                 m->addTile(t);
                 scene->addItem(t);
-                addChild(treeTiles, "StartingTile", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "EndingTile"){
@@ -339,35 +337,29 @@ void Editor::loadMap()
                 m->addTile(t);
                 m->setEndingTile(t);
                 scene->addItem(t);
-                addChild(treeTiles, "EndingTile", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "straight"){
                 Tile* t = new straight(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
-                addChild(treeTiles, "Straight", tileX, tileY);
             }
-
             else if(tilesAt.attribute("Typ:") == "turn"){
                 Tile* t = new turn(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
-                addChild(treeTiles, "Turn", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "T-Intersection"){
                 Tile* t = new Tintersection(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
-                addChild(treeTiles, "T-Intersection", tileX, tileY);
             }
 
             else if(tilesAt.attribute("Typ:") == "Intersection"){
                 Tile* t = new Intersection(tileX, tileY, tileAscent);
                 scene->addItem(t);
                 m->addTile(t);
-                addChild(treeTiles, "Intersection", tileX, tileY);
             }
             updateTreeNumberOfTiles();
             }
@@ -617,8 +609,6 @@ void Editor::on_straightButton_clicked()
         scene->addItem(t);
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
-        //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "straight", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 }
 
@@ -641,8 +631,6 @@ void Editor::on_turnButton_clicked()
         scene->addItem(t);
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
-        //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "turn", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 
 }
@@ -664,7 +652,6 @@ void Editor::on_staticObstacleButton_clicked()
 
 
         updateTreeNumberOfObstacles();
-        addChild(treeObstacles, "staticObstacle", m->getCurrentObstacle()->x(), m->getCurrentObstacle()->y());
     }
 }
 
@@ -694,7 +681,6 @@ void Editor::on_deleteTileButton_clicked()
                 scene->update();
                 m->deleteTile(i);
                 updateTreeNumberOfTiles();
-                treeTiles->removeChild(treeTiles->child(i));
                 i--;
                 isOneTileSelected = true;
             }
@@ -712,7 +698,6 @@ void Editor::on_deleteTileButton_clicked()
                 m->deleteCurrentTile();
 
                 updateTreeNumberOfTiles();
-                treeTiles->removeChild(treeTiles->child(treeTiles->childCount()-1));
             }
     }
     scene->update();
@@ -738,7 +723,6 @@ void Editor::on_deleteObstacleButton_clicked()
                 scene->update();
                 m->deleteObstacle(i);
                 updateTreeNumberOfObstacles();
-                treeObstacles->removeChild(treeObstacles->child(i));
                 i--;
                 isOneObstacleSelected = true;
             }
@@ -750,7 +734,6 @@ void Editor::on_deleteObstacleButton_clicked()
                 m->deleteCurrentObstacle();
 
                 updateTreeNumberOfObstacles();
-                treeObstacles->removeChild(treeObstacles->child(treeObstacles->childCount()-1));
             }
     }
     caretaker->setMemento(m->createMemento());
@@ -776,7 +759,6 @@ void Editor::on_intersectionButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "Intersection", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 }
 
@@ -799,7 +781,6 @@ void Editor::on_tIntersectionButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "T-Intersection", m->getCurrentTile()->x(), m->getCurrentTile()->y());
     }
 }
 
@@ -823,7 +804,6 @@ void Editor::on_startingPointButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "StartingTile", m->getCurrentTile()->x(), m->getCurrentTile()->y());
 
         ui->startingPointButton->setEnabled(false);
     }
@@ -849,7 +829,6 @@ void Editor::on_endingPointButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-        addChild(treeTiles, "EndingTile", m->getCurrentTile()->x(), m->getCurrentTile()->y());
 
         ui->endingPointButton->setEnabled(false);
     }// TODO
