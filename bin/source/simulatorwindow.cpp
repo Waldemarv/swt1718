@@ -46,7 +46,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 // Für Simulator umänderns
 void SimulatorWindow::collisionDetection() {
     //Kein Sensor an
-    /*if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
+    if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
     {
         if(leftTimer->isActive())
             leftTimer->stop();
@@ -138,7 +138,7 @@ void SimulatorWindow::collisionDetection() {
             sv->getSensor(i)->setColor(Qt::green);
         else
            sv->getSensor(i)->setColor(Qt::red);
-    }*/
+    }
 
     //Kollision vom SmartVehicle
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
@@ -225,6 +225,8 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 
 void SimulatorWindow::startSimulation()
 {
+    qDebug()<<"Simulation wurde gestartet!";
+
     if(sv != 0)
     {
         for(int i = 0; i<sv->getNumberOfSensors(); i++)
@@ -255,7 +257,7 @@ void SimulatorWindow::startSimulation()
     });
 
     //Automatische Abstandserkennung der Senoren
-    connect(sensorsTimer, &QTimer::timeout, [this] {
+    /*connect(sensorsTimer, &QTimer::timeout, [this] {
 
     for(int i=0; i<sv->getNumberOfSensors(); i++)
     {
@@ -284,7 +286,7 @@ void SimulatorWindow::startSimulation()
     }
     });
 
-    sensorsTimer->start(100);
+    sensorsTimer->start(100);*/
 }
 
 void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
@@ -322,7 +324,9 @@ void SimulatorWindow::pauseSimulation()
 
     collisionDetectionTimer->stop();
 
-    pauseTime = fitnessTime.elapsed();
+    tempTime = fitnessTime.elapsed();
+
+    qDebug()<<"Simulation paused";
 }
 
 void SimulatorWindow::resumeSimulation()
@@ -334,9 +338,11 @@ void SimulatorWindow::resumeSimulation()
     if(frontTimerWasOn)
         frontTimer->start(10);
 
-    pauseTime = fitnessTime.elapsed() - pauseTime;
+    pauseTime = pauseTime + fitnessTime.elapsed() - tempTime;
 
     collisionDetectionTimer->start();
+
+    qDebug()<<"Simulation resumed";
 }
 
 void SimulatorWindow::on_actionPause_triggered()

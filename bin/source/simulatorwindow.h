@@ -55,6 +55,7 @@ private:
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
 
     QTime fitnessTime;
+    int tempTime;
     int pauseTime;
 
     bool frontTimerWasOn;
