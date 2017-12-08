@@ -24,7 +24,7 @@ SmartVehicle::SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, in
     Sensor* l = new Sensor(-50,20, mapToScene(boundingRect().topRight()));
     sensors.push_back(l);
     //Front mid
-    Sensor* m = new Sensor(0,20, mapToScene(QPointF(boundingRect().center().x(), boundingRect().right())));
+    Sensor* m = new Sensor(0,20, mapToScene(QPointF( boundingRect().right(), boundingRect().center().y())));
     sensors.push_back(m);
 
     color = Qt::green;

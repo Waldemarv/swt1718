@@ -57,10 +57,6 @@ private:
     QTime fitnessTime;
     int tempTime;
     int pauseTime;
-
-    bool frontTimerWasOn;
-    bool leftTimerWasOn;
-    bool rightTimerWasOn;
 };
 
 #endif // SIMULATORWINDOW_H

@@ -282,6 +282,7 @@ void SimulatorWindow::startSimulation()
                 break;
             }
         }
+        scene->update();
         qDebug()<<"Sensor: "<<i<<" , length: "<<length;
     }
     });
@@ -323,7 +324,7 @@ void SimulatorWindow::pauseSimulation()
         rightTimerWasOn = false;
 
     collisionDetectionTimer->stop();
-
+    sensorsTimer->stop();
     tempTime = fitnessTime.elapsed();
 
     qDebug()<<"Simulation paused";
@@ -331,15 +332,15 @@ void SimulatorWindow::pauseSimulation()
 
 void SimulatorWindow::resumeSimulation()
 {
-    if(rightTimerWasOn)
+    /*if(rightTimerWasOn)
         rightTimer->start(10);
     if(leftTimerWasOn)
         leftTimer->start(10);
     if(frontTimerWasOn)
-        frontTimer->start(10);
+        frontTimer->start(10);*/
 
     pauseTime = pauseTime + fitnessTime.elapsed() - tempTime;
-
+    sensorsTimer->start();
     collisionDetectionTimer->start();
 
     qDebug()<<"Simulation resumed";
