@@ -33,6 +33,7 @@ SimulatorCMDL::SimulatorCMDL(Map &nm, QObject *parent) : QObject(parent)
         connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
 
         startSimulation();
+
     }
 }
 
@@ -181,6 +182,8 @@ void SimulatorCMDL::collisionDetection() {
 
 void SimulatorCMDL::startSimulation()
 {
+    qDebug()<<"Simulation wurde gestartet!";
+
     if(sv != 0)
     {
         for(int i = 0; i<sv->getNumberOfSensors(); i++)
