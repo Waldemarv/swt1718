@@ -311,7 +311,7 @@ void SimulatorWindow::physics()
     else if(slowTimer->isActive())
     {
         if(speed > 0)
-            speed -= 0.08;
+            speed -= 0.08 ;
         else if(speed < 0)
             speed = 0;
     }
