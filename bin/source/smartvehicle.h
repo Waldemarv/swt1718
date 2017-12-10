@@ -13,7 +13,7 @@ class SmartVehicle : public QGraphicsItem
 private:
     int angle;
     int rotationSpeed;
-    int speed;
+    double speed;
 
     std::vector<Sensor*> sensors;
 
@@ -21,7 +21,7 @@ private:
 
 public:
     SmartVehicle();
-    SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, int y);
+    SmartVehicle(int nangle, double nspeed, int nrotationSpeed, int x, int y);
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -245,7 +245,7 @@ void SimulatorWindow::startSimulation()
         speed = 0;
     }
     // Autonomes Fahrzeug hinzufügen
-    sv = new SmartVehicle(0,0,2,m.getStartingPoint().x(), m.getStartingPoint().y());
+    sv = new SmartVehicle(0,0,3,m.getStartingPoint().x(), m.getStartingPoint().y());
     scene->addItem(sv);
     //Sensoren der scene hinzufügen
     for(int i = 0; i<sv->getNumberOfSensors(); i++)
@@ -264,11 +264,10 @@ void SimulatorWindow::startSimulation()
     frontTimer->start(10);
 
     //Automatische Abstandserkennung der Senoren
-    /*connect(sensorsTimer, &QTimer::timeout, [this] {
+    connect(sensorsTimer, &QTimer::timeout, [this] {
 
     for(int i=0; i<sv->getNumberOfSensors(); i++)
     {
-        int length;
         for(int j=0;j<1000; j=j+10)
         {
             sv->getSensor(i)->setLength(j);
@@ -293,7 +292,7 @@ void SimulatorWindow::startSimulation()
     }
     });
 
-    sensorsTimer->start(10);*/
+    sensorsTimer->start(10);
 }
 
 void SimulatorWindow::physics()
@@ -312,7 +311,7 @@ void SimulatorWindow::physics()
     else if(slowTimer->isActive())
     {
         if(speed > 0)
-            speed -= 0.02;
+            speed -= 0.1;
         else if(speed < 0)
             speed = 0;
     }

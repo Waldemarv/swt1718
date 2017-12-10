@@ -8,7 +8,7 @@ SmartVehicle::SmartVehicle()
     setPos(100,100);
 }
 
-SmartVehicle::SmartVehicle(int nangle, int nspeed, int nrotationSpeed, int x, int y)
+SmartVehicle::SmartVehicle(int nangle, double nspeed, int nrotationSpeed, int x, int y)
 {
     angle = nangle%360;
     setRotation(angle);
