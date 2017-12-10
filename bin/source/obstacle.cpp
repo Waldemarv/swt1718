@@ -48,6 +48,16 @@ void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 /*! Gibt die Länge des Obstacle zurück
  * \return Länge des Obstacle */
 double Obstacle::getlength() { return length; }
+
+bool Obstacle::isClicked()
+{
+    return clicked;
+}
+
+void Obstacle::setClicked(bool c)
+{
+    clicked = c;
+}
 /*! Gibt die Breite des Obstacle zurück
  * \return Breite des Obstacle */
 double Obstacle::getwidth() {return width; }
@@ -62,6 +72,7 @@ Obstacle::Obstacle(){
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
+    clicked = false;
 }
 
 /*! Erstellt ein neues Obstacle
@@ -75,6 +86,7 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
+    clicked = false;
 }
 
 /*! Verändert die Position des Obstacle
@@ -89,11 +101,20 @@ void Obstacle::setPosition(double x, double y)
 /*! Wählt ein Obstacle an, wenn es angeklickt wurde */
 void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(isSelected()){
-       setSelected(false);
-    } else {
-       setSelected(true);
+    if(event->button() == Qt::RightButton)
+    {
+        if(isSelected() == true)
+        {
+            setSelected(false);
+        }
+        else if(isSelected() == false)
+        {
+            setSelected(true);
+        }
     }
+
+    else if(event->button() == Qt::LeftButton)
+        clicked = true;
 
     update();
     QGraphicsItem::mousePressEvent(event);
