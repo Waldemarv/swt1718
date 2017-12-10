@@ -5,6 +5,7 @@ Tile::Tile() {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
+    clicked = false;
 }
 /*! Erstellt ein Tile
  * \param x x-Position des Tile
@@ -15,6 +16,17 @@ Tile::Tile(double x, double y, double ascent) : ascent(ascent) {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
+    clicked = false;
+}
+
+bool Tile::isClicked()
+{
+    return clicked;
+}
+
+void Tile::setClicked(bool c)
+{
+    clicked = c;
 }
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
@@ -162,6 +174,9 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
             setSelected(true);
         }
     }
+
+    else if(event->button() == Qt::LeftButton)
+        clicked = true;
 
     update();
     QGraphicsItem::mousePressEvent(event);

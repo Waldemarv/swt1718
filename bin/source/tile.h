@@ -28,9 +28,14 @@ protected:
     QPointF leftCenter;
     QPointF rightCenter;
 
+    bool clicked;
+
 public:
     Tile();
     Tile(double x, double y, double ascent);
+
+    bool isClicked();
+    void setClicked(bool c);
 
     virtual QRectF boundingRect();
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

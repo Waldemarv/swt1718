@@ -502,14 +502,23 @@ void Editor::connectScene()
 
         for(unsigned int i=0; i<m->getNumberOfTiles();i++)
         {
+            if(m->getTile(i)->isClicked())
+            {
+                caretaker->setMemento(m->createMemento());
+                qDebug()<<"Memento set";
+                m->getTile(i)->setClicked(false);
+                /*for(unsigned int i=0; i<m->getNumberOfTiles();i++)
+                {
+                    if(m->getTile(i)->isSelected())
+                    {
+                        m->getTile(i)->setSelected(false);
+                    }
+                }*/
+
+            }
             m->getTile(i)->fitIntoGrid();
             m->getTile(i)->fitIntoScene();
-
-            //setTreeTilesPosition(m->getTile(i)->scenePos(), i);
         }
-
-        for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
-            //setTreeObstaclesPosition(m->getObstacle(i)->scenePos(), i);
 
         scene->update();
     });
@@ -531,7 +540,7 @@ void Editor::connectTreeWidget()
 {
     autoSaveTimer = new QTimer;
     connect(autoSaveTimer, &QTimer::timeout, this, [this] {
-        if(getMemento() != m->createMemento())
+        if(caretaker->getMemento() != m->createMemento())
         {
             setMemento(m->createMemento());
             qDebug()<<"impulse";
