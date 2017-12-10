@@ -505,19 +505,18 @@ void Editor::connectScene()
             if(m->getTile(i)->isClicked())
             {
                 caretaker->setMemento(m->createMemento());
-                qDebug()<<"Memento set";
                 m->getTile(i)->setClicked(false);
-                /*for(unsigned int i=0; i<m->getNumberOfTiles();i++)
-                {
-                    if(m->getTile(i)->isSelected())
-                    {
-                        m->getTile(i)->setSelected(false);
-                    }
-                }*/
-
             }
             m->getTile(i)->fitIntoGrid();
             m->getTile(i)->fitIntoScene();
+        }
+        for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
+        {
+            if(m->getObstacle(i)->isClicked())
+            {
+                caretaker->setMemento(m->createMemento());
+                m->getObstacle(i)->setClicked(false);
+            }
         }
 
         scene->update();
@@ -745,7 +744,6 @@ void Editor::on_deleteObstacleButton_clicked()
                 updateTreeNumberOfObstacles();
             }
     }
-    caretaker->setMemento(m->createMemento());
     scene->update();
 }
 

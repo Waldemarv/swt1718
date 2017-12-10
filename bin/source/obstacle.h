@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QDebug>
+#include <QGraphicsSceneMouseEvent>
 
 /*! Klasse für statische Hindernisse */
 class Obstacle :public QGraphicsItem {
@@ -15,6 +16,7 @@ private:
     QPointF* position;
     double width;
     double length;
+    bool clicked;
 
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren
@@ -23,6 +25,9 @@ public:
 
     double getwidth();
     double getlength();
+
+    bool isClicked();
+    void setClicked(bool c);
 
     void updatePosition();
     void setPosition(double x, double y);
