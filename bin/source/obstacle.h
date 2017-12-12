@@ -17,6 +17,7 @@ private:
     double width;
     double length;
     bool clicked;
+    QPainterPath path;
 
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren
@@ -31,6 +32,8 @@ public:
 
     void updatePosition();
     void setPosition(double x, double y);
+    void setPath(QPainterPath p);
+    QPainterPath getPath();
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

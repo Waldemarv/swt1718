@@ -137,6 +137,11 @@ void Map::setMapPath() {
 
         newMapPath.addPath(tiles.at(i)->getPath());
     }
+    for(unsigned int i = 0; i<obstacles.size(); i++) {
+        obstacles.at(i)->setPath(obstacles.at(i)->mapToScene((obstacles.at(i)->getPath())));
+
+        newMapPath.addPath(obstacles.at(i)->getPath());
+    }
     this->mapPath=newMapPath;
 }
 
