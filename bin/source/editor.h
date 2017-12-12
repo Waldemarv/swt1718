@@ -89,6 +89,8 @@ private slots:
 
     void on_actionUndo_triggered();
 
+    void on_dynamicObstacleButton_clicked();
+
 private:
     Ui::Editor *ui;
     Map* m;

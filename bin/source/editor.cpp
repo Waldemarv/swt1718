@@ -502,13 +502,19 @@ void Editor::connectScene()
 
         for(unsigned int i=0; i<m->getNumberOfTiles();i++)
         {
-            if(m->getTile(i)->isClicked())
-            {
+            if(m->getTile(i)->isClicked()){
                 caretaker->setMemento(m->createMemento());
                 m->getTile(i)->setClicked(false);
             }
             m->getTile(i)->fitIntoGrid();
             m->getTile(i)->fitIntoScene();
+
+//            for(unsigned int j=0; j<m->getNumberOfTiles();j++){
+//                if(i=!j && !(m->getTile(i)->boundingRect().intersects(m->getTile(j)->boundingRect()))){
+//                    QMessageBox::warning(this,"Warning!!"," Tiles are intersecting !!");
+//                }
+//            }
+
         }
         for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
         {
@@ -923,4 +929,25 @@ void Editor::on_actionUndo_triggered()
     {
         QMessageBox::about(this, "Kein Memento", "Vor dem Rückgängig machen bitte erst eine Änderung vornehmen !");
     }
+}
+
+void Editor::on_dynamicObstacleButton_clicked()
+{
+    if(m == nullptr)
+    {
+        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+    }
+    else
+    {
+        //Für Undo
+        caretaker->setMemento(m->createMemento());
+
+        Obstacle *o = new DynamicObstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 10, 10,0);
+        m->addObstacle(o);
+        scene->addItem(o);
+
+
+        updateTreeNumberOfObstacles();
+    }
+
 }
