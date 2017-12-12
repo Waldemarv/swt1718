@@ -21,11 +21,6 @@ Map::Map(int x, int y)
 /*! Destruktor für die Map. Es werden erst alle Elememte auf der Map gelöscht, dann die Map selbst */
 Map::~Map()
 {
-    for (auto it = tiles.begin() ; it != tiles.end(); ++it)
-        delete (*it);
-    for(auto it = obstacles.begin() ; it != obstacles.end(); ++it)      //Erweitern für SmartVehicle etc.
-        delete (*it);
-
     tiles.clear();
     obstacles.clear();
 }

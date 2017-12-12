@@ -33,7 +33,7 @@ private:
     Tile* startingTile;
     Tile* endingTile;
 
-    QPainterPath mapPath;
+    QPainterPath mapPath;    
 public:
     Map();
     Map(int x, int y);

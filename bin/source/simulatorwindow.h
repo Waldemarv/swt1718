@@ -54,7 +54,7 @@ private:
     QTimer *slowTimer;
 
     QGraphicsPathItem mapBoundaries;
-    Qt::ItemSelectionMode mode = Qt::IntersectsItemShape; //Modus für Kollisionsabfrage
+    Qt::ItemSelectionMode mode = Qt::IntersectsItemShape;
 
     QTime fitnessTime;
     int tempTime;
