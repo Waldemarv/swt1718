@@ -32,7 +32,9 @@ void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         pen.setColor(Qt::red);
         pen.setWidth(3);
         painter->setPen(pen);
-        painter->drawRect(boundingRect());
+        QPainterPath newPath;
+        newPath.addRect(boundingRect());
+        painter->drawPath(newPath);
     }
     // Change Pen: Color to Black and Size to 3
     QPen mainPen;
@@ -95,6 +97,15 @@ Obstacle::Obstacle(double x, double y, double width, double length) : width(widt
 void Obstacle::setPosition(double x, double y)
 {
     setPos(x,y);
+}
+
+void Obstacle::setPath(QPainterPath p)
+{
+    this->path = p;
+}
+
+QPainterPath Obstacle::getPath(){
+    return this->path;
 }
 
 // Mouse Event Handlers
