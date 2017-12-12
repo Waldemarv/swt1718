@@ -66,28 +66,30 @@ void Startingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     QPainterPath newPath;
     if (direction == 0)
     {
-        newPath.moveTo(rec.topLeft());
-        newPath.lineTo(rec.topRight());
-        newPath.moveTo(rec.bottomLeft());
-        newPath.lineTo(rec.bottomRight());
-        newPath.moveTo(rec.topLeft());
+        newPath.moveTo(rec.topRight());
+        newPath.lineTo(rec.topLeft());
         newPath.lineTo(rec.bottomLeft());
+        newPath.lineTo(rec.bottomRight());
+        newPath.moveTo(rec.topRight());
+
     }
     else if (direction == 1)
     {
-        newPath.moveTo(rec.topLeft());
-        newPath.lineTo(rec.bottomLeft());
-        newPath.moveTo(rec.topLeft());
+        newPath.moveTo(rec.bottomLeft());
+        newPath.lineTo(rec.topLeft());
         newPath.lineTo(rec.topRight());
         newPath.lineTo(rec.bottomRight());
+        newPath.moveTo(rec.bottomLeft());
+
     }
     else if(direction == 2)
     {
         newPath.moveTo(rec.topLeft());
         newPath.lineTo(rec.topRight());
-        newPath.moveTo(rec.bottomLeft());
         newPath.lineTo(rec.bottomRight());
-        newPath.lineTo(rec.topRight());
+        newPath.lineTo(rec.bottomLeft());
+        newPath.moveTo(rec.topLeft());
+
     }
     else if (direction == 3)
     {
@@ -95,6 +97,7 @@ void Startingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
         newPath.lineTo(rec.bottomLeft());
         newPath.lineTo(rec.bottomRight());
         newPath.lineTo(rec.topRight());
+        newPath.moveTo(rec.topLeft());
     }
     this->path=newPath;
     painter->drawPath(path);

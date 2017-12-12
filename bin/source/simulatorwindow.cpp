@@ -17,10 +17,14 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         scene->setSceneRect(0,0,m.getSizeX()*m.getGridSize(),m.getSizeY()*m.getGridSize());
         ui->graphicsView->setScene(scene);
         //Gesamtpfad der Map bestimmen und zeichnen
-        this->mapPath = m.getMapPath();
+        QPainterPathStroker stroke;
+        this->mapPath = stroke.createStroke(m.getMapPath());
         scene->addPath(mapPath);
 
-        mapBoundaries.setPath(m.getMapPath());
+        //Rectangle für Ziel erstellen
+        this->goal = QRectF(m.getEndingPoint(),QSizeF(50,50));
+        scene->addRect(goal,QPen(Qt::yellow),QBrush(Qt::BDiagPattern));
+        mapBoundaries.setPath(mapPath);
 
         for(int i=0; i<this->m.getNumberOfObstacles();i++)
         {
@@ -59,22 +63,37 @@ void SimulatorWindow::collisionDetection() {
 
     //Keine Kollision mit der Strecke
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
-        sv->setColor(Qt::green);
-        for(int i=0; i<m.getNumberOfObstacles(); i++)
-        {
-            if(m.getObstacle(i)->collidesWithItem(sv, mode))
+        //Überprüfen ob Ziel erreicht
+        if(goal.contains(sv->pos())) {
+            qDebug() << "Ziel erreicht!";
+            sv->setColor(Qt::blue);
+            collisionDetectionTimer->stop();
+            frontTimer->stop();
+            leftTimer->stop();
+            rightTimer->stop();
+            accelerationTimer->stop();
+            breakTimer->stop();
+            slowTimer->stop();
+            speed=0;
+        }
+        else {
+            sv->setColor(Qt::green);
+            for(int i=0; i<m.getNumberOfObstacles(); i++)
             {
-                //Kollision mit Obstacle
-                qDebug()<<"collision with obstacle at: "<<sv->pos();
-                sv->setColor(Qt::red);
-                collisionDetectionTimer->stop();
-                frontTimer->stop();
-                leftTimer->stop();
-                rightTimer->stop();
-                accelerationTimer->stop();
-                breakTimer->stop();
-                slowTimer->stop();
-                speed=0;
+                if(m.getObstacle(i)->collidesWithItem(sv, mode))
+                {
+                    //Kollision mit Obstacle
+                    qDebug()<<"collision with obstacle at: "<<sv->pos();
+                    sv->setColor(Qt::red);
+                    collisionDetectionTimer->stop();
+                    frontTimer->stop();
+                    leftTimer->stop();
+                    rightTimer->stop();
+                    accelerationTimer->stop();
+                    breakTimer->stop();
+                    slowTimer->stop();
+                    speed=0;
+                }
             }
         }
     }
