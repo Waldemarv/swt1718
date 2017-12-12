@@ -842,7 +842,7 @@ void Editor::on_endingPointButton_clicked()
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
         //Füge es dem Tree mit position hinzu
-
+        m->setEndingPoint(e->x(),e->y());
         ui->endingPointButton->setEnabled(false);
     }// TODO
 }

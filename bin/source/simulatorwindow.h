@@ -55,6 +55,7 @@ private:
 
     QGraphicsPathItem mapBoundaries;
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape;
+    QRectF goal;
 
     QTime fitnessTime;
     int tempTime;
