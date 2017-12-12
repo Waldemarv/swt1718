@@ -660,7 +660,7 @@ void Editor::on_staticObstacleButton_clicked()
     {
         //Für Undo
         caretaker->setMemento(m->createMemento());
-        Obstacle *o = new Obstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 20, 20);
+        Obstacle *o = new Obstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 8, 8);
         m->addObstacle(o);
         scene->addItem(o);
 
@@ -942,10 +942,9 @@ void Editor::on_dynamicObstacleButton_clicked()
         //Für Undo
         caretaker->setMemento(m->createMemento());
 
-        Obstacle *o = new DynamicObstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 10, 10,0);
+        Obstacle *o = new DynamicObstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 5, 5, 0);
         m->addObstacle(o);
         scene->addItem(o);
-
 
         updateTreeNumberOfObstacles();
     }

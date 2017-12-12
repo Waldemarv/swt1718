@@ -22,6 +22,11 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 
         mapBoundaries.setPath(m.getMapPath());
 
+        for(int i=0; i<this->m.getNumberOfObstacles();i++)
+        {
+            m.getObstacle(i)->setSelected(false);
+            scene->addItem(m.getObstacle(i));
+        }
 
         sv=0;
         pauseTime = 0;
@@ -51,108 +56,31 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 
 // Für Simulator umänderns
 void SimulatorWindow::collisionDetection() {
-    //Kein Sensor an
-    /*if(!mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && !mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
-    {
-        if(leftTimer->isActive())
-            leftTimer->stop();
-        if(rightTimer->isActive())
-            rightTimer->stop();
-        if(!frontTimer->isActive())
-            frontTimer->start(10);
-    }
-    //Alle Sensoren an
-    else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
-    {
-        if(leftTimer->isActive())
-            leftTimer->stop();
-        if(rightTimer->isActive())
-            rightTimer->stop();
-        if(!frontTimer->isActive())
-            frontTimer->start(10);
-    }
-    //Rechter und linker Sensor an
-    else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(1), mode))
-    {
-        if(leftTimer->isActive())
-            leftTimer->stop();
-        if(rightTimer->isActive())
-            rightTimer->stop();
-        if(!frontTimer->isActive())
-            frontTimer->start(10);
-    }
-    //Rechter und mittlerer Sensor an
-    else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
-    {
-        if(!leftTimer->isActive())
-            leftTimer->start(10);
-        if(rightTimer->isActive())
-            rightTimer->stop();
-        if(frontTimer->isActive())
-            frontTimer->stop();
-    }
-    //Linker und mittlerer Sensor an
-    else if(mapBoundaries.collidesWithItem(sv->getSensor(1), mode) && mapBoundaries.collidesWithItem(sv->getSensor(2), mode))
-    {
-        if(!rightTimer->isActive())
-            rightTimer->start(10);
-        if(leftTimer->isActive())
-            leftTimer->stop();
-        if(frontTimer->isActive())
-            frontTimer->stop();
-    }
-    else if(mapBoundaries.collidesWithItem(sv->getSensor(0), mode))
-    {
-        //Right Sensor
-        if(!leftTimer->isActive())
-           leftTimer->start(10);
 
-        if(rightTimer->isActive())
-           rightTimer->stop();
-
-        if(!frontTimer->isActive())
-            frontTimer->start(10);
-    }
-    else if (mapBoundaries.collidesWithItem(sv->getSensor(1), mode))
-    {
-        //Left Sensor
-        if(!rightTimer->isActive())
-           rightTimer->start(10);
-
-        if(leftTimer->isActive())
-           leftTimer->stop();
-
-        if(!frontTimer->isActive())
-            frontTimer->start(10);
-    }
-    else if (mapBoundaries.collidesWithItem(sv->getSensor(1), mode))
-    {
-        //Front Sensor
-        if(!rightTimer->isActive())
-           rightTimer->start(10);
-
-        if(leftTimer->isActive())
-           leftTimer->stop();
-
-        if(frontTimer->isActive())
-            frontTimer->stop();
-    }
-
-    for(int i=0; i<sv->getNumberOfSensors(); i++)
-    {
-        if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
-            sv->getSensor(i)->setColor(Qt::green);
-        else
-           sv->getSensor(i)->setColor(Qt::red);
-    }*/
-
-    //Kollision vom SmartVehicle
+    //Keine Kollision mit der Strecke
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
         sv->setColor(Qt::green);
+        for(int i=0; i<m.getNumberOfObstacles(); i++)
+        {
+            if(m.getObstacle(i)->collidesWithItem(sv, mode))
+            {
+                //Kollision mit Obstacle
+                qDebug()<<"collision with obstacle at: "<<sv->pos();
+                sv->setColor(Qt::red);
+                collisionDetectionTimer->stop();
+                frontTimer->stop();
+                leftTimer->stop();
+                rightTimer->stop();
+                accelerationTimer->stop();
+                breakTimer->stop();
+                slowTimer->stop();
+                speed=0;
+            }
+        }
     }
     else {
-        //Kollision
-        qDebug()<<"collision at: "<<sv->pos();
+        //Kollision mit der Strecke
+        qDebug()<<"collision with map at: "<<sv->pos();
         sv->setColor(Qt::red);
         collisionDetectionTimer->stop();
         frontTimer->stop();
@@ -266,16 +194,35 @@ void SimulatorWindow::startSimulation()
     //Automatische Abstandserkennung der Senoren
     connect(sensorsTimer, &QTimer::timeout, [this] {
 
+    /* Die Idee dieser Abstandserkennungsfunktion besteht darin, dass Jeder Sensor iterativ betrachtet wird, dann die länge immer um eine feste anzahl iterativ erhöht wird
+     * und bei jeder iteration geschaut wird, ob der sensor auf etwas (Obstacle oder MapPath) gestoßen ist. Falls dies der Fall ist, wird die Länge auf exakt diese Strecke zum nächsten Obstacle/Rand angepast.
+     * Somit ist in den Sensoren immer die aktuelle länge gespeichert und sie lässt sich leicht (nahezu) kontinuierlich ausgeben*/
     for(int i=0; i<sv->getNumberOfSensors(); i++)
     {
+        /* Hier wird die Sensorlänge hochgezählt. 1000 ist in dem Fall ein fester GrenzWert bei dem ich dachte, das höhere Werte dem System nicht mehr informationen geben würden (MapSize und GridSize beachten) - kann gerne noch kleiner angepasst werden*/
         for(int j=0;j<1000; j=j+10)
         {
             sv->getSensor(i)->setLength(j);
-            if(mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+
+            /*Da Obstacles bewegbar sind, muss hier eine Zwischenfunktion eingefügt werden, die immer alle Sensoren mit allen Obstacles abgleicht.
+             * Hierbei wird jedes Obstacle für den aktuell betrachteten Sensor überprüft. Bei einer Kollision mit dem Sensor wird true, andernfalls false zurückgegeben*/
+            auto collisionObstacleDetecition = [this, i]{
+                for(int o=0; o<m.getNumberOfObstacles(); o++)
+                {
+                    if(m.getObstacle(o)->collidesWithItem(sv->getSensor(i), mode))
+                        return true;
+                }
+                return false;    };
+
+            /* Hier wird Abgefragt, ob es eine Kollision mit einem Obstacle gab*/
+            bool col = collisionObstacleDetecition();
+            if(col)
             {
+                /* Wenn ja, wird der Abstandswert des Sensors auf die länge angepasst*/
                 for(int k=0; k<10; k++)
                 {
-                    if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+                    bool col = collisionObstacleDetecition();
+                    if(!col)
                     {
                         qDebug()<<(j-k);
                         break;
@@ -287,12 +234,30 @@ void SimulatorWindow::startSimulation()
                 }
                 break;
             }
+            /* Hier wird Abgefragt, ob es dann alternativ eine Kollision mit dem MapPath gab*/
+            else if(mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+            {
+                /* Auch hier wird die Länge angepasst*/
+               for(int k=0; k<10; k++)
+               {
+                   if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+                   {
+                       qDebug()<<(j-k);
+                       break;
+                   }
+                   else
+                   {
+                       sv->getSensor(i)->setLength(j-k);
+                   }
+               }
+               break;
+            }
         }
         scene->update();
     }
     });
 
-    sensorsTimer->start(10);
+    sensorsTimer->start(30);
 }
 
 void SimulatorWindow::physics()
