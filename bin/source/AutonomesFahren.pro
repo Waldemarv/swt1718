@@ -41,7 +41,8 @@ SOURCES += \
     memento.cpp \
     caretaker.cpp \
     sensor.cpp \
-    simulatorcmdl.cpp
+    simulatorcmdl.cpp \
+    dynamicobstacle.cpp
 
 HEADERS += \
         editor.h \
@@ -60,7 +61,8 @@ HEADERS += \
     memento.h \
     caretaker.h \
     sensor.h \
-    simulatorcmdl.h
+    simulatorcmdl.h \
+    dynamicobstacle.h
 
 FORMS += \
         editor.ui \

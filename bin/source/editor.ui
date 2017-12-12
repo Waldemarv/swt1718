@@ -174,7 +174,7 @@
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>81</width>
+            <width>131</width>
             <height>61</height>
            </rect>
           </property>
@@ -185,7 +185,7 @@
          <widget class="QPushButton" name="deleteObstacleButton">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>330</x>
             <y>20</y>
             <width>81</width>
             <height>61</height>
@@ -193,6 +193,19 @@
           </property>
           <property name="text">
            <string>Delete</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="dynamicObstacleButton">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>20</y>
+            <width>151</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Dynamic Obstacle</string>
           </property>
          </widget>
         </widget>
@@ -244,7 +257,7 @@
      <x>0</x>
      <y>0</y>
      <width>1500</width>
-     <height>17</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -4,6 +4,7 @@
 #include "straight.h"
 #include "turn.h"
 #include "obstacle.h"
+#include "dynamicobstacle.h"
 #include "intersection.h"
 #include "tintersection.h"
 #include "startingtile.h"
@@ -52,6 +53,7 @@ public:
     void setStartingPoint(int x, int y);
     void setEndingPoint(int x, int y);
     void setSize(int x, int y);
+
     void addTile(Tile* t);
     void addObstacle(Obstacle* o);
 

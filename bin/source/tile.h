@@ -46,6 +46,7 @@ public:
 
     void fitIntoGrid();
     void fitIntoScene();
+
     void setIndex(int i);
 
     void setPosition(double x, double y);
