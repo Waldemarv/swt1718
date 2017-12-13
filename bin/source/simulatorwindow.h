@@ -34,6 +34,9 @@ private slots:
     void pauseSimulation();
     void resumeSimulation();
 
+    void connectSensorCalculation();
+    void connectFitnessTime();
+
     void on_actionPause_triggered();
 
     void on_actionResume_triggered();

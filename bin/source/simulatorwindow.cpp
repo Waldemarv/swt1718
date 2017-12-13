@@ -51,6 +51,9 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
         connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
+        //Funktionen für firnesstime connect und sensor(Length)Calculation die mit entsprechenden Timern aktiviert werden
+        connectFitnessTime();
+        connectSensorCalculation();
 
         //Beschleunigungs- und Bremsphysik
         connect(frontTimer, &QTimer::timeout, [this] { physics(); });
@@ -202,79 +205,9 @@ void SimulatorWindow::startSimulation()
     collisionDetectionTimer->start();
     //fitnessTime starten und aktualisieren
     fitnessTime.start();
-    connect(collisionDetectionTimer, &QTimer::timeout, [this] {
-
-        QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number((fitnessTime.elapsed()-pauseTime)/1000), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
-        ui->timeLabel->setText(time);
-    });
-
     //frontTimer starten um beschleunigungs und bremssignale zu erhalten
     frontTimer->start(10);
-
-    //Automatische Abstandserkennung der Senoren
-    connect(sensorsTimer, &QTimer::timeout, [this] {
-
-    /* Die Idee dieser Abstandserkennungsfunktion besteht darin, dass Jeder Sensor iterativ betrachtet wird, dann die länge immer um eine feste anzahl iterativ erhöht wird
-     * und bei jeder iteration geschaut wird, ob der sensor auf etwas (Obstacle oder MapPath) gestoßen ist. Falls dies der Fall ist, wird die Länge auf exakt diese Strecke zum nächsten Obstacle/Rand angepast.
-     * Somit ist in den Sensoren immer die aktuelle länge gespeichert und sie lässt sich leicht (nahezu) kontinuierlich ausgeben*/
-    for(int i=0; i<sv->getNumberOfSensors(); i++)
-    {
-        /* Hier wird die Sensorlänge hochgezählt. 1000 ist in dem Fall ein fester GrenzWert bei dem ich dachte, das höhere Werte dem System nicht mehr informationen geben würden (MapSize und GridSize beachten) - kann gerne noch kleiner angepasst werden*/
-        for(int j=0;j<1000; j=j+10)
-        {
-            sv->getSensor(i)->setLength(j);
-
-            /*Da Obstacles bewegbar sind, muss hier eine Zwischenfunktion eingefügt werden, die immer alle Sensoren mit allen Obstacles abgleicht.
-             * Hierbei wird jedes Obstacle für den aktuell betrachteten Sensor überprüft. Bei einer Kollision mit dem Sensor wird true, andernfalls false zurückgegeben*/
-            auto collisionObstacleDetecition = [this, i]{
-                for(int o=0; o<m.getNumberOfObstacles(); o++)
-                {
-                    if(m.getObstacle(o)->collidesWithItem(sv->getSensor(i), mode))
-                        return true;
-                }
-                return false;    };
-
-            /* Hier wird Abgefragt, ob es eine Kollision mit einem Obstacle gab*/
-            bool collision = collisionObstacleDetecition();
-            if(collision)
-            {
-                /* Wenn ja, wird der Abstandswert des Sensors auf die länge angepasst*/
-                for(int k=0; k<10; k++)
-                {
-                    collision = collisionObstacleDetecition();
-                    if(!collision)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        sv->getSensor(i)->setLength(j-k);
-                    }
-                }
-                break;
-            }
-            /* Hier wird Abgefragt, ob es dann alternativ eine Kollision mit dem MapPath gab*/
-            else if(mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
-            {
-                /* Auch hier wird die Länge angepasst*/
-               for(int k=0; k<10; k++)
-               {
-                   if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
-                   {
-                       break;
-                   }
-                   else
-                   {
-                       sv->getSensor(i)->setLength(j-k);
-                   }
-               }
-               break;
-            }
-        }
-        scene->update();
-    }
-    });
-
+    //Sensorcalculation aktivieren
     sensorsTimer->start(30);
 }
 
@@ -344,6 +277,82 @@ void SimulatorWindow::resumeSimulation()
     sensorsTimer->start();
 
     qDebug()<<"Simulation resumed";
+}
+
+void SimulatorWindow::connectSensorCalculation()
+{
+    //Automatische Abstandserkennung der Senoren
+    connect(sensorsTimer, &QTimer::timeout, [this] {
+
+    /* Die Idee dieser Abstandserkennungsfunktion besteht darin, dass Jeder Sensor iterativ betrachtet wird, dann die länge immer um eine feste anzahl iterativ erhöht wird
+     * und bei jeder iteration geschaut wird, ob der sensor auf etwas (Obstacle oder MapPath) gestoßen ist. Falls dies der Fall ist, wird die Länge auf exakt diese Strecke zum nächsten Obstacle/Rand angepast.
+     * Somit ist in den Sensoren immer die aktuelle länge gespeichert und sie lässt sich leicht (nahezu) kontinuierlich ausgeben*/
+    for(int i=0; i<sv->getNumberOfSensors(); i++)
+    {
+        /* Hier wird die Sensorlänge hochgezählt. 1000 ist in dem Fall ein fester GrenzWert bei dem ich dachte, das höhere Werte dem System nicht mehr informationen geben würden (MapSize und GridSize beachten) - kann gerne noch kleiner angepasst werden*/
+        for(int j=0;j<1000; j=j+10)
+        {
+            sv->getSensor(i)->setLength(j);
+
+            /*Da Obstacles bewegbar sind, muss hier eine Zwischenfunktion eingefügt werden, die immer alle Sensoren mit allen Obstacles abgleicht.
+             * Hierbei wird jedes Obstacle für den aktuell betrachteten Sensor überprüft. Bei einer Kollision mit dem Sensor wird true, andernfalls false zurückgegeben*/
+            auto collisionObstacleDetecition = [this, i]{
+                for(int o=0; o<m.getNumberOfObstacles(); o++)
+                {
+                    if(m.getObstacle(o)->collidesWithItem(sv->getSensor(i), mode))
+                        return true;
+                }
+                return false;    };
+
+            /* Hier wird Abgefragt, ob es eine Kollision mit einem Obstacle gab*/
+            bool collision = collisionObstacleDetecition();
+            if(collision)
+            {
+                /* Wenn ja, wird der Abstandswert des Sensors auf die länge angepasst*/
+                for(int k=0; k<10; k++)
+                {
+                    collision = collisionObstacleDetecition();
+                    if(!collision)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        sv->getSensor(i)->setLength(j-k);
+                    }
+                }
+                break;
+            }
+            /* Hier wird Abgefragt, ob es dann alternativ eine Kollision mit dem MapPath gab*/
+            else if(mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+            {
+                /* Auch hier wird die Länge angepasst*/
+               for(int k=0; k<10; k++)
+               {
+                   if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
+                   {
+                       break;
+                   }
+                   else
+                   {
+                       sv->getSensor(i)->setLength(j-k);
+                   }
+               }
+               break;
+            }
+        }
+        scene->update();
+    }
+    });
+}
+
+void SimulatorWindow::connectFitnessTime()
+{
+    connect(collisionDetectionTimer, &QTimer::timeout, [this] {
+
+        QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number((fitnessTime.elapsed()-pauseTime)/1000), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
+        ui->timeLabel->setText(time);
+    });
 }
 
 void SimulatorWindow::on_actionPause_triggered()
