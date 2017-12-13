@@ -21,6 +21,7 @@ Editor::Editor(QWidget *parent) :
     ui->treeWidget->setColumnWidth(2,60);
 
     caretaker = new Caretaker;
+    animationTimer = new QTimer();
 }
 
 Editor::~Editor()
@@ -117,6 +118,9 @@ void Editor::saveMap()
         }
         else
         {
+
+    animationTimer->stop();
+
     //Pfad zum speichern wählen
     QString currentPath = QDir::currentPath();
     currentPath.append("/source/Maps/Map.xml");
@@ -166,9 +170,6 @@ void Editor::saveMap()
     end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
     points.appendChild(end);
 
-    //QDomElement smartVehicle = document.createElement("SmartVehicle");
-    //smartVehicle.setAttribute("Speed:", QString::number(m->getSmartVehicle.getSpeed()));
-
     //Unterkategorie für obstacles
     QDomElement obstacles = document.createElement("Obstacles");
     root.appendChild(obstacles);
@@ -177,12 +178,19 @@ void Editor::saveMap()
     for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
     {
         QDomElement node = document.createElement("Obstacle");
-        node.setAttribute("ID:", QString::number(i));
         node.setAttribute("Typ:", m->getObstacle(i)->getType());
         node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
         node.setAttribute("length:", QString::number(m->getObstacle(i)->getlength()));
         node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
         node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
+        if(m->getObstacle(i)->getType() == "dynamicObstacle")
+        {
+            node.setAttribute("startingPointX", QString::number(m->getObstacle(i)->getStartingPoint().x()));
+            node.setAttribute("startingPointY", QString::number(m->getObstacle(i)->getStartingPoint().y()));
+            node.setAttribute("endingPointX", QString::number(m->getObstacle(i)->getEndingPoint().x()));
+            node.setAttribute("endingPointY", QString::number(m->getObstacle(i)->getEndingPoint().y()));
+            node.setAttribute("rotation", QString::number(m->getObstacle(i)->rotation()));
+        }
         obstacles.appendChild(node);
     }
 
@@ -195,7 +203,6 @@ void Editor::saveMap()
     {
         QDomElement node = document.createElement("Tile");
         node.setAttribute("Typ:", m->getTile(i)->getType());
-        node.setAttribute("ID:", QString::number(i));
         node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
         node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
         node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
@@ -307,7 +314,20 @@ void Editor::loadMap()
             scene->addItem(o);
             m->addObstacle(o);
             }
-            //elseif(obstaclesAt.attribute("Typ:" == "dynamicObstacle") TODO: Für dynamic Obstacle ergänzen
+            else if(obstaclesAt.attribute("Typ:") == "dynamicObstacle")
+            {
+            int dynamicObstacleStartingPointX = obstaclesAt.attribute("startingPointX:").toInt();
+            int dynamicObstacleStartingPointY = obstaclesAt.attribute("startingPointY:").toInt();
+            int dynamicObstacleEndingPointX = obstaclesAt.attribute("endingPointX:").toInt();
+            int dynamicObstacleEndingPointY = obstaclesAt.attribute("endingPoiuntY:").toInt();
+            double speed = obstaclesAt.attribute("speed:").toDouble();
+            double rotation = obstaclesAt.attribute("rotation").toDouble();
+
+            Obstacle *o = new DynamicObstacle(obstacleX, obstacleY, obstacleWidth, obstacleLength, speed,QPointF(dynamicObstacleStartingPointX, dynamicObstacleStartingPointY), QPointF(dynamicObstacleEndingPointX, dynamicObstacleEndingPointY));
+            o->calculateRotation();
+            scene->addItem(o);
+            m->addObstacle(o);
+            }
 
             updateTreeNumberOfObstacles();
         }
@@ -364,6 +384,10 @@ void Editor::loadMap()
             updateTreeNumberOfTiles();
             }
         }
+    else
+    {
+        QMessageBox::about(this, "Öffnen Fehlgeschlagen..","Leider konnte die Datei nicht geöffnet werden.");
+    }
     }
     else
     {
@@ -771,7 +795,6 @@ void Editor::on_intersectionButton_clicked()
         scene->addItem(t);
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
-        //Füge es dem Tree mit position hinzu
     }
 }
 
@@ -793,7 +816,7 @@ void Editor::on_tIntersectionButton_clicked()
         scene->addItem(t);
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
-        //Füge es dem Tree mit position hinzu
+
     }
 }
 
@@ -816,8 +839,6 @@ void Editor::on_startingPointButton_clicked()
         scene->addItem(s);
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
-        //Füge es dem Tree mit position hinzu
-
         ui->startingPointButton->setEnabled(false);
     }
 }
@@ -841,10 +862,9 @@ void Editor::on_endingPointButton_clicked()
         scene->addItem(e);
         //Lass die aktuelle Zahl der Tiles aktualisieren
         updateTreeNumberOfTiles();
-        //Füge es dem Tree mit position hinzu
         m->setEndingPoint(e->x(),e->y());
         ui->endingPointButton->setEnabled(false);
-    }// TODO
+    }
 }
 
 void Editor::on_actionSimulation_starten_triggered()
@@ -942,9 +962,15 @@ void Editor::on_dynamicObstacleButton_clicked()
         //Für Undo
         caretaker->setMemento(m->createMemento());
 
-        Obstacle *o = new DynamicObstacle(m->getNumberOfObstacles()*(m->getGridSize()/2), 0, 5, 5, 0);
+        Obstacle *o = new DynamicObstacle(200, 50, 5, 5, 1, QPointF(200,50), QPointF(200,0));
+
+        connect(animationTimer, SIGNAL(timeout()), scene, SLOT(advance()));
+
+        o->calculateRotation();
         m->addObstacle(o);
         scene->addItem(o);
+
+        animationTimer->start(10);
 
         updateTreeNumberOfObstacles();
     }

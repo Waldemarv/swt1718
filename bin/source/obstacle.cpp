@@ -7,6 +7,16 @@ QString Obstacle::getType()
     return "staticObstacle";
 }
 
+QPointF Obstacle::getStartingPoint()
+{
+
+}
+
+QPointF Obstacle::getEndingPoint()
+{
+
+}
+
 /*! Erstellt ein Begrenzungsrechteck für das Obstacle. Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
  * \return Begrenzungsrechteck des Obstacle */
 QRectF Obstacle::boundingRect() const
@@ -32,9 +42,7 @@ void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         pen.setColor(Qt::red);
         pen.setWidth(3);
         painter->setPen(pen);
-        QPainterPath newPath;
-        newPath.addRect(boundingRect());
-        painter->drawPath(newPath);
+        painter->drawRect(boundingRect());
     }
     // Change Pen: Color to Black and Size to 3
     QPen mainPen;
@@ -70,7 +78,6 @@ QPointF* Obstacle::getPosition() { return position; }
 
 /*! Erstellt ein neues Obstacle ohne Größe und Position auf der Map */
 Obstacle::Obstacle(){
-    position = new QPointF();
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
@@ -84,7 +91,7 @@ Obstacle::Obstacle(){
  * \param length Höhe des Obstacle */
 Obstacle::Obstacle(double x, double y, double width, double length) : width(width), length(length)
 {
-    position = new QPointF(x,y);
+    setPos(x,y);
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
@@ -99,17 +106,18 @@ void Obstacle::setPosition(double x, double y)
     setPos(x,y);
 }
 
-void Obstacle::setPath(QPainterPath p)
+void Obstacle::calculateRotation()
 {
-    this->path = p;
-}
 
-QPainterPath Obstacle::getPath(){
-    return this->path;
 }
 
 // Mouse Event Handlers
 /*! Wählt ein Obstacle an, wenn es angeklickt wurde */
+void Obstacle::advance(int phase)
+{
+
+}
+
 void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::RightButton)
