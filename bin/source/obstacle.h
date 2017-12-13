@@ -12,15 +12,16 @@
 /*! Klasse für statische Hindernisse */
 class Obstacle :public QGraphicsItem {
 
-private:
+protected:
     QPointF* position;
     double width;
     double length;
     bool clicked;
-    QPainterPath path;
+
+    virtual void advance(int phase);
 
 public:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);  //TODO: Für löschen augewählter Elemente sowie "Auswahlumrandung" implementieren
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
@@ -32,12 +33,15 @@ public:
 
     void updatePosition();
     void setPosition(double x, double y);
-    void setPath(QPainterPath p);
-    QPainterPath getPath();
+
+    virtual void calculateRotation();
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
+    virtual QPointF getStartingPoint();
+    virtual QPointF getEndingPoint();
+
 
     Obstacle();
     Obstacle(double x, double y, double width, double length);

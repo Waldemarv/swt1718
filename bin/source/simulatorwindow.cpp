@@ -22,10 +22,11 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         scene->addPath(mapPath);
 
         //Rectangle für Ziel erstellen
-        this->goal = QRectF(m.getEndingPoint(),QSizeF(50,50));
+        goal = QRectF(m.getEndingTile()->pos(),QSizeF(50,50));
         scene->addRect(goal,QPen(Qt::yellow),QBrush(Qt::BDiagPattern));
+        //Map Path setzen
         mapBoundaries.setPath(mapPath);
-
+        //Obstacles einfügen
         for(int i=0; i<this->m.getNumberOfObstacles();i++)
         {
             m.getObstacle(i)->setSelected(false);
@@ -234,16 +235,15 @@ void SimulatorWindow::startSimulation()
                 return false;    };
 
             /* Hier wird Abgefragt, ob es eine Kollision mit einem Obstacle gab*/
-            bool col = collisionObstacleDetecition();
-            if(col)
+            bool collision = collisionObstacleDetecition();
+            if(collision)
             {
                 /* Wenn ja, wird der Abstandswert des Sensors auf die länge angepasst*/
                 for(int k=0; k<10; k++)
                 {
-                    bool col = collisionObstacleDetecition();
-                    if(!col)
+                    collision = collisionObstacleDetecition();
+                    if(!collision)
                     {
-                        qDebug()<<(j-k);
                         break;
                     }
                     else
@@ -261,7 +261,6 @@ void SimulatorWindow::startSimulation()
                {
                    if(!mapBoundaries.collidesWithItem(sv->getSensor(i), mode))
                    {
-                       qDebug()<<(j-k);
                        break;
                    }
                    else
