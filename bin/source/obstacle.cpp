@@ -77,7 +77,8 @@ double Obstacle::getwidth() {return width; }
 QPointF* Obstacle::getPosition() { return position; }
 
 /*! Erstellt ein neues Obstacle ohne Größe und Position auf der Map */
-Obstacle::Obstacle(){
+Obstacle::Obstacle()
+{
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsFocusable);
