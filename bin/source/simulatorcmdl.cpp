@@ -2,10 +2,12 @@
 
 SimulatorCMDL::SimulatorCMDL(Map &nm, QObject *parent) : QObject(parent)
 {
-    if(&nm == nullptr) {
+    if(&nm == nullptr) 
+	{
         //TODO : Egal was geklickt wird : Es muss eine Map geladen werden
     }
-    else {
+    else 
+	{
 
         this->m = nm;
         //Scene erstellen
@@ -38,7 +40,8 @@ SimulatorCMDL::SimulatorCMDL(Map &nm, QObject *parent) : QObject(parent)
 }
 
 // Für Simulator umändern
-void SimulatorCMDL::collisionDetection() {
+void SimulatorCMDL::collisionDetection() 
+{
 
     /*verhalten für Andere Vehicles nutzen*/
     //Kein Sensor an
@@ -129,9 +132,11 @@ void SimulatorCMDL::collisionDetection() {
     }*/
 
     //Kollision vom SmartVehicle
-    if(!mapBoundaries.collidesWithItem(sv,mode)) {
+    if(!mapBoundaries.collidesWithItem(sv,mode)) 
+	{
     }
-    else {
+    else 
+	{
         //Kollision
         qDebug()<<"collision at: "<<sv->pos();
         collisionDetectionTimer->stop();

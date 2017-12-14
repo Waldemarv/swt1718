@@ -128,10 +128,12 @@ void Map::setEndingTile(Tile *t)
 }
 
 /*! Fügt die einzelnen Begrenzungen der Tiles zu einem Gesamtpfad zusammen */
-void Map::setMapPath() {
+void Map::setMapPath()
+{
     QPainterPath newMapPath;
 
-    for(unsigned int i = 0; i<tiles.size(); i++) {
+    for(unsigned int i = 0; i<tiles.size(); i++) 
+	{
 
         tiles.at(i)->setPath(tiles.at(i)->mapToScene(tiles.at(i)->getPath()));
         newMapPath.addPath(tiles.at(i)->getPath());

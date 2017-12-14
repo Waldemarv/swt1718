@@ -6,10 +6,12 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
     ui(new Ui::SimulatorWindow)
 {
     ui->setupUi(this);
-    if(&nm == nullptr) {
+    if(&nm == nullptr) 
+	{
         //TODO : Egal was geklickt wird : Es muss eine Map geladen werden
     }
-    else {
+    else 
+	{
         this->m = nm;
         //Scene erstellen
         scene = new QGraphicsScene(this);
@@ -63,7 +65,8 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 }
 
 // Für Simulator umänderns
-void SimulatorWindow::collisionDetection() {
+void SimulatorWindow::collisionDetection() 
+{
 
     //Keine Kollision mit der Strecke
     if(!mapBoundaries.collidesWithItem(sv,mode)) {

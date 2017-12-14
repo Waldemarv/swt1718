@@ -18,7 +18,8 @@
 #include <QUndoCommand>
 
 
-namespace Ui {
+namespace Ui 
+{
 /*! Stellt grundlegende Funktionen zum Erstellen und bearbeiten von Maps in einer graphischen Oberfläche zur Verfügung */
 class Editor;
 }
