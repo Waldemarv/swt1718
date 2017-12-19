@@ -1,5 +1,6 @@
 #ifndef SIMULATORWINDOW_H
 #define SIMULATORWINDOW_H
+
 #include "map.h"
 #include "math.h"
 #include "editor.h"
@@ -8,6 +9,14 @@
 #include <QTime>
 #include <QKeyEvent>
 #include <QString>
+
+// ###### VTK #####################
+#include <vtkPolyDataMapper.h>
+#include <vtkRenderer.h>
+#include <vtkRenderWindow.h>
+#include <vtkSphereSource.h>
+#include <vtkSmartPointer.h>
+// ################################
 
 namespace Ui {
 class SimulatorWindow;
@@ -40,6 +49,8 @@ private slots:
     void on_actionPause_triggered();
 
     void on_actionResume_triggered();
+
+    virtual void slotExit(); // VTK
 
 private:
     Map m;

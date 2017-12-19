@@ -6,6 +6,34 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
     ui(new Ui::SimulatorWindow)
 {
     ui->setupUi(this);
+<<<<<<< c0cf68d8015f19849014fe08af4481a5278d815f
+=======
+
+    // ###### VTK
+    // Sphere
+      vtkSmartPointer<vtkSphereSource> sphereSource =
+        vtkSmartPointer<vtkSphereSource>::New();
+      sphereSource->Update();
+      vtkSmartPointer<vtkPolyDataMapper> sphereMapper =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+      sphereMapper->SetInputConnection(sphereSource->GetOutputPort());
+      vtkSmartPointer<vtkActor> sphereActor =
+        vtkSmartPointer<vtkActor>::New();
+      sphereActor->SetMapper(sphereMapper);
+
+      // VTK Renderer
+      vtkSmartPointer<vtkRenderer> renderer =
+        vtkSmartPointer<vtkRenderer>::New();
+      renderer->AddActor(sphereActor);
+
+      // VTK/Qt wedded
+      this->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+
+      // Set up action signals and slots
+      connect(this->actionExit, SIGNAL(triggered()), this, SLOT(slotExit()));
+    // ##########
+
+>>>>>>> VTK base
     if(&nm == nullptr) 
 	{
         //TODO : Egal was geklickt wird : Es muss eine Map geladen werden
