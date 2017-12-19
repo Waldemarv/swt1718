@@ -59,6 +59,16 @@ void Obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
  * \return Länge des Obstacle */
 double Obstacle::getlength() { return length; }
 
+double Obstacle::getSpeed()
+{
+
+}
+
+void Obstacle::setSpeed(double s)
+{
+
+}
+
 bool Obstacle::isClicked()
 {
     return clicked;
@@ -107,7 +117,7 @@ void Obstacle::setPosition(double x, double y)
     setPos(x,y);
 }
 
-void Obstacle::calculateRotation()
+double Obstacle::calculateRotation()
 {
 
 }

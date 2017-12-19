@@ -77,6 +77,6 @@ void straight::rotate()
  * \return Typ des Tile */
 QString straight::getType()
 {
-    return "straight";
+    return "Straight";
 }
 

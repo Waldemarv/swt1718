@@ -217,9 +217,9 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="MOFO2">
-      <item>
-       <widget class="QLabel" name="label">
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="objsettings">
         <property name="maximumSize">
          <size>
           <width>300</width>
@@ -237,13 +237,94 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QTextEdit" name="textEdit">
-        <property name="maximumSize">
-         <size>
-          <width>300</width>
-          <height>16777215</height>
-         </size>
+      <item row="1" column="1">
+       <widget class="QLabel" name="placeholderType">
+        <property name="text">
+         <string>none</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelX">
+        <property name="text">
+         <string>X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="spinBoxPosX"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelY">
+        <property name="text">
+         <string>Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="spinBoxPosY"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelSpeed">
+        <property name="text">
+         <string>Speed:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QDoubleSpinBox" name="spinBoxSpeed"/>
+      </item>
+      <item row="6" column="1">
+       <widget class="QSpinBox" name="spinBoxStartPointX"/>
+      </item>
+      <item row="7" column="1">
+       <widget class="QSpinBox" name="spinBoxStartPointY"/>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="labelStartPoint">
+        <property name="text">
+         <string>Start Point</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLabel" name="labelEndPoint">
+        <property name="text">
+         <string>End Point</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QSpinBox" name="spinBoxEndPointX"/>
+      </item>
+      <item row="10" column="1">
+       <widget class="QSpinBox" name="spinBoxEndPointY"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="labelStartPointX">
+        <property name="text">
+         <string>X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="labelStartPointY">
+        <property name="text">
+         <string>Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="labelEndPointX">
+        <property name="text">
+         <string>X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="labelEndPointY">
+        <property name="text">
+         <string>Y:</string>
         </property>
        </widget>
       </item>
@@ -257,7 +338,7 @@
      <x>0</x>
      <y>0</y>
      <width>1500</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

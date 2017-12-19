@@ -101,7 +101,6 @@ private:
     QTreeWidgetItem* treeTiles;
     QTreeWidgetItem* treePoints;
     Caretaker* caretaker;
-    QTimer* animationTimer;
 };
 
 #endif // EDITOR_H

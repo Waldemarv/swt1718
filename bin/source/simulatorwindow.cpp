@@ -33,6 +33,8 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         {
             m.getObstacle(i)->setSelected(false);
             scene->addItem(m.getObstacle(i));
+            if(m.getObstacle(i)->getType() == "dynamicObstacle")
+                m.getObstacle(i)->setRotation(m.getObstacle(i)->calculateRotation());
         }
 
         sv=0;
@@ -56,6 +58,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         //Funktionen für firnesstime connect und sensor(Length)Calculation die mit entsprechenden Timern aktiviert werden
         connectFitnessTime();
         connectSensorCalculation();
+
 
         //Beschleunigungs- und Bremsphysik
         connect(frontTimer, &QTimer::timeout, [this] { physics(); });

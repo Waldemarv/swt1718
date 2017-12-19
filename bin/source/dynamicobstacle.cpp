@@ -9,6 +9,17 @@ DynamicObstacle::DynamicObstacle(double x, double y, double width, double length
     setPos(x,y);
     startingPoint = nstartingPoint;
     endingPoint = nendingPoint;
+
+    endingEllipse = new QGraphicsEllipseItem(QRectF(0,0,10,10), this);
+    qreal len = sqrt(((pos().y()-endingPoint.y())*(pos().y()-endingPoint.y())) + (pos().x()-endingPoint.x())*(pos().x()-endingPoint.x()));
+    endingEllipse->setPos(len,0);
+    endingEllipse->setFlags(ItemIsMovable);
+}
+
+void DynamicObstacle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    setSelected(false);
+    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void DynamicObstacle::advance(int phase)
@@ -48,20 +59,21 @@ void DynamicObstacle::setDirection(int d){
     direction = (direction + d)%4 ;
 }
 
-void DynamicObstacle::calculateRotation()
+double DynamicObstacle::calculateRotation()
 {
+    /* TODO ÜBERARBEITEN FÜR SIMULATION
     QLineF xAxis;
     QLineF movingVector;
 
-    xAxis.setPoints(startingPoint, QPointF(startingPoint.x() + 100, startingPoint.y()));
+    xAxis.setPoints(startingPoint, QPointF(startingPoint.x() + 1000, startingPoint.y()));
     movingVector.setPoints(startingPoint, endingPoint);
 
-    angle = xAxis.angleTo(movingVector) - 360;
+    angle = xAxis.angleTo(movingVector);
 
     if(angle<0)
         angle = angle*(-1);
-
-    setRotation(angle);
+    return angle;
+    */
 }
 
 QRectF DynamicObstacle::boundingRect() const{
@@ -75,6 +87,10 @@ void DynamicObstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
     QRectF rec = boundingRect();
 
+    //Startpunkt neu setzen wenn die position geändert wurde
+    if(isSelected())
+        startingPoint = pos();
+    endingPoint = endingEllipse->scenePos();
     //Hightligh when Selected
     if(isSelected()){
         QPen pen;
@@ -92,6 +108,8 @@ void DynamicObstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     QBrush brush(Qt::green);
     painter->fillRect(rec, brush);
     painter->drawRect(rec);
+
+    painter->drawLine(QPointF(0,0), endingEllipse->pos());
 }
 
 QString DynamicObstacle::getType(){

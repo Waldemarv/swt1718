@@ -28,13 +28,16 @@ public:
     double getwidth();
     double getlength();
 
+    virtual double getSpeed();
+    virtual void setSpeed(double s);
+
     bool isClicked();
     void setClicked(bool c);
 
     void updatePosition();
     void setPosition(double x, double y);
 
-    virtual void calculateRotation();
+    virtual double calculateRotation();
 
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -3,7 +3,10 @@
 
 
 #include "obstacle.h"
+#include "stdio.h"
+#include "math.h"
 #include <QTimer>
+#include <QtCore>
 
 class  DynamicObstacle: public Obstacle {
 
@@ -17,7 +20,7 @@ class  DynamicObstacle: public Obstacle {
         int getDirection();
         void setDirection(int d);
 
-        void calculateRotation();
+        double calculateRotation();
 
         QRectF boundingRect() const;
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -32,6 +35,8 @@ class  DynamicObstacle: public Obstacle {
         DynamicObstacle();
         DynamicObstacle(double x, double y, double width, double length, double speed, QPointF nstartingPoint, QPointF nendingPoint);
 
+        void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
     protected:
         double speed;
         double angle;
@@ -42,6 +47,8 @@ class  DynamicObstacle: public Obstacle {
 
         QPointF startingPoint;
         QPointF endingPoint;
+
+        QGraphicsItem *endingEllipse;
 
 };
 #endif // DYNAMICOBSTACLE_H

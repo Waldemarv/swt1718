@@ -21,7 +21,10 @@ Editor::Editor(QWidget *parent) :
     ui->treeWidget->setColumnWidth(2,60);
 
     caretaker = new Caretaker;
-    animationTimer = new QTimer();
+
+    scene = new QGraphicsScene(this);
+    ui->graphicsView->setScene(scene);
+
 }
 
 Editor::~Editor()
@@ -43,14 +46,20 @@ void Editor::createMap()
         addTreeMap(x,x); //Map dem TreeWidget hinzufügen
         addTreeItems(); //Hauptitems für das TreeWidget hinzufügen (Tiles, Obstacles...)
 
-        //scene (graphisches Fenster zum letztendlichen zeichnen) erstellen und in das GraphicWidget setzen
-        scene = new QGraphicsScene(this);
+        //Maximum der positionsspinboxen an map anpassen
+        ui->spinBoxPosX->setMaximum(m->getGridSize()*m->getSizeX());
+        ui->spinBoxPosY->setMaximum(m->getGridSize()*m->getSizeY());
+        ui->spinBoxEndPointX->setMaximum(m->getGridSize()*m->getSizeX());
+        ui->spinBoxEndPointY->setMaximum(m->getGridSize()*m->getSizeY());
+        ui->spinBoxStartPointX->setMaximum(m->getGridSize()*m->getSizeX());
+        ui->spinBoxStartPointY->setMaximum(m->getGridSize()*m->getSizeY());
+        //Steps dem grid anpassen
+        ui->spinBoxPosX->setSingleStep(m->getGridSize());
+
         //Verbindungsstelle der scene
         connectScene();
         //Verbindungsstelle des treeWidget
         connectTreeWidget();
-
-        ui->graphicsView->setScene(scene);
 
         //Größe der Scene setzen
         scene->setSceneRect(0,0,x*m->getGridSize(),x*m->getGridSize());
@@ -118,8 +127,6 @@ void Editor::saveMap()
         }
         else
         {
-
-    animationTimer->stop();
 
     //Pfad zum speichern wählen
     QString currentPath = QDir::currentPath();
@@ -225,9 +232,6 @@ void Editor::loadMap()
 {
     if(m==nullptr) {
 
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
-
     //Dokument für Datei erstellen
     QDomDocument document;
     //Pfad für die zu ladene Map wählen
@@ -272,6 +276,15 @@ void Editor::loadMap()
         int sizeY = mapSize.attribute("Y:").toInt();
         //map erstellen
         m = new Map(sizeX, sizeY);
+        //Maximum der positionsspinboxen an map anpassen
+        ui->spinBoxPosX->setMaximum(m->getGridSize()*m->getSizeX());
+        ui->spinBoxPosY->setMaximum(m->getGridSize()*m->getSizeY());
+        ui->spinBoxEndPointX->setMaximum(m->getGridSize()*m->getSizeX());
+        ui->spinBoxEndPointY->setMaximum(m->getGridSize()*m->getSizeY());
+        ui->spinBoxStartPointX->setMaximum(m->getGridSize()*m->getSizeX());
+        ui->spinBoxStartPointY->setMaximum(m->getGridSize()*m->getSizeY());
+        //Steps dem grid anpassen
+        ui->spinBoxPosX->setSingleStep(m->getGridSize());
         //TreeView hinzufügen
         addTreeMap(sizeX,sizeY);
         addTreeItems();
@@ -359,12 +372,12 @@ void Editor::loadMap()
                 scene->addItem(t);
             }
 
-            else if(tilesAt.attribute("Typ:") == "straight"){
+            else if(tilesAt.attribute("Typ:") == "Straight"){
                 Tile* t = new straight(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
             }
-            else if(tilesAt.attribute("Typ:") == "turn"){
+            else if(tilesAt.attribute("Typ:") == "Turn"){
                 Tile* t = new turn(tileX, tileY, tileAscent, tileDirection);
                 scene->addItem(t);
                 m->addTile(t);
@@ -524,6 +537,8 @@ void Editor::connectScene()
 {
     connect(scene, &QGraphicsScene::changed, [this]{
 
+        int pos;
+
         for(unsigned int i=0; i<m->getNumberOfTiles();i++)
         {
             if(m->getTile(i)->isClicked()){
@@ -533,12 +548,45 @@ void Editor::connectScene()
             m->getTile(i)->fitIntoGrid();
             m->getTile(i)->fitIntoScene();
 
-//            for(unsigned int j=0; j<m->getNumberOfTiles();j++){
-//                if(i=!j && !(m->getTile(i)->boundingRect().intersects(m->getTile(j)->boundingRect()))){
-//                    QMessageBox::warning(this,"Warning!!"," Tiles are intersecting !!");
-//                }
-//            }
+            if(m->getTile(i)->isSelected())
+            {
+                ui->spinBoxPosX->setValue(m->getTile(i)->scenePos().x());
+                ui->spinBoxPosY->setValue(m->getTile(i)->scenePos().y());
 
+                if(m->getTile(i)->getType() == "Straight")
+                    ui->placeholderType->setText("Straight");
+                else if(m->getTile(i)->getType() == "Turn")
+                    ui->placeholderType->setText("Turn");
+                else if(m->getTile(i)->getType() == "Intersection")
+                    ui->placeholderType->setText("Intersection");
+                else if(m->getTile(i)->getType() == "T-Intersection")
+                    ui->placeholderType->setText("T-Intersection");
+                else if(m->getTile(i)->getType() == "StartingTile")
+                    ui->placeholderType->setText("StartingTile");
+                else if(m->getTile(i)->getType() == "EndingTile")
+                    ui->placeholderType->setText("EndingTile");
+                else
+                {
+                    ui->spinBoxPosX->hide();
+                    ui->spinBoxPosY->hide();
+                    ui->labelX->hide();
+                    ui->labelY->hide();
+                }
+
+                ui->spinBoxSpeed->hide();
+                ui->labelSpeed->hide();
+                ui->spinBoxEndPointX->hide();
+                ui->spinBoxEndPointY->hide();
+                ui->spinBoxStartPointX->hide();
+                ui->spinBoxStartPointY->hide();
+                ui->labelEndPoint->hide();
+                ui->labelEndPointX->hide();
+                ui->labelEndPointY->hide();
+                ui->labelStartPoint->hide();
+                ui->labelStartPointX->hide();
+                ui->labelStartPointY->hide();
+
+            }
         }
         for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
         {
@@ -547,6 +595,51 @@ void Editor::connectScene()
                 caretaker->setMemento(m->createMemento());
                 m->getObstacle(i)->setClicked(false);
             }
+            if(m->getObstacle(i)->isSelected())
+            {
+                ui->spinBoxPosX->setValue(m->getObstacle(i)->scenePos().x());
+                ui->spinBoxPosY->setValue(m->getObstacle(i)->scenePos().y());
+
+                if(m->getObstacle(i)->getType() == "staticObstacle")
+                {
+                    ui->placeholderType->setText("staticObstacle");
+                    ui->spinBoxSpeed->hide();
+                    ui->labelSpeed->hide();
+                    ui->spinBoxEndPointX->hide();
+                    ui->spinBoxEndPointY->hide();
+                    ui->spinBoxStartPointX->hide();
+                    ui->spinBoxStartPointY->hide();
+                    ui->labelEndPoint->hide();
+                    ui->labelEndPointX->hide();
+                    ui->labelEndPointY->hide();
+                    ui->labelStartPoint->hide();
+                    ui->labelStartPointX->hide();
+                    ui->labelStartPointY->hide();
+
+                }
+
+                if(m->getObstacle(i)->getType() == "dynamicObstacle")
+                {
+                    ui->placeholderType->setText("dynamicObstacle");
+                    ui->spinBoxSpeed->show();
+                    ui->labelSpeed->show();
+                    ui->spinBoxEndPointX->show();
+                    ui->spinBoxEndPointY->show();
+                    ui->spinBoxStartPointX->show();
+                    ui->spinBoxStartPointY->show();
+                    ui->labelEndPoint->show();
+                    ui->labelEndPointX->show();
+                    ui->labelEndPointY->show();
+                    ui->labelStartPoint->show();
+                    ui->labelStartPointX->show();
+                    ui->labelStartPointY->show();
+                    ui->spinBoxSpeed->setValue(m->getObstacle(i)->getSpeed());
+                    ui->spinBoxStartPointX->setValue(m->getObstacle(i)->getStartingPoint().x());
+                    ui->spinBoxStartPointY->setValue(m->getObstacle(i)->getStartingPoint().y());
+                }
+            }
+            ui->spinBoxEndPointX->setValue(m->getObstacle(i)->getEndingPoint().x());
+            ui->spinBoxEndPointY->setValue(m->getObstacle(i)->getEndingPoint().y());
         }
 
         scene->update();
@@ -564,18 +657,6 @@ void Editor::connectTreeWidget()
         }
     });
 }
-
-/*void Editor::autoSave()
-{
-    autoSaveTimer = new QTimer;
-    connect(autoSaveTimer, &QTimer::timeout, this, [this] {
-        if(caretaker->getMemento() != m->createMemento())
-        {
-            setMemento(m->createMemento());
-            qDebug()<<"impulse";
-        }
-    });
-}*/
 
 void Editor::keyPressEvent(QKeyEvent *event)
 {
@@ -962,17 +1043,13 @@ void Editor::on_dynamicObstacleButton_clicked()
         //Für Undo
         caretaker->setMemento(m->createMemento());
 
-        Obstacle *o = new DynamicObstacle(200, 50, 5, 5, 1, QPointF(200,50), QPointF(200,0));
+        Obstacle *o = new DynamicObstacle(200, 50, 5, 5, 1, QPointF(200,50), QPointF(500,300));
 
-        connect(animationTimer, SIGNAL(timeout()), scene, SLOT(advance()));
-
-        o->calculateRotation();
         m->addObstacle(o);
         scene->addItem(o);
-
-        animationTimer->start(10);
 
         updateTreeNumberOfObstacles();
     }
 
 }
+

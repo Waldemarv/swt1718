@@ -112,6 +112,6 @@ void turn::rotate()
  * \return Typ des Tile */
 QString turn::getType()
 {
-    return "turn";
+    return "Turn";
 }
 

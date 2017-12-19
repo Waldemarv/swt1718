@@ -29,6 +29,7 @@ protected:
     QPointF rightCenter;
 
     bool clicked;
+    bool rightButtonSelect;
 
 public:
     Tile();
@@ -57,6 +58,7 @@ public:
     virtual void rotate();
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     QPainterPath getPath();
     QPointF* getPosition();

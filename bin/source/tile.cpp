@@ -174,14 +174,28 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
         else if(isSelected() == false)
         {
             setSelected(true);
+            rightButtonSelect = true;
         }
     }
 
     else if(event->button() == Qt::LeftButton)
+    {
         clicked = true;
-
+        rightButtonSelect = false;
+    }
     update();
     QGraphicsItem::mousePressEvent(event);
+}
+
+void Tile::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    if(!rightButtonSelect)
+    {
+        setSelected(false);
+        rightButtonSelect = false;
+    }
+
+    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 /*! Gibt den Path des Tile zurück
