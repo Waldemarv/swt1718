@@ -20,6 +20,9 @@ Editor::Editor(QWidget *parent) :
     ui->treeWidget->setColumnWidth(1,60);
     ui->treeWidget->setColumnWidth(2,60);
 
+    //Objekteigenschaften bei Start verstecken
+    ui->ObjectSpecs->hide();
+
     caretaker = new Caretaker;
 
     scene = new QGraphicsScene(this);
@@ -538,6 +541,10 @@ void Editor::connectScene()
     connect(scene, &QGraphicsScene::changed, [this]{
 
         int pos;
+        bool itemsSelected = false; // Speichert ob Objekt auf Map ausgewählt ist
+
+        ui->ObjectSpecs->show();
+        ui->labelIcon->hide();
 
         for(unsigned int i=0; i<m->getNumberOfTiles();i++)
         {
@@ -550,6 +557,7 @@ void Editor::connectScene()
 
             if(m->getTile(i)->isSelected())
             {
+                itemsSelected = true; // min. 1 Tile ausgewählt
                 ui->spinBoxPosX->setValue(m->getTile(i)->scenePos().x());
                 ui->spinBoxPosY->setValue(m->getTile(i)->scenePos().y());
 
@@ -588,6 +596,7 @@ void Editor::connectScene()
 
             }
         }
+
         for(unsigned int i=0; i<m->getNumberOfObstacles();i++)
         {
             if(m->getObstacle(i)->isClicked())
@@ -597,6 +606,7 @@ void Editor::connectScene()
             }
             if(m->getObstacle(i)->isSelected())
             {
+                itemsSelected = true; // min. 1 Obstacle ausgewählt
                 ui->spinBoxPosX->setValue(m->getObstacle(i)->scenePos().x());
                 ui->spinBoxPosY->setValue(m->getObstacle(i)->scenePos().y());
 
@@ -640,6 +650,12 @@ void Editor::connectScene()
             }
             ui->spinBoxEndPointX->setValue(m->getObstacle(i)->getEndingPoint().x());
             ui->spinBoxEndPointY->setValue(m->getObstacle(i)->getEndingPoint().y());
+        }
+
+        if (!itemsSelected) // keine Objekte ausgewählt
+        {
+            //ui->labelIcon->show();
+            ui->ObjectSpecs->hide(); // Verstecke Objekteigenschaften -> TODO Mapeigenschaften
         }
 
         scene->update();
