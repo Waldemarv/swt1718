@@ -69,7 +69,7 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab">
          <property name="maximumSize">
@@ -124,36 +124,101 @@
           </item>
           <item>
            <widget class="QPushButton" name="straightButton">
+            <property name="toolTip">
+             <string>Gerade</string>
+            </property>
             <property name="text">
-             <string>Straight</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/straight.svg</normaloff>:/btn_icon/img/icon/straight.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="turnButton">
+            <property name="toolTip">
+             <string>Kurve</string>
+            </property>
             <property name="text">
-             <string>Turn</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/turn.svg</normaloff>:/btn_icon/img/icon/turn.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="intersectionButton">
+            <property name="toolTip">
+             <string>Kreuzung</string>
+            </property>
             <property name="text">
-             <string>Intersection</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/intersection.svg</normaloff>:/btn_icon/img/icon/intersection.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="tIntersectionButton">
+            <property name="toolTip">
+             <string>T-Kreuzung</string>
+            </property>
             <property name="text">
-             <string>T-Intersection</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/tintersection.svg</normaloff>:/btn_icon/img/icon/tintersection.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="deleteTileButton">
+            <property name="toolTip">
+             <string>Streckenabschnitt löschen</string>
+            </property>
             <property name="text">
-             <string>Delete</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/delete.svg</normaloff>:/btn_icon/img/icon/delete.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -169,45 +234,68 @@
          <attribute name="title">
           <string>Hindernisse</string>
          </attribute>
-         <widget class="QPushButton" name="staticObstacleButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>131</width>
-            <height>61</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>staticObstacle</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="deleteObstacleButton">
-          <property name="geometry">
-           <rect>
-            <x>330</x>
-            <y>20</y>
-            <width>81</width>
-            <height>61</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Delete</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="dynamicObstacleButton">
-          <property name="geometry">
-           <rect>
-            <x>160</x>
-            <y>20</y>
-            <width>151</width>
-            <height>61</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Dynamic Obstacle</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="staticObstacleButton">
+            <property name="toolTip">
+             <string>Statisches Hinderniss</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/staticobs.svg</normaloff>:/btn_icon/img/icon/staticobs.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="dynamicObstacleButton">
+            <property name="toolTip">
+             <string>Dynamisches Hinderniss</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/dynamicobs.svg</normaloff>:/btn_icon/img/icon/dynamicobs.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="deleteObstacleButton">
+            <property name="toolTip">
+             <string>Hinderniss löschen</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/btn_icon/img/icon/delete.svg</normaloff>:/btn_icon/img/icon/delete.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>

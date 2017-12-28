@@ -13,4 +13,13 @@
         <file>img/icon/startingpoint.svg</file>
         <file>img/icon/endingpoint.svg</file>
     </qresource>
+    <qresource prefix="/btn_icon">
+        <file>img/icon/turn.svg</file>
+        <file>img/icon/straight.svg</file>
+        <file>img/icon/tintersection.svg</file>
+        <file>img/icon/intersection.svg</file>
+        <file>img/icon/delete.svg</file>
+        <file>img/icon/staticobs.svg</file>
+        <file>img/icon/dynamicobs.svg</file>
+    </qresource>
 </RCC>
