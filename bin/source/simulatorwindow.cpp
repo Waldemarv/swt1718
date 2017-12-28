@@ -39,52 +39,66 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 
         sv=0;
         pauseTime = 0;
+        straight = 0.0;
+        left = 0.0;
+        right = 0.0;
+        collision = false;
 
         // Timer erstellen
-        frontTimer = new QTimer();
+        straightTimer = new QTimer();
         leftTimer = new QTimer();
         rightTimer = new QTimer();
-        collisionDetectionTimer = new QTimer();
+        mainTimer = new QTimer();
         sensorsTimer = new QTimer();
-        accelerationTimer = new QTimer();
-        breakTimer = new QTimer();
-        slowTimer = new QTimer();
 
         //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right), sowie der collisionDeteciton
-        connect(frontTimer, SIGNAL(timeout()), scene, SLOT(advance()));
+        connect(straightTimer, SIGNAL(timeout()), scene, SLOT(advance()));
         connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
-        connect(collisionDetectionTimer, &QTimer::timeout, [this] { collisionDetection(); });
+        connect(mainTimer, &QTimer::timeout, [this] { collisionDetection(); vehicleControls(); });
         //Funktionen für firnesstime connect und sensor(Length)Calculation die mit entsprechenden Timern aktiviert werden
         connectFitnessTime();
         connectSensorCalculation();
 
-
-        //Beschleunigungs- und Bremsphysik
-        connect(frontTimer, &QTimer::timeout, [this] { physics(); });
-
         ui->graphicsView->setEnabled(false);
+
+        if(trainingMode)
+        {
+            ui->trainingModeButton->setEnabled(false);
+            ui->autonomousModeButton->setEnabled(true);
+        }
+        else
+        {
+            ui->autonomousModeButton->setEnabled(false);
+            ui->trainingModeButton->setEnabled(true);
+        }
+
+       //INITALIZE NERUAL NET//
+
+       topology = {3,6,3}; //3 NEURONS (Left, Right, Front Sensor), 6 HIDDEN, 3 OUTPUT
+
+       drivingNet = new neuralNet(topology);
     }
 }
 
 // Für Simulator umänderns
 void SimulatorWindow::collisionDetection() 
 {
-
     //Keine Kollision mit der Strecke
     if(!mapBoundaries.collidesWithItem(sv,mode)) {
         //Überprüfen ob Ziel erreicht
         if(goal.contains(sv->pos())) {
             qDebug() << "Ziel erreicht!";
-            sv->setColor(Qt::blue);
-            collisionDetectionTimer->stop();
-            frontTimer->stop();
+            sv->setColor(Qt::blue); 
+
+            straightTimer->stop();
             leftTimer->stop();
             rightTimer->stop();
-            accelerationTimer->stop();
-            breakTimer->stop();
-            slowTimer->stop();
             speed=0;
+            right = left = straight= 0.0;
+            mainTimer->stop();
+            sensorsTimer->stop();
+            collision = false;
         }
         else {
             sv->setColor(Qt::green);
@@ -94,15 +108,16 @@ void SimulatorWindow::collisionDetection()
                 {
                     //Kollision mit Obstacle
                     qDebug()<<"collision with obstacle at: "<<sv->pos();
-                    sv->setColor(Qt::red);
-                    collisionDetectionTimer->stop();
-                    frontTimer->stop();
+                    straightTimer->stop();
                     leftTimer->stop();
                     rightTimer->stop();
-                    accelerationTimer->stop();
-                    breakTimer->stop();
-                    slowTimer->stop();
                     speed=0;
+                    right = left = straight=0.0;
+                    mainTimer->stop();
+                    sensorsTimer->stop();
+                    collision = true;
+
+                    sv->setColor(Qt::red);
                 }
             }
         }
@@ -110,15 +125,50 @@ void SimulatorWindow::collisionDetection()
     else {
         //Kollision mit der Strecke
         qDebug()<<"collision with map at: "<<sv->pos();
-        sv->setColor(Qt::red);
-        collisionDetectionTimer->stop();
-        frontTimer->stop();
+        straightTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
-        accelerationTimer->stop();
-        breakTimer->stop();
-        slowTimer->stop();
         speed=0;
+        right = left = straight=0.0;
+        mainTimer->stop();
+        sensorsTimer->stop();
+        collision = true;
+
+        sv->setColor(Qt::red);
+    }
+}
+
+void SimulatorWindow::vehicleControls()
+{
+    if(straight)
+    {
+        if(!straightTimer->isActive())
+            straightTimer->start(10);
+    }
+    else
+    {
+        if(straightTimer->isActive())
+            straightTimer->stop();
+    }
+
+    if(left)
+    {
+        if(!leftTimer->isActive())
+            leftTimer->start(10);
+    }
+    else
+    {
+        leftTimer->stop();
+    }
+
+    if(right)
+    {
+        if(!rightTimer->isActive())
+            rightTimer->start(10);
+    }
+    else
+    {
+        rightTimer->stop();
     }
 }
 
@@ -134,25 +184,12 @@ void SimulatorWindow::on_actionSimulation_starten_triggered()
 void SimulatorWindow::keyPressEvent(QKeyEvent *event)
 {
         //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
-        if(event->key() == Qt::Key_Up) {
-            slowTimer->stop();
-            breakTimer->stop();
-            accelerationTimer->start(10);
-        }
-        else if(event->key() == Qt::Key_Left) {
-            leftTimer->start(10);
-        }
-
-        else if(event->key() == Qt::Key_Right) {
-            rightTimer->start(10);
-        }
-        else if(event->key() == Qt::Key_Down)
-        {
-            accelerationTimer->stop();
-            slowTimer->stop();
-            breakTimer->start(10);
-        }
-
+        if(event->key() == Qt::Key_Up)
+            straight = 1.0;
+        else if(event->key() == Qt::Key_Left)
+            left = 1.0;
+        else if(event->key() == Qt::Key_Right)
+            right = 1.0;
 
         QWidget::keyPressEvent(event);
 }
@@ -161,21 +198,11 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 {
         //Schalte Timer wieder aus, wenn Knopf losgelassen wird
         if(event->key() == Qt::Key_Up)
-        {
-            accelerationTimer->stop();
-            slowTimer->start(10);
-        }
+            straight = 0.0;
         else if(event->key() == Qt::Key_Left)
-            leftTimer->stop();
+            left = 0.0;
         else if(event->key() == Qt::Key_Right)
-            rightTimer->stop();
-
-        else if(event->key() == Qt::Key_Down)
-        {
-            accelerationTimer->stop();
-            slowTimer->start();
-            breakTimer->stop();
-        }
+            right = 0.0;
 
         QWidget::keyReleaseEvent(event);
 
@@ -187,66 +214,36 @@ void SimulatorWindow::startSimulation()
 
     if(sv != 0)
     {
-        for(int i = 0; i<sv->getNumberOfSensors(); i++)
-        {
-            scene->removeItem(sv->getSensor(i));
-            delete sv->getSensor(i);
-        }
-        delete sv;
-        frontTimer->stop();
+        sv->setPos(m.getStartingPoint().x(), m.getStartingPoint().y());
+        sv->setRotation(0);
+        sv->setAngle(0);
+        sv->resetSensors();
+        straightTimer->stop();
         leftTimer->stop();
         rightTimer->stop();
-        accelerationTimer->stop();
-        breakTimer->stop();
-        slowTimer->stop();
+        mainTimer->stop();
+        sensorsTimer->stop();
         speed = 0;
     }
+    else
+    {
     // Autonomes Fahrzeug hinzufügen
-    sv = new SmartVehicle(0,0,3,m.getStartingPoint().x(), m.getStartingPoint().y());
+    sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
     scene->addItem(sv);
     //Sensoren der scene hinzufügen
     for(int i = 0; i<sv->getNumberOfSensors(); i++)
         scene->addItem(sv->getSensor(i));
+    fitnessTime.restart();
+    }
+
     //Timer der die collisionsdetection Funktion aufruft starten
-    collisionDetectionTimer->start();
+    mainTimer->start(10);
     //fitnessTime starten und aktualisieren
-    fitnessTime.start();
-    //frontTimer starten um beschleunigungs und bremssignale zu erhalten
-    frontTimer->start(10);
+    fitnessTime.restart();
     //Sensorcalculation aktivieren
-    sensorsTimer->start(30);
-}
-
-void SimulatorWindow::physics()
-{
-    //Beschleunigung
-    if(accelerationTimer->isActive())
-    {
-        if(speed < 2.0)
-            speed += 0.1;
-        else if(speed >= 2.0 && speed < 3.0)
-            speed += 0.01;
-        else if(speed >= 3.0 && speed < 4.0)
-            speed += 0.001;
-    }
-    //Motorbremse ohne gas oder bremse
-    else if(slowTimer->isActive())
-    {
-        if(speed > 0)
-            speed -= 0.08 ;
-        else if(speed < 0)
-            speed = 0;
-    }
-    //Bremse
-    else if(breakTimer->isActive())
-    {
-        if(speed > 0)
-            speed -= 0.5;
-        else if(speed < 0)
-            speed = 0;
-    }
-
-    sv->setSpeed(speed);
+    sensorsTimer->start(10);
+    //Parameter für kollisionsAbfrage aus falsch setzen damit SV bewegbar und wieder auf Ausgangsvariablen
+    collision = false;
 }
 
 void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
@@ -258,8 +255,8 @@ void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
 
 void SimulatorWindow::pauseSimulation()
 {
-    if(frontTimer->isActive())
-        frontTimer->stop();
+    if(straightTimer->isActive())
+        straightTimer->stop();
 
     if(leftTimer->isActive())
         leftTimer->stop();
@@ -267,7 +264,7 @@ void SimulatorWindow::pauseSimulation()
     if(rightTimer->isActive())
         rightTimer->stop();
 
-    collisionDetectionTimer->stop();
+    mainTimer->stop();
     sensorsTimer->stop();
 
     tempTime = fitnessTime.elapsed();
@@ -279,7 +276,7 @@ void SimulatorWindow::resumeSimulation()
 {
     pauseTime = pauseTime + fitnessTime.elapsed() - tempTime;
 
-    collisionDetectionTimer->start();
+    mainTimer->start();
     sensorsTimer->start();
 
     qDebug()<<"Simulation resumed";
@@ -349,12 +346,99 @@ void SimulatorWindow::connectSensorCalculation()
         }
         scene->update();
     }
+
+
+
+    if(trainingMode)
+    {
+        //FEED THE NEURAL NET --- LIFE TRAINING//
+        //Sensor data
+        std::vector<double> inputVals;
+
+        for(int y=0; y<sv->getNumberOfSensors(); y++)
+        {
+            inputVals.push_back((double)sv->getSensor(y)->getLength()/(double)1000);
+        }
+
+        drivingNet->showVectorVals(": Inputs:", inputVals);
+        drivingNet->feedForward(inputVals);
+
+        //GET THE NEURAL NETS RESULTS//
+
+        std::vector<double> resultVals;
+
+        drivingNet->getResults(resultVals);
+        drivingNet->showVectorVals("Outputs:", resultVals);
+
+        //TRAIN FOR WHAT THE OUTPUTS SHOULD HAVE BEEN//
+
+        //Steering data
+        std::vector<double> targetVals;
+
+        targetVals.push_back(left);
+        targetVals.push_back(straight);
+        targetVals.push_back(right);
+
+
+        drivingNet->showVectorVals("Targets:", targetVals);
+        assert(targetVals.size() == topology.back());
+
+        drivingNet->backProp(targetVals);
+
+        qDebug() << "Net recent average error: "
+                        << drivingNet->getRecentAverageError();
+    }
+
+    else
+    {
+        straight = 1.0;
+        //Sensor data
+        std::vector<double> inputVals;
+
+        for(int y=0; y<sv->getNumberOfSensors(); y++)
+        {
+            inputVals.push_back((double)sv->getSensor(y)->getLength()/(double)1000);
+        }
+        drivingNet->showVectorVals(": Inputs:", inputVals);
+        drivingNet->feedForward(inputVals);
+
+        //GET THE NEURAL NETS RESULTS AND APPLY THEM//
+
+        std::vector<double> resultVals;
+
+        drivingNet->getResults(resultVals);
+        drivingNet->showVectorVals("Outputs:", resultVals);
+
+
+        left = resultVals.at(0) < 0.5 ? 0.0 : 1;
+        straight = resultVals.at(1) < 0.5 ? 0.0 : 1;
+        right = resultVals.at(2) < 0.5 ? 0.0 : 1;
+    }
+
+    //SAFE SENSOR DATA IN MEMORY ---  TRAINING HAPPENS LATER//
+    std::vector<double> tempVectorSensors;
+
+    for(int y=0; y<sv->getNumberOfSensors(); y++)
+    {
+        tempVectorSensors.push_back((double)sv->getSensor(y)->getLength()/(double)1000);
+    }
+    sensorData.push_back(tempVectorSensors);
+
+    //Safe SteeringData in Memory//
+    std::vector<double> tempVectorSteering;
+
+    tempVectorSteering.push_back(left);
+    tempVectorSteering.push_back(straight);
+    tempVectorSteering.push_back(right);
+
+
+    steeringData.push_back(tempVectorSteering);
     });
 }
 
 void SimulatorWindow::connectFitnessTime()
 {
-    connect(collisionDetectionTimer, &QTimer::timeout, [this] {
+    connect(mainTimer, &QTimer::timeout, [this] {
 
         QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number((fitnessTime.elapsed()-pauseTime)/1000), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
         ui->timeLabel->setText(time);
@@ -369,4 +453,46 @@ void SimulatorWindow::on_actionPause_triggered()
 void SimulatorWindow::on_actionResume_triggered()
 {
     resumeSimulation();
+}
+
+void SimulatorWindow::on_trainingModeButton_clicked()
+{
+    if(ui->trainingModeButton->isEnabled())
+        ui->trainingModeButton->setEnabled(false);
+    if(!ui->autonomousModeButton->isEnabled())
+        ui->autonomousModeButton->setEnabled(true);
+    trainingMode = true;
+}
+
+void SimulatorWindow::on_autonomousModeButton_clicked()
+{
+    if(!ui->trainingModeButton->isEnabled())
+        ui->trainingModeButton->setEnabled(true);
+    if(ui->autonomousModeButton->isEnabled())
+        ui->autonomousModeButton->setEnabled(false);
+    trainingMode = false;
+}
+
+void SimulatorWindow::on_trainModelButton_clicked()
+{
+    //ITERATIVE TRAINING WITH TRAINING DATA//
+    bool ok;
+    int x = QInputDialog::getInt(this, tr("Trainingsepochen"), tr("Wie oft soll trainiert werden?"), 10000, 100, INT_MAX, 100, &ok);
+    if(ok) { //Wenn OK gedrückt wurde :
+        for(int i=0; i<x; i++)
+        {
+            for(int j=0; j<sensorData.size(); j++)
+            {
+                drivingNet->feedForward(sensorData[j]);
+
+                std::vector<double> resultVals;
+
+                assert(steeringData[j].size() == topology.back());
+                drivingNet->backProp(steeringData[j]);
+            }
+            if(i%100 == 0)
+                qDebug() <<"Epoch " << i << ": Net recent average error: "
+                            << drivingNet->getRecentAverageError();
+        }
+    }
 }

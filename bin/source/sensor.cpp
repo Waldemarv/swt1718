@@ -35,6 +35,11 @@ int Sensor::getAngle()
     return angle;
 }
 
+int Sensor::getLength()
+{
+    return length;
+}
+
 void Sensor::setColor(QColor c)
 {
     color = c;
@@ -43,4 +48,14 @@ void Sensor::setColor(QColor c)
 void Sensor::setLength(int nlength)
 {
     length = nlength;
+}
+
+void Sensor::setAngle(int nangle)
+{
+    angle = nangle;
+}
+
+void Sensor::resetRotation()
+{
+    setRotation(angle);
 }

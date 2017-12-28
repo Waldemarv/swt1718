@@ -3,11 +3,13 @@
 #include "map.h"
 #include "math.h"
 #include "editor.h"
+#include "neuralnet.h"
 #include <QMainWindow>
 #include <QTimer>
 #include <QTime>
 #include <QKeyEvent>
 #include <QString>
+#include <vector>
 
 namespace Ui {
 class SimulatorWindow;
@@ -29,6 +31,7 @@ public:
 private slots:
     void on_actionSimulation_starten_triggered();
     void collisionDetection();
+    void vehicleControls();
 
     void on_actionZu_Editor_wechseln_triggered();
     void pauseSimulation();
@@ -41,20 +44,23 @@ private slots:
 
     void on_actionResume_triggered();
 
+    void on_trainingModeButton_clicked();
+
+    void on_autonomousModeButton_clicked();
+
+    void on_trainModelButton_clicked();
+
 private:
     Map m;
     QGraphicsScene *scene;
     Ui::SimulatorWindow *ui;
     QPainterPath mapPath;
     SmartVehicle* sv;
-    QTimer *frontTimer;
+    QTimer *straightTimer;
     QTimer *leftTimer;
     QTimer *rightTimer;
-    QTimer *collisionDetectionTimer;
+    QTimer *mainTimer;
     QTimer *sensorsTimer;
-    QTimer *accelerationTimer;
-    QTimer *breakTimer;
-    QTimer *slowTimer;
 
     QGraphicsPathItem mapBoundaries;
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape;
@@ -64,7 +70,20 @@ private:
     int tempTime;
     int pauseTime;
 
+    double left;
+    double right;
+    double straight;
+    bool collision;
+    bool trainingMode = true;
+
     double speed = 0;
+
+    std::vector<std::vector<double>> sensorData;
+    std::vector<std::vector<double>> steeringData;
+
+    neuralNet *drivingNet;
+    std::vector<unsigned> topology;
+
 };
 
 #endif // SIMULATORWINDOW_H

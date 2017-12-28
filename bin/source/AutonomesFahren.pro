@@ -42,7 +42,9 @@ SOURCES += \
     caretaker.cpp \
     sensor.cpp \
     simulatorcmdl.cpp \
-    dynamicobstacle.cpp
+    dynamicobstacle.cpp \
+    neuralnet.cpp \
+    neuron.cpp
 
 HEADERS += \
         editor.h \
@@ -62,7 +64,9 @@ HEADERS += \
     caretaker.h \
     sensor.h \
     simulatorcmdl.h \
-    dynamicobstacle.h
+    dynamicobstacle.h \
+    neuralnet.h \
+    neuron.h
 
 FORMS += \
         editor.ui \

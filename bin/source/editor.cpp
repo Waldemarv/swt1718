@@ -795,9 +795,11 @@ void Editor::on_deleteTileButton_clicked()
 {
     if(m == nullptr) {
         QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        return;
     }
     else if(m->getNumberOfItems() == 0) {
         QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+        return;
     }
     else {
         //Für Undo
@@ -843,9 +845,11 @@ void Editor::on_deleteObstacleButton_clicked()
 {
     if(m == nullptr) {
         QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        return;
     }
     else if(m->getNumberOfItems() == 0) {
         QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+        return;
     }
     else {
         //Für Undo
@@ -1045,6 +1049,7 @@ void Editor::on_actionUndo_triggered()
     else
     {
         QMessageBox::about(this, "Kein Memento", "Vor dem Rückgängig machen bitte erst eine Änderung vornehmen !");
+        return;
     }
 }
 

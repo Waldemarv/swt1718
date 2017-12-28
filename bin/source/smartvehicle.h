@@ -33,7 +33,10 @@ public:
 
     void setColor(QColor c);
     void setSpeed(double nspeed);
+    void setAngle(int nangle);
+    void resetSensors();
 
+    double getSpeed();
     int getNumberOfSensors();
 protected:
     void advance(int phase);

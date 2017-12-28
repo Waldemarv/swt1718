@@ -24,9 +24,13 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     int getAngle();
+    int getLength();
 
     void setColor(QColor c);
     void setLength(int nlength);
+    void setAngle(int nangle);
+
+    void resetRotation();
 };
 
 #endif // SENSOR_H

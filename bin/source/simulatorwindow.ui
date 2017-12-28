@@ -15,6 +15,13 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="trainingModeButton">
+      <property name="text">
+       <string>training Mode</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="timeLabel">
       <property name="font">
@@ -29,8 +36,22 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="QGraphicsView" name="graphicsView"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="autonomousModeButton">
+      <property name="text">
+       <string>autonomous Mode</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="trainModelButton">
+      <property name="text">
+       <string>Train Model</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -40,7 +61,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">

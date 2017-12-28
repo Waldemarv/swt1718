@@ -32,7 +32,7 @@ SmartVehicle::SmartVehicle(int nangle, double nspeed, int nrotationSpeed, int x,
 
 QRectF SmartVehicle::boundingRect() const
 {
-    return QRectF(0,0,15,10);
+    return QRectF(0,0,8,4);
 }
 
 void SmartVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -82,6 +82,22 @@ void SmartVehicle::setColor(QColor c)
 void SmartVehicle::setSpeed(double nspeed)
 {
     speed = nspeed;
+}
+
+void SmartVehicle::setAngle(int nangle)
+{
+    angle = nangle;
+}
+
+void SmartVehicle::resetSensors()
+{
+    for(int i=0; i<sensors.size();i++)
+        sensors[i]->resetRotation();
+}
+
+double SmartVehicle::getSpeed()
+{
+    return speed;
 }
 
 int SmartVehicle::getNumberOfSensors()
