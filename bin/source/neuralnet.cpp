@@ -7,7 +7,7 @@ void neuralNet::getResults(std::vector<double> &resultVals) const
     resultVals.clear();
 
     for (unsigned n = 0; n < m_layers.back().size() - 1; ++n) {
-        resultVals.push_back(m_layers.back()[n].getOutputVal());
+        resultVals.push_back(m_layers.back()[n]->getOutputVal());
     }
 }
 
@@ -19,7 +19,7 @@ void neuralNet::backProp(const std::vector<double> &targetVals)
     m_error = 0.0;
 
     for (unsigned n = 0; n < outputLayer.size() - 1; ++n) {
-        double delta = targetVals[n] - outputLayer[n].getOutputVal();
+        double delta = targetVals[n] - outputLayer[n]->getOutputVal();
         m_error += delta * delta;
     }
     m_error /= outputLayer.size() - 1; // get average error squared
@@ -34,7 +34,7 @@ void neuralNet::backProp(const std::vector<double> &targetVals)
     // Calculate output layer gradients
 
     for (unsigned n = 0; n < outputLayer.size() - 1; ++n) {
-        outputLayer[n].calcOutputGradients(targetVals[n]);
+        outputLayer[n]->calcOutputGradients(targetVals[n]);
     }
 
     // Calculate hidden layer gradients
@@ -44,7 +44,7 @@ void neuralNet::backProp(const std::vector<double> &targetVals)
         Layer &nextLayer = m_layers[layerNum + 1];
 
         for (unsigned n = 0; n < hiddenLayer.size(); ++n) {
-            hiddenLayer[n].calcHiddenGradients(nextLayer);
+            hiddenLayer[n]->calcHiddenGradients(nextLayer);
         }
     }
 
@@ -56,7 +56,7 @@ void neuralNet::backProp(const std::vector<double> &targetVals)
         Layer &prevLayer = m_layers[layerNum - 1];
 
         for (unsigned n = 0; n < layer.size() - 1; ++n) {
-            layer[n].updateInputWeights(prevLayer);
+            layer[n]->updateInputWeights(prevLayer);
         }
     }
 }
@@ -67,14 +67,14 @@ void neuralNet::feedForward(const std::vector<double> &inputVals)
 
     // Assign (latch) the input values into the input neurons
     for (unsigned i = 0; i < inputVals.size(); ++i) {
-        m_layers[0][i].setOutputVal(inputVals[i]);
+        m_layers[0][i]->setOutputVal(inputVals[i]);
     }
 
     // forward propagate
     for (unsigned layerNum = 1; layerNum < m_layers.size(); ++layerNum) {
         Layer &prevLayer = m_layers[layerNum - 1];
         for (unsigned n = 0; n < m_layers[layerNum].size() - 1; ++n) {
-            m_layers[layerNum][n].feedForward(prevLayer);
+            m_layers[layerNum][n]->feedForward(prevLayer);
         }
     }
 }
@@ -89,12 +89,13 @@ neuralNet::neuralNet(const std::vector<unsigned> &topology)
         // We have a new layer, now fill it with neurons, and
         // add a bias neuron in each layer.
         for (unsigned neuronNum = 0; neuronNum <= topology[layerNum]; ++neuronNum) {
-            m_layers.back().push_back(Neuron(numOutputs, neuronNum));
+            Neuron *neur = new Neuron(numOutputs, neuronNum);
+            m_layers.back().push_back(neur);
             qDebug() << "Made a Neuron!";
         }
 
         // Force the bias node's output to 1.0 (it was the last neuron pushed in this layer):
-        m_layers.back().back().setOutputVal(1.0);
+        m_layers.back().back()->setOutputVal(1.0);
     }
 }
 
@@ -105,4 +106,9 @@ void neuralNet::showVectorVals(QString label, std::vector<double> &v)
     for (unsigned i = 0; i < v.size(); ++i) {
         qDebug() << v[i] << " ";
     }
+}
+
+std::vector<Layer> neuralNet::get_m_layers()
+{
+    return m_layers;
 }

@@ -15,6 +15,16 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="0">
+     <widget class="QGraphicsView" name="graphicsView"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="autonomousModeButton">
+      <property name="text">
+       <string>autonomous Mode</string>
+      </property>
+     </widget>
+    </item>
     <item row="3" column="0">
      <widget class="QPushButton" name="trainingModeButton">
       <property name="text">
@@ -33,16 +43,6 @@
       </property>
       <property name="text">
        <string>0:0.0</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QGraphicsView" name="graphicsView"/>
-    </item>
-    <item row="4" column="0">
-     <widget class="QPushButton" name="autonomousModeButton">
-      <property name="text">
-       <string>autonomous Mode</string>
       </property>
      </widget>
     </item>
@@ -89,10 +89,15 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionMap_ffnen"/>
-   <addaction name="actionSimulation_starten"/>
    <addaction name="actionZu_Editor_wechseln"/>
+   <addaction name="separator"/>
+   <addaction name="actionSimulation_starten"/>
+   <addaction name="separator"/>
    <addaction name="actionPause"/>
    <addaction name="actionResume"/>
+   <addaction name="separator"/>
+   <addaction name="actionsaveNeuralNet"/>
+   <addaction name="actionloadNeuralNet"/>
   </widget>
   <action name="actionMap_ffnen">
    <property name="text">
@@ -117,6 +122,16 @@
   <action name="actionResume">
    <property name="text">
     <string>Resume</string>
+   </property>
+  </action>
+  <action name="actionsaveNeuralNet">
+   <property name="text">
+    <string>saveNeuralNet</string>
+   </property>
+  </action>
+  <action name="actionloadNeuralNet">
+   <property name="text">
+    <string>loadNeuralNet</string>
    </property>
   </action>
  </widget>

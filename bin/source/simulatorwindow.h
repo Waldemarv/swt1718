@@ -10,6 +10,8 @@
 #include <QKeyEvent>
 #include <QString>
 #include <vector>
+#include <QtCore>
+#include <QtXml>
 
 namespace Ui {
 class SimulatorWindow;
@@ -27,6 +29,9 @@ public:
 
     void startSimulation();    
     void physics();
+
+    void saveNet();
+    void loadNet();
 
 private slots:
     void on_actionSimulation_starten_triggered();
@@ -49,6 +54,10 @@ private slots:
     void on_autonomousModeButton_clicked();
 
     void on_trainModelButton_clicked();
+
+    void on_actionsaveNeuralNet_triggered();
+
+    void on_actionloadNeuralNet_triggered();
 
 private:
     Map m;

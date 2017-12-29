@@ -64,6 +64,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 
         if(trainingMode)
         {
+            QMessageBox::about(this, "Trainingsmodus..", "Sie befinden sich nun im Trainingsmodus. (Zum starten drücken sie Simulation starten.) Alle Bewegungsdaten werden aufgezeichnet. Das neuronale Netz wird während der Fahrt trainiert. Sie haben zusätzlich die möglichkeit das Netz mit den aufgenommenen Daten zu trainieren. Drücken Sie dazu anschließen oben auf den trainieren Button und wählen Sie, wie oft trainiert werden soll. Das netz verbessert sich bei jeder Epoche.");
             ui->trainingModeButton->setEnabled(false);
             ui->autonomousModeButton->setEnabled(true);
         }
@@ -244,6 +245,120 @@ void SimulatorWindow::startSimulation()
     sensorsTimer->start(10);
     //Parameter für kollisionsAbfrage aus falsch setzen damit SV bewegbar und wieder auf Ausgangsvariablen
     collision = false;
+}
+
+void SimulatorWindow::saveNet()
+{
+
+    QString currentPath = QDir::currentPath();
+    currentPath.append("/source/Networks/neuralNet.xml");
+
+    QString filename = QFileDialog::getOpenFileName(this, tr("Datei wählen..."),
+                                                    currentPath,
+                                                    tr("Extensible Markup Language Files (*.xml)"),0,QFileDialog::DontUseNativeDialog);
+
+    //Document erstellen
+    QDomDocument document;
+
+    if(filename != NULL)
+    {
+        QFile file(filename);
+        if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QMessageBox::information(this,tr("Datei kann nicht gewählt werden."),file.errorString());
+            return ;
+        }
+        else
+        {
+            //root festlegen
+            QDomElement root = document.createElement("Net");
+
+            //root dem document hinzufügen
+            document.appendChild(root);
+
+            qDebug()<<drivingNet->get_m_layers().size();
+            for(int i=0; i < drivingNet->get_m_layers().size() - 1; i++)  //Last Layer has no weights
+            {
+                QDomElement layer = document.createElement("Layer");
+                root.appendChild(layer);
+
+                qDebug()<<drivingNet->get_m_layers()[i].size();
+                for(int j=0; j < drivingNet->get_m_layers()[i].size(); j++)
+                {
+                    QDomElement neuron = document.createElement("Neuron");
+                    neuron.setAttribute("Neuron-Nr", j);
+
+                    qDebug()<<drivingNet->get_m_layers()[i][j]->get_m_outputWeights().size();
+                    for(int k=0; k<drivingNet->get_m_layers()[i][j]->get_m_outputWeights().size() ; k++)
+                    {
+                        QDomElement weight = document.createElement("Weights");
+                        weight.setAttribute("ID", k);
+                        weight.setAttribute("weight" ,drivingNet->get_m_layers()[i][j]->get_m_outputWeights()[k].weight);
+                        weight.setAttribute("deltaWeight",drivingNet->get_m_layers()[i][j]->get_m_outputWeights()[k].deltaWeight);
+                        neuron.appendChild(weight);
+                    }
+                    layer.appendChild(neuron);
+                }
+            }
+
+            QTextStream stream(&file);
+            stream<<document.toString();
+        }
+    }
+}
+
+void SimulatorWindow::loadNet()
+{
+    //Dokument für Datei erstellen
+    QDomDocument document;
+    //Pfad für die zu ladene Map wählen
+    QString currentPath = QDir::currentPath();
+    currentPath.append("/source/Networks");
+
+
+    QString filename = QFileDialog::getOpenFileName(this, tr("Datei wählen..."),
+                                                    currentPath,
+                                                    tr("Extensible Markup Language Files (*.xml)"),0,QFileDialog::DontUseNativeDialog);
+
+
+    if(filename != NULL)
+    {
+        //Ausgewählte Datei öffnen
+        QFile file(filename);
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::information(this,tr("Datei kann nicht geöffnet werden."),file.errorString());
+            return;
+        }
+        else
+        {
+            if(!document.setContent(&file))
+            {
+                QMessageBox::information(this,tr("Dokument kann nicht geladen werden."),file.errorString());
+            }
+            file.close();
+        }
+
+        //Root erstellen
+        QDomElement root = document.firstChildElement();
+        //Liste aller sich im root befindenden Nodes erstellen
+        QDomNodeList allLayerNodes = root.childNodes();
+
+        for(int i=0; i< allLayerNodes.count(); i++)
+        {
+            QDomNodeList allNeuronNodes = allLayerNodes.at(i).childNodes();
+            for(int j=0; j<allNeuronNodes.count(); j++)
+            {
+                QDomNodeList weights = allNeuronNodes.at(j).childNodes();
+                for(int k=0; k<weights.count(); k++)
+                {
+                    double weight = weights.at(k).toElement().attribute("weight").toDouble();
+                    double deltaWeight = weights.at(k).toElement().attribute("deltaWeight").toDouble();
+                    drivingNet->get_m_layers()[i][j]->setWeights(k, weight, deltaWeight);
+
+                    qDebug()<<"Layer "<<i<<", Neuron "<<j<<", Weight "<<k<<": "<<drivingNet->get_m_layers()[i][j]->get_m_outputWeights()[k].weight<<", delta Weight "<<k<<": "<<drivingNet->get_m_layers()[i][j]->get_m_outputWeights()[k].deltaWeight;
+                }
+            }
+        }
+    }
 }
 
 void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
@@ -462,6 +577,9 @@ void SimulatorWindow::on_trainingModeButton_clicked()
     if(!ui->autonomousModeButton->isEnabled())
         ui->autonomousModeButton->setEnabled(true);
     trainingMode = true;
+
+    //QMessageBox::about(this, "Trainingsmodus..", "Sie befinden sich im Trainingsmodus.Zum starten drücken sie oben 'Simulation starten'. Alle Bewegungsdaten werden aufgezeichnet. Das neuronale Netz wird während der Fahrt trainiert. Sie haben zusätzlich die möglichkeit das Netz mit den aufgenommenen Daten zu trainieren. Drücken Sie dazu anschließen oben auf den 'trainieren' Button und wählen Sie, wie oft trainiert werden soll. Das netz verbessert sich bei jeder Epoche.");
+
 }
 
 void SimulatorWindow::on_autonomousModeButton_clicked()
@@ -471,6 +589,9 @@ void SimulatorWindow::on_autonomousModeButton_clicked()
     if(ui->autonomousModeButton->isEnabled())
         ui->autonomousModeButton->setEnabled(false);
     trainingMode = false;
+
+    //QMessageBox::about(this, "Trainingsmodus..", "Sie befinden sich nun im autonomen Modus. Drücken Sie einfach Simulation starten und sehen Sie wie das neuronale Netz des Fahrzeugs gelernt hat.");
+
 }
 
 void SimulatorWindow::on_trainModelButton_clicked()
@@ -495,4 +616,14 @@ void SimulatorWindow::on_trainModelButton_clicked()
                             << drivingNet->getRecentAverageError();
         }
     }
+}
+
+void SimulatorWindow::on_actionsaveNeuralNet_triggered()
+{
+    saveNet();
+}
+
+void SimulatorWindow::on_actionloadNeuralNet_triggered()
+{
+    loadNet();
 }

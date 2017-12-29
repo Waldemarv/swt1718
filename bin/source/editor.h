@@ -15,7 +15,6 @@
 #include <QtGui>
 #include <QMainWindow>
 #include <vector>
-#include <QUndoCommand>
 
 
 namespace Ui 

@@ -14,6 +14,7 @@ public:
     void getResults(std::vector<double> &resultVals) const;
     double getRecentAverageError(void) const { return m_recentAverageError; }
     void showVectorVals(QString label, std::vector<double> &v);
+    std::vector<Layer> get_m_layers();
 
 private:
     std::vector<Layer> m_layers; // m_layers[layerNum][neuronNum]

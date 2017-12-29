@@ -9,21 +9,32 @@ void Neuron::updateInputWeights(Layer &prevLayer)
     // in the neurons in the preceding layer
 
     for (unsigned n = 0; n < prevLayer.size(); ++n) {
-        Neuron &neuron = prevLayer[n];
-        double oldDeltaWeight = neuron.m_outputWeights[m_myIndex].deltaWeight;
+        Neuron *neuron = prevLayer[n];
+        double oldDeltaWeight = neuron->m_outputWeights[m_myIndex].deltaWeight;
 
         double newDeltaWeight =
                 // Individual input, magnified by the gradient and train rate:
                 eta
-                * neuron.getOutputVal()
+                * neuron->getOutputVal()
                 * m_gradient
                 // Also add momentum = a fraction of the previous delta weight;
                 + alpha
                 * oldDeltaWeight;
 
-        neuron.m_outputWeights[m_myIndex].deltaWeight = newDeltaWeight;
-        neuron.m_outputWeights[m_myIndex].weight += newDeltaWeight;
+        neuron->m_outputWeights[m_myIndex].deltaWeight = newDeltaWeight;
+        neuron->m_outputWeights[m_myIndex].weight += newDeltaWeight;
     }
+}
+
+std::vector<Connection> Neuron::get_m_outputWeights()
+{
+    return m_outputWeights;
+}
+
+void Neuron::setWeights(int index, double weight, double deltaWeight)
+{
+    m_outputWeights[index].weight = weight;
+    m_outputWeights[index].deltaWeight = deltaWeight;
 }
 
 double Neuron::sumDOW(const Layer &nextLayer) const
@@ -33,7 +44,7 @@ double Neuron::sumDOW(const Layer &nextLayer) const
     // Sum our contributions of the errors at the nodes we feed.
 
     for (unsigned n = 0; n < nextLayer.size() - 1; ++n) {
-        sum += m_outputWeights[n].weight * nextLayer[n].m_gradient;
+        sum += m_outputWeights[n].weight * nextLayer[n]->m_gradient;
     }
 
     return sum;
@@ -72,8 +83,8 @@ void Neuron::feedForward(const Layer &prevLayer)
     // Include the bias node from the previous layer.
 
     for (unsigned n = 0; n < prevLayer.size(); ++n) {
-        sum += prevLayer[n].getOutputVal() *
-                prevLayer[n].m_outputWeights[m_myIndex].weight;
+        sum += prevLayer[n]->getOutputVal() *
+                prevLayer[n]->m_outputWeights[m_myIndex].weight;
     }
 
     m_outputVal = Neuron::transferFunction(sum);

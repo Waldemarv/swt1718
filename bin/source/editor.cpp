@@ -130,105 +130,113 @@ void Editor::saveMap()
         }
         else
         {
+            QString currentPath = QDir::currentPath();
+            currentPath.append("/source/Maps/Map.xml");
 
-    //Pfad zum speichern wählen
-    QString currentPath = QDir::currentPath();
-    currentPath.append("/source/Maps/Map.xml");
+            QString filename = QFileDialog::getOpenFileName(this, tr("Datei wählen..."),
+                                                            currentPath,
+                                                            tr("Extensible Markup Language Files (*.xml)"),0,QFileDialog::DontUseNativeDialog);
 
-    QString filename = QFileDialog::getSaveFileName(
-            this,
-            tr("Dateipfad wählen..."),
-            currentPath,
-            tr("Extensible Markup Language Files (*.xml)")
-);
-    if(filename != NULL)
-    {
-    //File erstellen
-    QFile file(filename);
 
-    //Document erstellen
-    QDomDocument document;
+            //Document erstellen
+            QDomDocument document;
 
-    //root (Map) festlegen
-    QDomElement root = document.createElement("Map");
+            if(filename != NULL)
+            {
+                QFile file(filename);
+                if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                    QMessageBox::information(this,tr("Datei kann nicht gewählt werden."),file.errorString());
+                    return ;
+                }
+                else
+                {
+                    //File erstellen
+                    QFile file(filename);
 
-    //root dem document hinzufügen
-    document.appendChild(root);
+                    //Document erstellen
+                    QDomDocument document;
 
-    //Daten der Map Einfügen
-    QDomElement data = document.createElement("Data");
-    root.appendChild(data);
+                    //root (Map) festlegen
+                    QDomElement root = document.createElement("Map");
 
-    //Mapgröße als Node Einfügen
-    QDomElement size = document.createElement("MapSize");
-    size.setAttribute("X:", QString::number(m->getSizeX()));
-    size.setAttribute("Y:",QString::number(m->getSizeY()));
-    data.appendChild(size);
+                    //root dem document hinzufügen
+                    document.appendChild(root);
 
-    //Unterkategorie Points einfügen
-    QDomElement points = document.createElement("Points");
-    root.appendChild(points);
+                    //Daten der Map Einfügen
+                    QDomElement data = document.createElement("Data");
+                    root.appendChild(data);
 
-    //Start- und Endingpoints als nodes dem document hinzufügen
-    QDomElement start = document.createElement("StartingPoint");
-    start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()+20));
-    start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()+20));
-    points.appendChild(start);
+                    //Mapgröße als Node Einfügen
+                    QDomElement size = document.createElement("MapSize");
+                    size.setAttribute("X:", QString::number(m->getSizeX()));
+                    size.setAttribute("Y:",QString::number(m->getSizeY()));
+                    data.appendChild(size);
 
-    QDomElement end = document.createElement("EndingPoint");
-    end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()+20));
-    end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
-    points.appendChild(end);
+                    //Unterkategorie Points einfügen
+                    QDomElement points = document.createElement("Points");
+                    root.appendChild(points);
 
-    //Unterkategorie für obstacles
-    QDomElement obstacles = document.createElement("Obstacles");
-    root.appendChild(obstacles);
+                    //Start- und Endingpoints als nodes dem document hinzufügen
+                    QDomElement start = document.createElement("StartingPoint");
+                    start.setAttribute("X:", QString::number(m->getStartingTile()->scenePos().x()+20));
+                    start.setAttribute("Y:", QString::number(m->getStartingTile()->scenePos().y()+20));
+                    points.appendChild(start);
 
-    //Obstacles als nodes dem unterpunkt hinzufügen
-    for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
-    {
-        QDomElement node = document.createElement("Obstacle");
-        node.setAttribute("Typ:", m->getObstacle(i)->getType());
-        node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
-        node.setAttribute("length:", QString::number(m->getObstacle(i)->getlength()));
-        node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
-        node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
-        if(m->getObstacle(i)->getType() == "dynamicObstacle")
-        {
-            node.setAttribute("startingPointX", QString::number(m->getObstacle(i)->getStartingPoint().x()));
-            node.setAttribute("startingPointY", QString::number(m->getObstacle(i)->getStartingPoint().y()));
-            node.setAttribute("endingPointX", QString::number(m->getObstacle(i)->getEndingPoint().x()));
-            node.setAttribute("endingPointY", QString::number(m->getObstacle(i)->getEndingPoint().y()));
-            node.setAttribute("rotation", QString::number(m->getObstacle(i)->rotation()));
+                    QDomElement end = document.createElement("EndingPoint");
+                    end.setAttribute("X:", QString::number(m->getEndingTile()->scenePos().x()+20));
+                    end.setAttribute("Y:", QString::number(m->getEndingTile()->scenePos().y()+20));
+                    points.appendChild(end);
+
+                    //Unterkategorie für obstacles
+                    QDomElement obstacles = document.createElement("Obstacles");
+                    root.appendChild(obstacles);
+
+                    //Obstacles als nodes dem unterpunkt hinzufügen
+                    for(unsigned int i = 0; i < m->getNumberOfObstacles(); i++)
+                    {
+                        QDomElement node = document.createElement("Obstacle");
+                        node.setAttribute("Typ:", m->getObstacle(i)->getType());
+                        node.setAttribute("width:", QString::number(m->getObstacle(i)->getwidth()));
+                        node.setAttribute("length:", QString::number(m->getObstacle(i)->getlength()));
+                        node.setAttribute("X:", QString::number(m->getObstacle(i)->scenePos().x()));
+                        node.setAttribute("Y:", QString::number(m->getObstacle(i)->scenePos().y()));
+                        if(m->getObstacle(i)->getType() == "dynamicObstacle")
+                        {
+                            node.setAttribute("startingPointX", QString::number(m->getObstacle(i)->getStartingPoint().x()));
+                            node.setAttribute("startingPointY", QString::number(m->getObstacle(i)->getStartingPoint().y()));
+                            node.setAttribute("endingPointX", QString::number(m->getObstacle(i)->getEndingPoint().x()));
+                            node.setAttribute("endingPointY", QString::number(m->getObstacle(i)->getEndingPoint().y()));
+                            node.setAttribute("rotation", QString::number(m->getObstacle(i)->rotation()));
+                        }
+                        obstacles.appendChild(node);
+                    }
+
+                    //Unterpunkt für tiles hinzufügen
+                    QDomElement tiles = document.createElement("Tiles");
+                    root.appendChild(tiles);
+
+                    //Tiles als nodes dem document hinzufügen
+                    for(unsigned int i=0; i < m->getNumberOfTiles(); i++)
+                    {
+                        QDomElement node = document.createElement("Tile");
+                        node.setAttribute("Typ:", m->getTile(i)->getType());
+                        node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
+                        node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
+                        node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
+                        node.setAttribute("direction:", QString::number(m->getTile(i)->getDirection()));
+                        tiles.appendChild(node);
+                    }
+
+                                //Die zu schreibene Datei erstellen/öffnen
+                                file.open(QIODevice::WriteOnly | QIODevice::Text);
+
+                                //Dokument schreiben.
+                                QTextStream stream(&file);
+                                stream<<document.toString();
+                            }
+                    }
+              }
         }
-        obstacles.appendChild(node);
-    }
-
-    //Unterpunkt für tiles hinzufügen
-    QDomElement tiles = document.createElement("Tiles");
-    root.appendChild(tiles);
-
-    //Tiles als nodes dem document hinzufügen
-    for(unsigned int i=0; i < m->getNumberOfTiles(); i++)
-    {
-        QDomElement node = document.createElement("Tile");
-        node.setAttribute("Typ:", m->getTile(i)->getType());
-        node.setAttribute("ascent:", QString::number(m->getTile(i)->getAscent()));
-        node.setAttribute("X:", QString::number(m->getTile(i)->scenePos().x()));
-        node.setAttribute("Y:", QString::number(m->getTile(i)->scenePos().y()));
-        node.setAttribute("direction:", QString::number(m->getTile(i)->getDirection()));
-        tiles.appendChild(node);
-    }
-
-    //Die zu schreibene Datei erstellen/öffnen
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-
-    //Dokument schreiben.
-    QTextStream stream(&file);
-    stream<<document.toString();
-    }
-    }
-    }
 }
 /*! Lädt eine Map-Datei und öffnet die Map im Editor */
 void Editor::loadMap()
@@ -241,24 +249,27 @@ void Editor::loadMap()
     QString currentPath = QDir::currentPath();
     currentPath.append("/source/Maps");
 
-    QString filename = QFileDialog::getOpenFileName(
-                this,
-                tr("Datei wählen..."),
-                currentPath,
-                tr("Extensible Markup Language Files (*.xml)")
-                );
+    QString filename = QFileDialog::getOpenFileName(this, tr("Datei wählen..."),
+                                                    currentPath,
+                                                    tr("Extensible Markup Language Files (*.xml)"),0,QFileDialog::DontUseNativeDialog);
+
 
     if(filename != NULL)
     {
         //Ausgewählte Datei öffnen
         QFile file(filename);
-        if(!file.open(QIODevice::ReadOnly)) {
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QMessageBox::information(this,tr("Datei kann nicht geöffnet werden."),file.errorString());
             return;
         }
-        //File in QDomDocument laden und file wieder schließen
-        document.setContent(&file);
-        file.close();
+        else
+        {
+            if(!document.setContent(&file))
+            {
+                QMessageBox::information(this,tr("Dokument kann nicht geladen werden."),file.errorString());
+            }
+            file.close();
+        }
 
         //Verbindungsstelle für scene
         connectScene();

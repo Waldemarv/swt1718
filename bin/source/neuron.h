@@ -17,7 +17,7 @@ struct Connection
 
 class Neuron;
 
-typedef std::vector<Neuron> Layer;
+typedef std::vector<Neuron*> Layer;
 
 class Neuron
 {
@@ -29,6 +29,9 @@ public:
     void calcOutputGradients(double targetVal);
     void calcHiddenGradients(const Layer &nextLayer);
     void updateInputWeights(Layer &prevLayer);
+    std::vector<Connection> get_m_outputWeights();
+    void setWeights(int index, double weight, double deltaWeight);
+
 
 private:
     static double eta;   // [0.0..1.0] overall net training rate
