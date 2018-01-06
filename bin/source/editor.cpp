@@ -1,6 +1,7 @@
 #include "editor.h"
 #include <iostream>
 #include <QGraphicsWidget>
+#include <QtXml>
 
 /*! Erstellt ein Editorfenster
  * \param *parent Fenster in welchem der Editor gezeichnet werden soll */

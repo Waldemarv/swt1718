@@ -6,6 +6,8 @@
 
 QT       += core gui xml
 CONFIG   += c++11 console
+INCLUDEPATH += /usr/local/include/vtk-8.1
+LIBS += vtk
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

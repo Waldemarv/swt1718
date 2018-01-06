@@ -11,6 +11,8 @@
 #include <QString>
 
 // ###### VTK #####################
+#include <QVTKWidget.h>
+#include <QVTKPaintEngine.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
@@ -50,6 +52,7 @@ private slots:
 
     void on_actionResume_triggered();
 
+public slots:
     virtual void slotExit(); // VTK
 
 private:

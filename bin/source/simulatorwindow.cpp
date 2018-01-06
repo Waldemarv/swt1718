@@ -6,8 +6,6 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
     ui(new Ui::SimulatorWindow)
 {
     ui->setupUi(this);
-<<<<<<< c0cf68d8015f19849014fe08af4481a5278d815f
-=======
 
     // ###### VTK
     // Sphere
@@ -27,13 +25,12 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
       renderer->AddActor(sphereActor);
 
       // VTK/Qt wedded
-      this->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+      ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 
       // Set up action signals and slots
       connect(this->actionExit, SIGNAL(triggered()), this, SLOT(slotExit()));
     // ##########
 
->>>>>>> VTK base
     if(&nm == nullptr) 
 	{
         //TODO : Egal was geklickt wird : Es muss eine Map geladen werden
@@ -45,7 +42,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         scene = new QGraphicsScene(this);
         //Größe der Scene setzen
         scene->setSceneRect(0,0,m.getSizeX()*m.getGridSize(),m.getSizeY()*m.getGridSize());
-        ui->graphicsView->setScene(scene);
+        //ui->graphicsView->setScene(scene);
         //Gesamtpfad der Map bestimmen und zeichnen
         QPainterPathStroker stroke;
         this->mapPath = stroke.createStroke(m.getMapPath());
@@ -88,7 +85,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         //Beschleunigungs- und Bremsphysik
         connect(frontTimer, &QTimer::timeout, [this] { physics(); });
 
-        ui->graphicsView->setEnabled(false);
+        //ui->graphicsView->setEnabled(false);
     }
 }
 
