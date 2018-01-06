@@ -12,6 +12,7 @@
 #include <vector>
 #include <QtCore>
 #include <QtXml>
+#include <sstream>
 
 namespace Ui {
 class SimulatorWindow;
@@ -32,6 +33,9 @@ public:
 
     void saveNet();
     void loadNet();
+
+    std::vector<unsigned> createTopology();
+    void createNeuralNet(std::vector<unsigned> top);
 
 private slots:
     void on_actionSimulation_starten_triggered();
@@ -58,6 +62,8 @@ private slots:
     void on_actionsaveNeuralNet_triggered();
 
     void on_actionloadNeuralNet_triggered();
+
+    void on_actioncreateNeuralNet_triggered();
 
 private:
     Map m;

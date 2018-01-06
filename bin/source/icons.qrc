@@ -12,6 +12,9 @@
         <file>img/icon/undo.svg</file>
         <file>img/icon/startingpoint.svg</file>
         <file>img/icon/endingpoint.svg</file>
+        <file>img/icon/pause.svg</file>
+        <file>img/icon/resume_play.svg</file>
+        <file>img/icon/create_Neural_network.svg</file>
     </qresource>
     <qresource prefix="/btn_icon">
         <file>img/icon/turn.svg</file>

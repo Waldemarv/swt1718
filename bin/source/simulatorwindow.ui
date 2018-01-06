@@ -88,53 +88,83 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionMap_ffnen"/>
-   <addaction name="actionZu_Editor_wechseln"/>
-   <addaction name="separator"/>
    <addaction name="actionSimulation_starten"/>
    <addaction name="separator"/>
-   <addaction name="actionPause"/>
    <addaction name="actionResume"/>
+   <addaction name="actionPause"/>
    <addaction name="separator"/>
+   <addaction name="actioncreateNeuralNet"/>
    <addaction name="actionsaveNeuralNet"/>
    <addaction name="actionloadNeuralNet"/>
+   <addaction name="separator"/>
+   <addaction name="actionZu_Editor_wechseln"/>
   </widget>
-  <action name="actionMap_ffnen">
-   <property name="text">
-    <string>Map Laden</string>
-   </property>
-  </action>
-  <action name="actionSimulation_starten">
-   <property name="text">
-    <string>Simulation starten</string>
-   </property>
-  </action>
   <action name="actionZu_Editor_wechseln">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/map.svg</normaloff>:/icon/img/icon/map.svg</iconset>
+   </property>
    <property name="text">
     <string>Zu Editor wechseln</string>
    </property>
   </action>
   <action name="actionPause">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/pause.svg</normaloff>:/icon/img/icon/pause.svg</iconset>
+   </property>
    <property name="text">
     <string>Pause</string>
    </property>
   </action>
   <action name="actionResume">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/resume_play.svg</normaloff>:/icon/img/icon/resume_play.svg</iconset>
+   </property>
    <property name="text">
-    <string>Resume</string>
+    <string>Fortsetzen</string>
    </property>
   </action>
   <action name="actionsaveNeuralNet">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/save.svg</normaloff>:/icon/img/icon/save.svg</iconset>
+   </property>
    <property name="text">
-    <string>saveNeuralNet</string>
+    <string>Neuronales Netz speichern</string>
    </property>
   </action>
   <action name="actionloadNeuralNet">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/load.svg</normaloff>:/icon/img/icon/load.svg</iconset>
+   </property>
    <property name="text">
-    <string>loadNeuralNet</string>
+    <string>Neuronales Netz laden</string>
+   </property>
+  </action>
+  <action name="actioncreateNeuralNet">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/create_Neural_network.svg</normaloff>:/icon/img/icon/create_Neural_network.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Neuronales Netz erstellen</string>
+   </property>
+  </action>
+  <action name="actionSimulation_starten">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icon/img/icon/run.svg</normaloff>:/icon/img/icon/run.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Simulation starten</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -24,10 +24,6 @@ Editor::Editor(QWidget *parent) :
     ui->ObjectSpecs->hide();
 
     caretaker = new Caretaker;
-
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
-
 }
 
 Editor::~Editor()
@@ -48,6 +44,11 @@ void Editor::createMap()
         m =  new Map(x,x); //Neue Map erstellen
         addTreeMap(x,x); //Map dem TreeWidget hinzufügen
         addTreeItems(); //Hauptitems für das TreeWidget hinzufügen (Tiles, Obstacles...)
+
+
+        scene = new QGraphicsScene(this);
+        ui->graphicsView->setScene(scene);
+
 
         //Maximum der positionsspinboxen an map anpassen
         ui->spinBoxPosX->setMaximum(m->getGridSize()*m->getSizeX());
@@ -133,7 +134,7 @@ void Editor::saveMap()
             QString currentPath = QDir::currentPath();
             currentPath.append("/source/Maps/Map.xml");
 
-            QString filename = QFileDialog::getOpenFileName(this, tr("Datei wählen..."),
+            QString filename = QFileDialog::getSaveFileName(this, tr("Datei wählen..."),
                                                             currentPath,
                                                             tr("Extensible Markup Language Files (*.xml)"),0,QFileDialog::DontUseNativeDialog);
 
@@ -270,6 +271,10 @@ void Editor::loadMap()
             }
             file.close();
         }
+
+        //Scene neu erstellen
+        scene = new QGraphicsScene(this);
+        ui->graphicsView->setScene(scene);
 
         //Verbindungsstelle für scene
         connectScene();
@@ -988,23 +993,11 @@ void Editor::on_actionSimulation_starten_triggered()
         else {
             //TODO: Wenn simulation offen, fragen ob man fortsetzen möchte oder eine neue Simulation starten will.
 
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::question(this, "Darstellung der Simulation", "Möchten Sie eine graphische Visualisierung für die Simulation?",
-                                          QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
-
-            if (reply == QMessageBox::No) {
-                m->setMapPath();
-                m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
-                SimulatorCMDL *cmdl = new SimulatorCMDL(*m);
-                this->hide();
-            }
-            if (reply == QMessageBox::Yes) {
                 m->setMapPath();
                 m->setStartingPoint(m->getStartingTile()->x()+20, m->getStartingTile()->y()+20);
                 SimulatorWindow *sim = new SimulatorWindow(*m,this);
                 sim->show();
                 this->hide();
-            }
         }
     }
     else

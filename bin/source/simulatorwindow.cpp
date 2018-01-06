@@ -42,7 +42,11 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         straight = 0.0;
         left = 0.0;
         right = 0.0;
+        drivingNet = 0;
         collision = false;
+        ui->actionPause->setEnabled(false);
+        ui->actionResume->setEnabled(false);
+
 
         // Timer erstellen
         straightTimer = new QTimer();
@@ -64,7 +68,6 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
 
         if(trainingMode)
         {
-            QMessageBox::about(this, "Trainingsmodus..", "Sie befinden sich nun im Trainingsmodus. (Zum starten drücken sie Simulation starten.) Alle Bewegungsdaten werden aufgezeichnet. Das neuronale Netz wird während der Fahrt trainiert. Sie haben zusätzlich die möglichkeit das Netz mit den aufgenommenen Daten zu trainieren. Drücken Sie dazu anschließen oben auf den trainieren Button und wählen Sie, wie oft trainiert werden soll. Das netz verbessert sich bei jeder Epoche.");
             ui->trainingModeButton->setEnabled(false);
             ui->autonomousModeButton->setEnabled(true);
         }
@@ -73,16 +76,9 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
             ui->autonomousModeButton->setEnabled(false);
             ui->trainingModeButton->setEnabled(true);
         }
-
-       //INITALIZE NERUAL NET//
-
-       topology = {3,6,3}; //3 NEURONS (Left, Right, Front Sensor), 6 HIDDEN, 3 OUTPUT
-
-       drivingNet = new neuralNet(topology);
     }
 }
 
-// Für Simulator umänderns
 void SimulatorWindow::collisionDetection() 
 {
     //Keine Kollision mit der Strecke
@@ -182,6 +178,7 @@ void SimulatorWindow::on_actionSimulation_starten_triggered()
 {
     startSimulation();
 }
+
 void SimulatorWindow::keyPressEvent(QKeyEvent *event)
 {
         //Starte die Timer wenn bestimmter Knopf gedrückt wird(Nur zu tetszwecken)
@@ -211,7 +208,15 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 
 void SimulatorWindow::startSimulation()
 {
+    if(drivingNet == 0)
+    {
+        QMessageBox::about(this, "Kein neuronales Netz vorhanden!", "Bitte erstellen oder laden Sie vor der Simulation ein neuonales Netz.");
+        return;
+    }
+
     qDebug()<<"Simulation wurde gestartet!";
+
+    ui->actionPause->setEnabled(true);
 
     if(sv != 0)
     {
@@ -253,7 +258,7 @@ void SimulatorWindow::saveNet()
     QString currentPath = QDir::currentPath();
     currentPath.append("/source/Networks/neuralNet.xml");
 
-    QString filename = QFileDialog::getOpenFileName(this, tr("Datei wählen..."),
+    QString filename = QFileDialog::getSaveFileName(this, tr("Datei wählen..."),
                                                     currentPath,
                                                     tr("Extensible Markup Language Files (*.xml)"),0,QFileDialog::DontUseNativeDialog);
 
@@ -275,19 +280,24 @@ void SimulatorWindow::saveNet()
             //root dem document hinzufügen
             document.appendChild(root);
 
-            qDebug()<<drivingNet->get_m_layers().size();
-            for(int i=0; i < drivingNet->get_m_layers().size() - 1; i++)  //Last Layer has no weights
-            {
-                QDomElement layer = document.createElement("Layer");
-                root.appendChild(layer);
+            QDomElement top = document.createElement("Topology");
+            int numberOfLayers = drivingNet->get_m_layers().size() - 2;
+            top.setAttribute("Layer-Count", numberOfLayers);
 
-                qDebug()<<drivingNet->get_m_layers()[i].size();
-                for(int j=0; j < drivingNet->get_m_layers()[i].size(); j++)
+            for(int i=0; i < drivingNet->get_m_layers().size() - 1; i++)  //Last Layer has no weights
+            {                
+                QDomElement layer = document.createElement("Layer");
+                if(i!=0)
                 {
+                    int neuronsInLayer = drivingNet->get_m_layers()[i].size() - 1;
+                    top.setAttribute("Layer"+QString::number(i)+"-Neurons", neuronsInLayer);
+                }
+
+                for(int j=0; j < drivingNet->get_m_layers()[i].size(); j++)
+                {                    
                     QDomElement neuron = document.createElement("Neuron");
                     neuron.setAttribute("Neuron-Nr", j);
 
-                    qDebug()<<drivingNet->get_m_layers()[i][j]->get_m_outputWeights().size();
                     for(int k=0; k<drivingNet->get_m_layers()[i][j]->get_m_outputWeights().size() ; k++)
                     {
                         QDomElement weight = document.createElement("Weights");
@@ -298,7 +308,9 @@ void SimulatorWindow::saveNet()
                     }
                     layer.appendChild(neuron);
                 }
+                root.appendChild(layer);
             }
+            root.appendChild(top);
 
             QTextStream stream(&file);
             stream<<document.toString();
@@ -308,6 +320,27 @@ void SimulatorWindow::saveNet()
 
 void SimulatorWindow::loadNet()
 {
+    //Falls netz vorhanden vorher löschen
+    if(drivingNet!=0)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Vor dem Laden speichern..", "Möchten Sie ihr aktuelles neuronales Netz vor dem Laden eines Anderen speichern?\nAndernfalls gehen alle Daten unwiederruflich verloren!",
+                                      QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+
+        if (reply == QMessageBox::No) {
+            drivingNet = 0;
+        }
+        if (reply == QMessageBox::Yes) {
+            saveNet();
+            drivingNet = 0;
+            loadNet();
+        }
+    }
+    //Falls topology vorhanden vorher löschen
+    if(topology.size()>0)
+        topology.clear();
+
+
     //Dokument für Datei erstellen
     QDomDocument document;
     //Pfad für die zu ladene Map wählen
@@ -342,6 +375,19 @@ void SimulatorWindow::loadNet()
         //Liste aller sich im root befindenden Nodes erstellen
         QDomNodeList allLayerNodes = root.childNodes();
 
+        QDomElement top = allLayerNodes.at(allLayerNodes.count()-1).toElement();
+
+        topology.push_back(3);
+
+        for(int a=1; a< top.attribute("Layer-Count").toInt()+1; a++)
+        {
+            topology.push_back(top.attribute("Layer"+QString::number(a)+"-Neurons").toInt());
+        }
+
+        topology.push_back(3);
+
+        createNeuralNet(topology);
+
         for(int i=0; i< allLayerNodes.count(); i++)
         {
             QDomNodeList allNeuronNodes = allLayerNodes.at(i).childNodes();
@@ -353,11 +399,36 @@ void SimulatorWindow::loadNet()
                     double weight = weights.at(k).toElement().attribute("weight").toDouble();
                     double deltaWeight = weights.at(k).toElement().attribute("deltaWeight").toDouble();
                     drivingNet->get_m_layers()[i][j]->setWeights(k, weight, deltaWeight);
-
-                    qDebug()<<"Layer "<<i<<", Neuron "<<j<<", Weight "<<k<<": "<<drivingNet->get_m_layers()[i][j]->get_m_outputWeights()[k].weight<<", delta Weight "<<k<<": "<<drivingNet->get_m_layers()[i][j]->get_m_outputWeights()[k].deltaWeight;
                 }
             }
         }
+    }
+}
+
+std::vector<unsigned> SimulatorWindow::createTopology()
+{
+    std::vector<unsigned> tempTopology;
+     //3inputs (3 sensors)
+     tempTopology.push_back(3);
+
+     bool ok;
+     int x = QInputDialog::getInt(this, tr("Struktur des neuronalen Netzes"), tr("Wie viele hidden Layer wollen Sie?"), 3, 1, 10, 1, &ok);
+     if(ok) { //Wenn OK gedrückt wurde :
+     for(int i=0; i<x;i++)
+     {
+         bool ok1 = false;
+         QString layernum = QString("Layer"+QString::number(i+1));
+         QString neurons = QString("Anzahl der Neuronen in Layer " +QString::number(i+1)+ " auswählen:");
+         int y = QInputDialog::getInt(this, layernum, neurons, 1, 6, 100, 1, &ok1);
+         if(ok1)
+         {
+             tempTopology.push_back(y);
+         }
+     }
+     //3 outputs (left straight right)
+     tempTopology.push_back(3);
+     topology = tempTopology;
+     return topology;
     }
 }
 
@@ -384,6 +455,10 @@ void SimulatorWindow::pauseSimulation()
 
     tempTime = fitnessTime.elapsed();
 
+    ui->actionPause->setEnabled(false);
+    if(!ui->actionResume->isEnabled())
+        ui->actionResume->setEnabled(true);
+
     qDebug()<<"Simulation paused";
 }
 
@@ -393,6 +468,10 @@ void SimulatorWindow::resumeSimulation()
 
     mainTimer->start();
     sensorsTimer->start();
+
+    ui->actionResume->setEnabled(false);
+    if(!ui->actionPause->isEnabled())
+        ui->actionPause->setEnabled(true);
 
     qDebug()<<"Simulation resumed";
 }
@@ -496,9 +575,9 @@ void SimulatorWindow::connectSensorCalculation()
 
 
         drivingNet->showVectorVals("Targets:", targetVals);
-        assert(targetVals.size() == topology.back());
+        //assert(targetVals.size() == topology.back());
 
-        drivingNet->backProp(targetVals);
+        //drivingNet->backProp(targetVals);
 
         qDebug() << "Net recent average error: "
                         << drivingNet->getRecentAverageError();
@@ -506,7 +585,6 @@ void SimulatorWindow::connectSensorCalculation()
 
     else
     {
-        straight = 1.0;
         //Sensor data
         std::vector<double> inputVals;
 
@@ -546,7 +624,6 @@ void SimulatorWindow::connectSensorCalculation()
     tempVectorSteering.push_back(straight);
     tempVectorSteering.push_back(right);
 
-
     steeringData.push_back(tempVectorSteering);
     });
 }
@@ -555,7 +632,7 @@ void SimulatorWindow::connectFitnessTime()
 {
     connect(mainTimer, &QTimer::timeout, [this] {
 
-        QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number((fitnessTime.elapsed()-pauseTime)/1000), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
+        QString time = QString("%1:%2.%3").arg(QString::number((fitnessTime.elapsed()-pauseTime)/60000), QString::number(((fitnessTime.elapsed()-pauseTime)/1000) % 60), QString::number((fitnessTime.elapsed()-pauseTime)%1000));
         ui->timeLabel->setText(time);
     });
 }
@@ -615,6 +692,8 @@ void SimulatorWindow::on_trainModelButton_clicked()
                 qDebug() <<"Epoch " << i << ": Net recent average error: "
                             << drivingNet->getRecentAverageError();
         }
+
+        qDebug()<<"DONE TRAINING!";
     }
 }
 
@@ -626,4 +705,26 @@ void SimulatorWindow::on_actionsaveNeuralNet_triggered()
 void SimulatorWindow::on_actionloadNeuralNet_triggered()
 {
     loadNet();
+}
+
+void SimulatorWindow::createNeuralNet(std::vector<unsigned> top)
+{
+    drivingNet = new neuralNet(topology);
+}
+
+void SimulatorWindow::on_actioncreateNeuralNet_triggered()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Vor dem Erstellen speichern?", "Möchten Sie ihr aktuelles neuronales Netz vor dem erstellen eines Anderen speichern?\nAndernfalls gehen alle Daten unwiederruflich verloren!",
+                                  QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+
+    if (reply == QMessageBox::No) {
+        drivingNet = 0;
+        createNeuralNet(createTopology());
+    }
+    if (reply == QMessageBox::Yes) {
+        saveNet();
+        drivingNet = 0;
+        createNeuralNet(createTopology());
+    }
 }

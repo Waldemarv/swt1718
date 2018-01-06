@@ -1,0 +1,280 @@
+<Net>
+ <Layer>
+  <Neuron Neuron-Nr="0">
+   <Weights weight="-40.44507685974349" ID="0" deltaWeight="-3.244823858345305e-07"/>
+   <Weights weight="-13.19293502850379" ID="1" deltaWeight="-1.262110386218859e-06"/>
+   <Weights weight="32.07873083239127" ID="2" deltaWeight="1.395070120390816e-06"/>
+   <Weights weight="1.800417703062742" ID="3" deltaWeight="2.122138173010712e-07"/>
+   <Weights weight="-29.27283251411881" ID="4" deltaWeight="-4.219316673769007e-06"/>
+   <Weights weight="20.75219386745625" ID="5" deltaWeight="3.234938018755968e-07"/>
+  </Neuron>
+  <Neuron Neuron-Nr="1">
+   <Weights weight="53.94205729853021" ID="0" deltaWeight="-2.61679343414944e-07"/>
+   <Weights weight="5.713068913278724" ID="1" deltaWeight="-1.017830956628112e-06"/>
+   <Weights weight="2.71819911300126" ID="2" deltaWeight="1.125056548702271e-06"/>
+   <Weights weight="24.12945143897162" ID="3" deltaWeight="1.711401752427994e-07"/>
+   <Weights weight="18.8075710004597" ID="4" deltaWeight="-3.40267473691049e-06"/>
+   <Weights weight="-17.29980440094568" ID="5" deltaWeight="2.608820982867717e-07"/>
+  </Neuron>
+  <Neuron Neuron-Nr="2">
+   <Weights weight="-0.4626470621199381" ID="0" deltaWeight="-4.350120705209573e-07"/>
+   <Weights weight="1.078664091381896" ID="1" deltaWeight="-1.697585930968879e-06"/>
+   <Weights weight="46.62873172420338" ID="2" deltaWeight="1.879440787568391e-06"/>
+   <Weights weight="13.73381560082555" ID="3" deltaWeight="2.786386484732729e-07"/>
+   <Weights weight="11.3455570045626" ID="4" deltaWeight="-5.673327400638147e-06"/>
+   <Weights weight="41.76849902823142" ID="5" deltaWeight="4.33393547761548e-07"/>
+  </Neuron>
+  <Neuron Neuron-Nr="3">
+   <Weights weight="-1.126021767482563" ID="0" deltaWeight="-1.046717373659776e-05"/>
+   <Weights weight="1.343564309284153" ID="1" deltaWeight="-4.07132382651245e-05"/>
+   <Weights weight="-3.227756289260622" ID="2" deltaWeight="4.500226194809084e-05"/>
+   <Weights weight="-1.578392864416567" ID="3" deltaWeight="6.845607009711977e-06"/>
+   <Weights weight="0.3099973466666379" ID="4" deltaWeight="-0.0001361069894764196"/>
+   <Weights weight="-0.2395111988361029" ID="5" deltaWeight="1.043528393147087e-05"/>
+  </Neuron>
+ </Layer>
+ <Layer>
+  <Neuron Neuron-Nr="0">
+   <Weights weight="6.324950236422262" ID="0" deltaWeight="1.533504826289164e-05"/>
+   <Weights weight="8.248872701801599" ID="1" deltaWeight="-2.32777780292613e-05"/>
+   <Weights weight="8.222066143512848" ID="2" deltaWeight="4.007242387171504e-10"/>
+   <Weights weight="-0.1524621788507973" ID="3" deltaWeight="1.026237455045596e-05"/>
+   <Weights weight="-10.03615016499202" ID="4" deltaWeight="-1.045675623359301e-05"/>
+   <Weights weight="0.5890305874303317" ID="5" deltaWeight="-1.989194138679861e-10"/>
+   <Weights weight="8.930258363331983" ID="6" deltaWeight="1.27935042618293e-05"/>
+   <Weights weight="12.12610669910798" ID="7" deltaWeight="1.912708492086394e-25"/>
+   <Weights weight="4.516190141630107" ID="8" deltaWeight="-3.524885491817347e-08"/>
+   <Weights weight="2.936585077341798" ID="9" deltaWeight="-7.141228702837388e-08"/>
+   <Weights weight="4.092372199859127" ID="10" deltaWeight="-2.469280166520198e-05"/>
+   <Weights weight="4.239569419559039" ID="11" deltaWeight="-2.784710220448359e-08"/>
+  </Neuron>
+  <Neuron Neuron-Nr="1">
+   <Weights weight="3.151852679056047" ID="0" deltaWeight="-1.585308685534324e-05"/>
+   <Weights weight="1.968902591101373" ID="1" deltaWeight="2.40643383050638e-05"/>
+   <Weights weight="-1.239635722818015" ID="2" deltaWeight="-4.142603335324535e-10"/>
+   <Weights weight="1.13218799542945" ID="3" deltaWeight="-1.060841708593573e-05"/>
+   <Weights weight="-4.939485185907821" ID="4" deltaWeight="1.080976498237303e-05"/>
+   <Weights weight="2.528057591661079" ID="5" deltaWeight="2.056352722119657e-10"/>
+   <Weights weight="4.416260829214519" ID="6" deltaWeight="-1.322540695477539e-05"/>
+   <Weights weight="-6.325043067910584" ID="7" deltaWeight="-1.984010929141618e-25"/>
+   <Weights weight="1.146651806566569" ID="8" deltaWeight="3.64396261901255e-08"/>
+   <Weights weight="1.091472185132596" ID="9" deltaWeight="7.381934489377517e-08"/>
+   <Weights weight="1.224029990399613" ID="10" deltaWeight="2.552568143399574e-05"/>
+   <Weights weight="1.193143486635592" ID="11" deltaWeight="2.878576589724265e-08"/>
+  </Neuron>
+  <Neuron Neuron-Nr="2">
+   <Weights weight="-2.663742509905711" ID="0" deltaWeight="4.18482156406793e-06"/>
+   <Weights weight="-0.7021646792580005" ID="1" deltaWeight="-6.305915785550048e-06"/>
+   <Weights weight="-0.2893856572024671" ID="2" deltaWeight="1.095385699310651e-10"/>
+   <Weights weight="0.7875081260066873" ID="3" deltaWeight="2.943969763875884e-06"/>
+   <Weights weight="1.340120678389216" ID="4" deltaWeight="-2.905954401325291e-06"/>
+   <Weights weight="-0.7511024029925835" ID="5" deltaWeight="-5.51714621468482e-11"/>
+   <Weights weight="0.1334338997486055" ID="6" deltaWeight="3.554191684834384e-06"/>
+   <Weights weight="3.724910854666011" ID="7" deltaWeight="-9.573322350375759e-26"/>
+   <Weights weight="1.565204288931354" ID="8" deltaWeight="-9.622802806757322e-09"/>
+   <Weights weight="2.007010391531786" ID="9" deltaWeight="-2.069477339194723e-08"/>
+   <Weights weight="0.324919834877585" ID="10" deltaWeight="-7.026893439085487e-06"/>
+   <Weights weight="1.620536125153788" ID="11" deltaWeight="-8.061892612094057e-09"/>
+  </Neuron>
+  <Neuron Neuron-Nr="3">
+   <Weights weight="3.989062940588391" ID="0" deltaWeight="6.517024878621528e-06"/>
+   <Weights weight="-0.6203846467254379" ID="1" deltaWeight="-9.879749547470073e-06"/>
+   <Weights weight="0.7943951903817025" ID="2" deltaWeight="1.70349183116019e-10"/>
+   <Weights weight="5.076069685711291" ID="3" deltaWeight="4.40067444805172e-06"/>
+   <Weights weight="1.656240533723433" ID="4" deltaWeight="-4.458274778465547e-06"/>
+   <Weights weight="2.034993208434902" ID="5" deltaWeight="-8.477965091898715e-11"/>
+   <Weights weight="-4.327148707473651" ID="6" deltaWeight="5.454226340322192e-06"/>
+   <Weights weight="3.697329365143385" ID="7" deltaWeight="3.753557040106653e-26"/>
+   <Weights weight="1.947696866202382" ID="8" deltaWeight="-1.49804641478841e-08"/>
+   <Weights weight="1.274587044125077" ID="9" deltaWeight="-3.068024756527817e-08"/>
+   <Weights weight="2.467059548487094" ID="10" deltaWeight="-1.057309601970562e-05"/>
+   <Weights weight="0.8995514622619849" ID="11" deltaWeight="-1.196151099306257e-08"/>
+  </Neuron>
+  <Neuron Neuron-Nr="4">
+   <Weights weight="6.181283074284172" ID="0" deltaWeight="-6.542363751696562e-06"/>
+   <Weights weight="4.140901782104057" ID="1" deltaWeight="9.941306035092601e-06"/>
+   <Weights weight="3.195980513724193" ID="2" deltaWeight="-1.709142805312126e-10"/>
+   <Weights weight="6.310460356724798" ID="3" deltaWeight="-4.346305668591099e-06"/>
+   <Weights weight="-8.228049284330917" ID="4" deltaWeight="4.449338471651956e-06"/>
+   <Weights weight="3.326724222740873" ID="5" deltaWeight="8.466800033394951e-11"/>
+   <Weights weight="6.634560591016243" ID="6" deltaWeight="-5.4440245610361e-06"/>
+   <Weights weight="-4.082327132108146" ID="7" deltaWeight="-1.134086507152077e-25"/>
+   <Weights weight="3.713249174254381" ID="8" deltaWeight="1.503892342573095e-08"/>
+   <Weights weight="3.06439935572359" ID="9" deltaWeight="3.019760781928533e-08"/>
+   <Weights weight="4.612434845507628" ID="10" deltaWeight="1.047043127184339e-05"/>
+   <Weights weight="4.689433394008752" ID="11" deltaWeight="1.177729174073078e-08"/>
+  </Neuron>
+  <Neuron Neuron-Nr="5">
+   <Weights weight="0.1499227725188631" ID="0" deltaWeight="-1.83777226906756e-05"/>
+   <Weights weight="1.239502094914283" ID="1" deltaWeight="2.79011502707299e-05"/>
+   <Weights weight="-2.957366503667741" ID="2" deltaWeight="-4.802046056378497e-10"/>
+   <Weights weight="-1.082411625585223" ID="3" deltaWeight="-1.228404632444464e-05"/>
+   <Weights weight="-1.091725932491566" ID="4" deltaWeight="1.25259045194146e-05"/>
+   <Weights weight="4.709939242175695" ID="5" deltaWeight="2.38299388218268e-10"/>
+   <Weights weight="2.304676520713826" ID="6" deltaWeight="-1.532544752651294e-05"/>
+   <Weights weight="6.029425695647062" ID="7" deltaWeight="-2.387232280657959e-25"/>
+   <Weights weight="2.509286636899985" ID="8" deltaWeight="4.224515320325064e-08"/>
+   <Weights weight="2.013110246908989" ID="9" deltaWeight="8.545861365133022e-08"/>
+   <Weights weight="2.799518667451397" ID="10" deltaWeight="2.956289069269374e-05"/>
+   <Weights weight="2.489780437308451" ID="11" deltaWeight="3.332526198806996e-08"/>
+  </Neuron>
+  <Neuron Neuron-Nr="6">
+   <Weights weight="0.3616211687971549" ID="0" deltaWeight="-1.960921651978663e-05"/>
+   <Weights weight="0.6548919709912775" ID="1" deltaWeight="2.976550128169103e-05"/>
+   <Weights weight="2.70078346957615" ID="2" deltaWeight="-5.124146707264072e-10"/>
+   <Weights weight="0.5323919237493796" ID="3" deltaWeight="-1.312341519128289e-05"/>
+   <Weights weight="-0.8884912156113104" ID="4" deltaWeight="1.33715182794079e-05"/>
+   <Weights weight="-0.1220182957260368" ID="5" deltaWeight="2.543664793777684e-10"/>
+   <Weights weight="-0.5818444651344593" ID="6" deltaWeight="-1.635961375483246e-05"/>
+   <Weights weight="-8.592590230864039" ID="7" deltaWeight="-2.438544305235412e-25"/>
+   <Weights weight="1.699627204864893" ID="8" deltaWeight="4.50733735949582e-08"/>
+   <Weights weight="3.39565482247677" ID="9" deltaWeight="9.132232835964405e-08"/>
+   <Weights weight="-0.03774925197970762" ID="10" deltaWeight="3.157660648013972e-05"/>
+   <Weights weight="3.430403632958485" ID="11" deltaWeight="3.561094923585259e-08"/>
+  </Neuron>
+ </Layer>
+ <Layer>
+  <Neuron Neuron-Nr="0">
+   <Weights weight="0.6308654619478903" ID="0" deltaWeight="-1.260467922910341e-07"/>
+   <Weights weight="3.576095633669305" ID="1" deltaWeight="-7.797097971701976e-08"/>
+   <Weights weight="0.0729538434661644" ID="2" deltaWeight="-2.983735409606158e-05"/>
+   <Weights weight="-1.43756179610004" ID="3" deltaWeight="-2.00960317831643e-12"/>
+   <Weights weight="-1.080911351831937" ID="4" deltaWeight="-2.009545901603398e-11"/>
+   <Weights weight="-1.046228146605337" ID="5" deltaWeight="-1.626726480953699e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="1">
+   <Weights weight="3.535593123380273" ID="0" deltaWeight="-2.05489609220394e-07"/>
+   <Weights weight="1.298780315407031" ID="1" deltaWeight="-1.270343859226048e-07"/>
+   <Weights weight="-1.268017584915893" ID="2" deltaWeight="-4.855026027619802e-05"/>
+   <Weights weight="-4.077103096531619" ID="3" deltaWeight="-3.282002924947005e-12"/>
+   <Weights weight="-3.050103001338298" ID="4" deltaWeight="-3.269529243813372e-11"/>
+   <Weights weight="6.095964307045393" ID="5" deltaWeight="-2.646103716441219e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="2">
+   <Weights weight="3.382777418408572" ID="0" deltaWeight="-2.380039675992324e-07"/>
+   <Weights weight="4.977413846433368" ID="1" deltaWeight="-1.471508761779548e-07"/>
+   <Weights weight="-2.285533889290471" ID="2" deltaWeight="-5.625173324879014e-05"/>
+   <Weights weight="-1.171993366429656" ID="3" deltaWeight="-3.799927328427664e-12"/>
+   <Weights weight="0.5319864923871429" ID="4" deltaWeight="-3.788265190163747e-11"/>
+   <Weights weight="1.700864479599244" ID="5" deltaWeight="-3.066068726105499e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="3">
+   <Weights weight="0.5945708746417141" ID="0" deltaWeight="1.527613504969634e-07"/>
+   <Weights weight="0.5482936822100924" ID="1" deltaWeight="9.49650107301827e-08"/>
+   <Weights weight="-0.3494978916131133" ID="2" deltaWeight="3.673485909704738e-05"/>
+   <Weights weight="3.475462428271364" ID="3" deltaWeight="2.393549523178647e-12"/>
+   <Weights weight="-0.08858388642334118" ID="4" deltaWeight="2.477055046032467e-11"/>
+   <Weights weight="-0.1217166598811419" ID="5" deltaWeight="2.009438034698185e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="4">
+   <Weights weight="-3.932432416281622" ID="0" deltaWeight="-2.206303200608666e-07"/>
+   <Weights weight="-2.228791021615869" ID="1" deltaWeight="-1.364166188206777e-07"/>
+   <Weights weight="4.635537325011947" ID="2" deltaWeight="-5.215455567574601e-05"/>
+   <Weights weight="1.677282743281532" ID="3" deltaWeight="-3.521868063298741e-12"/>
+   <Weights weight="7.151843379176501" ID="4" deltaWeight="-3.51239069517614e-11"/>
+   <Weights weight="-5.359196595330063" ID="5" deltaWeight="-2.842855641507643e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="5">
+   <Weights weight="-1.28362583746694" ID="0" deltaWeight="2.380036101278247e-07"/>
+   <Weights weight="0.8040664424822773" ID="1" deltaWeight="1.47150658859421e-07"/>
+   <Weights weight="-0.498007515248638" ID="2" deltaWeight="5.625165322885026e-05"/>
+   <Weights weight="2.468900483706574" ID="3" deltaWeight="3.799921311954728e-12"/>
+   <Weights weight="1.302545817706582" ID="4" deltaWeight="3.788259820773317e-11"/>
+   <Weights weight="1.780870100216057" ID="5" deltaWeight="3.06606441180655e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="6">
+   <Weights weight="3.362004819101647" ID="0" deltaWeight="2.248827751764267e-07"/>
+   <Weights weight="3.527646726874382" ID="1" deltaWeight="1.390605225562517e-07"/>
+   <Weights weight="-2.108035558515422" ID="2" deltaWeight="5.317725722722514e-05"/>
+   <Weights weight="-5.412085193621554" ID="3" deltaWeight="3.588575057061122e-12"/>
+   <Weights weight="-3.141759674554841" ID="4" deltaWeight="3.581337411252399e-11"/>
+   <Weights weight="-1.196212324016621" ID="5" deltaWeight="2.898778381610427e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="7">
+   <Weights weight="0.05038719344290858" ID="0" deltaWeight="-2.380047790411933e-07"/>
+   <Weights weight="3.340506536367655" ID="1" deltaWeight="-1.471513785274871e-07"/>
+   <Weights weight="-0.2188578579555382" ID="2" deltaWeight="-5.62519258202201e-05"/>
+   <Weights weight="1.865988910717032" ID="3" deltaWeight="-3.79994023295347e-12"/>
+   <Weights weight="-0.2409724177880609" ID="4" deltaWeight="-3.788278161395475e-11"/>
+   <Weights weight="0.3539634942705256" ID="5" deltaWeight="-3.066079229730474e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="8">
+   <Weights weight="1.04477924948641" ID="0" deltaWeight="2.215007609804246e-07"/>
+   <Weights weight="1.918058844801806" ID="1" deltaWeight="1.370505626584843e-07"/>
+   <Weights weight="-0.1179586046792074" ID="2" deltaWeight="5.247749737592226e-05"/>
+   <Weights weight="2.131543392303013" ID="3" deltaWeight="3.527250691590183e-12"/>
+   <Weights weight="-2.45579436154106" ID="4" deltaWeight="3.534724561773127e-11"/>
+   <Weights weight="0.2116153786558655" ID="5" deltaWeight="2.861799398620013e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="9">
+   <Weights weight="1.142293653725497" ID="0" deltaWeight="2.378438594141846e-07"/>
+   <Weights weight="1.774637905188863" ID="1" deltaWeight="1.470529276301332e-07"/>
+   <Weights weight="0.8839528457033943" ID="2" deltaWeight="5.621516930269626e-05"/>
+   <Weights weight="2.523288927562283" ID="3" deltaWeight="3.797277764483321e-12"/>
+   <Weights weight="-3.0191047994983" ID="4" deltaWeight="3.785809244664532e-11"/>
+   <Weights weight="0.645198883261207" ID="5" deltaWeight="3.06409049870692e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="10">
+   <Weights weight="0.4158340762831356" ID="0" deltaWeight="1.81144265590209e-07"/>
+   <Weights weight="-0.01959901919743122" ID="1" deltaWeight="1.12258500040609e-07"/>
+   <Weights weight="1.493065607736805" ID="2" deltaWeight="4.3131400976932e-05"/>
+   <Weights weight="-2.689398490748584" ID="3" deltaWeight="2.869495208271888e-12"/>
+   <Weights weight="1.242484980996061" ID="4" deltaWeight="2.906213496259116e-11"/>
+   <Weights weight="-0.2339673162066307" ID="5" deltaWeight="2.354465471587567e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="11">
+   <Weights weight="0.6744834398304936" ID="0" deltaWeight="2.379156199404674e-07"/>
+   <Weights weight="3.598179136924903" ID="1" deltaWeight="1.470968211844581e-07"/>
+   <Weights weight="0.5897301228672405" ID="2" deltaWeight="5.623154852740087e-05"/>
+   <Weights weight="2.128919079480015" ID="3" deltaWeight="3.798465979801231e-12"/>
+   <Weights weight="-0.02309390431226922" ID="4" deltaWeight="3.786909359339398e-11"/>
+   <Weights weight="0.5021803795568019" ID="5" deltaWeight="3.064976552540404e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="12">
+   <Weights weight="1.110231537099124" ID="0" deltaWeight="2.380047790411933e-07"/>
+   <Weights weight="1.352444157739114" ID="1" deltaWeight="1.471513785274871e-07"/>
+   <Weights weight="1.705511701111109" ID="2" deltaWeight="5.62519258202201e-05"/>
+   <Weights weight="3.518536583948173" ID="3" deltaWeight="3.79994023295347e-12"/>
+   <Weights weight="1.595105440151154" ID="4" deltaWeight="3.788278161395475e-11"/>
+   <Weights weight="1.135968042660814" ID="5" deltaWeight="3.066079229730474e-05"/>
+  </Neuron>
+ </Layer>
+ <Layer>
+  <Neuron Neuron-Nr="0">
+   <Weights weight="-0.01602384006734178" ID="0" deltaWeight="-0.0002938511161698496"/>
+   <Weights weight="1.069005602860751" ID="1" deltaWeight="1.582310742024253e-15"/>
+   <Weights weight="-0.5516037752840736" ID="2" deltaWeight="-7.498417434617821e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="1">
+   <Weights weight="-0.06811986169952548" ID="0" deltaWeight="-0.000294273092732352"/>
+   <Weights weight="1.099356604459675" ID="1" deltaWeight="1.584518716602965e-15"/>
+   <Weights weight="-0.5742199746749332" ID="2" deltaWeight="-7.509099732658402e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="2">
+   <Weights weight="-0.3423052561488359" ID="0" deltaWeight="-0.0001880966520877861"/>
+   <Weights weight="0.7363490820846565" ID="1" deltaWeight="1.014796607195964e-15"/>
+   <Weights weight="0.07697005925122671" ID="2" deltaWeight="-4.801711644180425e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="3">
+   <Weights weight="-0.8852171681811881" ID="0" deltaWeight="-0.0002946180644157825"/>
+   <Weights weight="1.615882318540066" ID="1" deltaWeight="1.586347258638076e-15"/>
+   <Weights weight="-0.05216868697727416" ID="2" deltaWeight="-7.517856693012127e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="4">
+   <Weights weight="-0.1780382048289333" ID="0" deltaWeight="0.0002946180242444781"/>
+   <Weights weight="0.06938791220508199" ID="1" deltaWeight="-1.586347042634973e-15"/>
+   <Weights weight="-1.057146689158186" ID="2" deltaWeight="7.517855668830558e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="5">
+   <Weights weight="-0.1475866217166579" ID="0" deltaWeight="-0.0002335248321473555"/>
+   <Weights weight="0.1102774538447245" ID="1" deltaWeight="1.257912147110481e-15"/>
+   <Weights weight="-0.5204824444193167" ID="2" deltaWeight="-5.959307950749536e-05"/>
+  </Neuron>
+  <Neuron Neuron-Nr="6">
+   <Weights weight="1.138912906325662" ID="0" deltaWeight="-0.0002946180665316979"/>
+   <Weights weight="3.791680475672972" ID="1" deltaWeight="1.586347269627831e-15"/>
+   <Weights weight="0.4852330974229522" ID="2" deltaWeight="-7.517856746380242e-05"/>
+  </Neuron>
+ </Layer>
+ <Topology Layer2-Neurons="12" Layer-Count="3" Layer3-Neurons="6" Layer1-Neurons="6"/>
+</Net>

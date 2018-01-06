@@ -41,7 +41,6 @@ SOURCES += \
     memento.cpp \
     caretaker.cpp \
     sensor.cpp \
-    simulatorcmdl.cpp \
     dynamicobstacle.cpp \
     neuralnet.cpp \
     neuron.cpp
@@ -63,7 +62,6 @@ HEADERS += \
     memento.h \
     caretaker.h \
     sensor.h \
-    simulatorcmdl.h \
     dynamicobstacle.h \
     neuralnet.h \
     neuron.h
