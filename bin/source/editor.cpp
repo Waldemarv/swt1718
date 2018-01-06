@@ -115,19 +115,19 @@ void Editor::saveMap()
 {
     //Map vorhanden?
     if(m==nullptr){
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Speichern eine Map!");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Speichern eine Map!");
     }
     else if(m->getNumberOfItems() == 0){
-        QMessageBox::about(this, "Keine Elemente in der Map", "Bitte fügen Sie mindestens ein Objekt hinzu!");
+        QMessageBox::warning(this, "Keine Elemente in der Map", "Bitte fügen Sie mindestens ein Objekt hinzu!");
     }
     else{
         if(m->getStartingTile() == NULL)
         {
-            QMessageBox::about(this, "Kein Startpunkt", "Bitte erstellen Sie vor dem Speichern einen Startpunkt!");
+            QMessageBox::warning(this, "Kein Startpunkt", "Bitte erstellen Sie vor dem Speichern einen Startpunkt!");
         }
         else if(m->getEndingTile() == NULL)
         {
-            QMessageBox::about(this, "Kein Endpunkt", "Bitte erstellen Sie vor dem Speichern einen Endpunkt!");
+            QMessageBox::warning(this, "Kein Endpunkt", "Bitte erstellen Sie vor dem Speichern einen Endpunkt!");
         }
         else
         {
@@ -272,6 +272,16 @@ void Editor::loadMap()
             file.close();
         }
 
+        //Root erstellen
+        QDomElement root = document.firstChildElement();
+
+        //Sicherstellen, dass nur Map und kein Network geladen wird
+        if(root.tagName() != "Map")
+        {
+            QMessageBox::warning(this, "Keine Map..", "Bitte wählen Sie eine Map datei !");
+            return;
+        }
+
         //Scene neu erstellen
         scene = new QGraphicsScene(this);
         ui->graphicsView->setScene(scene);
@@ -282,8 +292,6 @@ void Editor::loadMap()
         //Verbindungsstelle für treeWidget
         connectTreeWidget();
 
-        //Root erstellen
-        QDomElement root = document.firstChildElement();
         //Liste aller sich im root befindenden Nodes erstellen
         QDomNodeList allNodes = root.childNodes();
         //Data als erstes darunterliegendes Node der liste erstellen
@@ -418,7 +426,7 @@ void Editor::loadMap()
         }
     else
     {
-        QMessageBox::about(this, "Öffnen Fehlgeschlagen..","Leider konnte die Datei nicht geöffnet werden.");
+        QMessageBox::critical(this, "Öffnen Fehlgeschlagen..","Leider konnte die Datei nicht geöffnet werden.");
     }
     }
     else
@@ -745,7 +753,7 @@ void Editor::on_straightButton_clicked()
     //Wenn keine Map vorhanden
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {
@@ -768,7 +776,7 @@ void Editor::on_turnButton_clicked()
 {
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {
@@ -791,7 +799,7 @@ void Editor::on_staticObstacleButton_clicked()
 {
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {
@@ -810,11 +818,11 @@ void Editor::on_staticObstacleButton_clicked()
 void Editor::on_deleteTileButton_clicked()
 {
     if(m == nullptr) {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
         return;
     }
     else if(m->getNumberOfItems() == 0) {
-        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+        QMessageBox::warning(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
         return;
     }
     else {
@@ -860,11 +868,11 @@ void Editor::on_deleteTileButton_clicked()
 void Editor::on_deleteObstacleButton_clicked()
 {
     if(m == nullptr) {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
         return;
     }
     else if(m->getNumberOfItems() == 0) {
-        QMessageBox::about(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
+        QMessageBox::warning(this, "Keine Elemente vorhanden", "Es gibt nichts zu löschen!");
         return;
     }
     else {
@@ -898,7 +906,7 @@ void Editor::on_intersectionButton_clicked()
 {
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {
@@ -919,7 +927,7 @@ void Editor::on_tIntersectionButton_clicked()
 {
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {
@@ -941,7 +949,7 @@ void Editor::on_startingPointButton_clicked()
 {
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {
@@ -964,7 +972,7 @@ void Editor::on_endingPointButton_clicked()
 {
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {
@@ -989,7 +997,7 @@ void Editor::on_actionSimulation_starten_triggered()
     if(m!=0)
     {
         if(m->getStartingTile()== 0 || m->getEndingTile() == 0) {
-            QMessageBox::about(this, "Kein Start- oder Endpunkt vorhanden", "Bitte erstellen Sie vor der Simulation einen Start- und Endpunkt");        }
+            QMessageBox::warning(this, "Kein Start- oder Endpunkt vorhanden", "Bitte erstellen Sie vor der Simulation einen Start- und Endpunkt");        }
         else {
             //TODO: Wenn simulation offen, fragen ob man fortsetzen möchte oder eine neue Simulation starten will.
 
@@ -1002,7 +1010,7 @@ void Editor::on_actionSimulation_starten_triggered()
     }
     else
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor der Simulation eine Map!");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor der Simulation eine Map!");
     }
 }
 
@@ -1052,7 +1060,7 @@ void Editor::on_actionUndo_triggered()
     }
     else
     {
-        QMessageBox::about(this, "Kein Memento", "Vor dem Rückgängig machen bitte erst eine Änderung vornehmen !");
+        QMessageBox::warning(this, "Kein Memento", "Vor dem Rückgängig machen bitte erst eine Änderung vornehmen !");
         return;
     }
 }
@@ -1061,7 +1069,7 @@ void Editor::on_dynamicObstacleButton_clicked()
 {
     if(m == nullptr)
     {
-        QMessageBox::about(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map");
+        QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor dem Bearbeiten eine Map !");
     }
     else
     {

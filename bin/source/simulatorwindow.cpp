@@ -210,7 +210,7 @@ void SimulatorWindow::startSimulation()
 {
     if(drivingNet == 0)
     {
-        QMessageBox::about(this, "Kein neuronales Netz vorhanden!", "Bitte erstellen oder laden Sie vor der Simulation ein neuonales Netz.");
+        QMessageBox::warning(this, "Kein neuronales Netz vorhanden!", "Bitte erstellen oder laden Sie vor der Simulation ein neuonales Netz.");
         return;
     }
 
@@ -372,6 +372,14 @@ void SimulatorWindow::loadNet()
 
         //Root erstellen
         QDomElement root = document.firstChildElement();
+
+        //Sicherstellen, dass nur Network und keine Map geladen wird
+        if(root.tagName() != "Net")
+        {
+            QMessageBox::warning(this, "Kein Netzwerk..", "Bitte wählen Sie eine Netzwerk datei !");
+            return;
+        }
+
         //Liste aller sich im root befindenden Nodes erstellen
         QDomNodeList allLayerNodes = root.childNodes();
 
