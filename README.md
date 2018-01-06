@@ -1,6 +1,7 @@
 # Projekt zum autonomen Fahren
 
-![Bild des Editors](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/editor%2007-11-17.png)
+![Bild des Editors](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/editor06-01-17.png)
+![Gif der Simulation](https://raw.githubusercontent.com/Waldemarv/swt1718/dokumente/dokumente/bilder/swt_gif.gif)
 
 ## Aktuelle Dokumente
 
