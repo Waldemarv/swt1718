@@ -1,0 +1,38 @@
+\hypertarget{class_neuron}{}\section{Neuron Class Reference}
+\label{class_neuron}\index{Neuron@{Neuron}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_neuron_aac8e77c54251e7e30f1b59e768f16db2}\label{class_neuron_aac8e77c54251e7e30f1b59e768f16db2}} 
+{\bfseries Neuron} (unsigned num\+Outputs, unsigned my\+Index)
+\item 
+\mbox{\Hypertarget{class_neuron_a219bfcc8c9cd5cc634fef77bccb72d84}\label{class_neuron_a219bfcc8c9cd5cc634fef77bccb72d84}} 
+void {\bfseries set\+Output\+Val} (double val)
+\item 
+\mbox{\Hypertarget{class_neuron_ac0e4317b5146cebd2abda0b9f6d3af6f}\label{class_neuron_ac0e4317b5146cebd2abda0b9f6d3af6f}} 
+double {\bfseries get\+Output\+Val} (void) const
+\item 
+\mbox{\Hypertarget{class_neuron_a67c71b826dcfe651bf188869df932f02}\label{class_neuron_a67c71b826dcfe651bf188869df932f02}} 
+void {\bfseries feed\+Forward} (const Layer \&prev\+Layer)
+\item 
+\mbox{\Hypertarget{class_neuron_aed841fbec8dd00df77fc802c6934f903}\label{class_neuron_aed841fbec8dd00df77fc802c6934f903}} 
+void {\bfseries calc\+Output\+Gradients} (double target\+Val)
+\item 
+\mbox{\Hypertarget{class_neuron_a6872e68ea8229653280d29e052440937}\label{class_neuron_a6872e68ea8229653280d29e052440937}} 
+void {\bfseries calc\+Hidden\+Gradients} (const Layer \&next\+Layer)
+\item 
+\mbox{\Hypertarget{class_neuron_a09d963e955e9cf91a078f60f11ee2c47}\label{class_neuron_a09d963e955e9cf91a078f60f11ee2c47}} 
+void {\bfseries update\+Input\+Weights} (Layer \&prev\+Layer)
+\item 
+\mbox{\Hypertarget{class_neuron_aa3f1bcf80f7a12bf2c4cf1b7efe8ccab}\label{class_neuron_aa3f1bcf80f7a12bf2c4cf1b7efe8ccab}} 
+std\+::vector$<$ \mbox{\hyperlink{struct_connection}{Connection}} $>$ {\bfseries get\+\_\+m\+\_\+output\+Weights} ()
+\item 
+\mbox{\Hypertarget{class_neuron_acee33f1da8cdb10647fccdfadf2766a8}\label{class_neuron_acee33f1da8cdb10647fccdfadf2766a8}} 
+void {\bfseries set\+Weights} (int index, double weight, double delta\+Weight)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/neuron.\+h\item 
+D\+:/swt1718-\/editor/bin/source/neuron.\+cpp\end{DoxyCompactItemize}

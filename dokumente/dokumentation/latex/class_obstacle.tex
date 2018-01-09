@@ -1,0 +1,219 @@
+\hypertarget{class_obstacle}{}\section{Obstacle Class Reference}
+\label{class_obstacle}\index{Obstacle@{Obstacle}}
+
+
+{\ttfamily \#include $<$obstacle.\+h$>$}
+
+Inheritance diagram for Obstacle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_obstacle}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_obstacle_ad99ea2e5503c0f3ae2f23ff33005ea66}\label{class_obstacle_ad99ea2e5503c0f3ae2f23ff33005ea66}} 
+void {\bfseries mouse\+Press\+Event} (Q\+Graphics\+Scene\+Mouse\+Event $\ast$event)
+\item 
+\mbox{\Hypertarget{class_obstacle_aee96980c04e985efb24934541fba293e}\label{class_obstacle_aee96980c04e985efb24934541fba293e}} 
+void {\bfseries mouse\+Release\+Event} (Q\+Graphics\+Scene\+Mouse\+Event $\ast$event)
+\item 
+\mbox{\Hypertarget{class_obstacle_a9bf186d9151a4973369a5aef75a42e61}\label{class_obstacle_a9bf186d9151a4973369a5aef75a42e61}} 
+void {\bfseries mouse\+Move\+Event} (Q\+Graphics\+Scene\+Mouse\+Event $\ast$event)
+\item 
+double \mbox{\hyperlink{class_obstacle_a2bf33211e30b7dd9292ff23f76a7d008}{getwidth}} ()
+\item 
+double \mbox{\hyperlink{class_obstacle_afe853d8607d0794e44d3507c47ad5761}{getlength}} ()
+\item 
+\mbox{\Hypertarget{class_obstacle_a340e003df47196b278dc1b3cbf66145d}\label{class_obstacle_a340e003df47196b278dc1b3cbf66145d}} 
+virtual double {\bfseries get\+Speed} ()
+\item 
+\mbox{\Hypertarget{class_obstacle_a7025a08583ea3d3dc21778d2727fb89f}\label{class_obstacle_a7025a08583ea3d3dc21778d2727fb89f}} 
+virtual void {\bfseries set\+Speed} (double s)
+\item 
+\mbox{\Hypertarget{class_obstacle_a4053849e0ecdb7b51be12e779c5dece1}\label{class_obstacle_a4053849e0ecdb7b51be12e779c5dece1}} 
+bool {\bfseries is\+Clicked} ()
+\item 
+\mbox{\Hypertarget{class_obstacle_a7c0383da429b66fd9f7c28af4bb9e287}\label{class_obstacle_a7c0383da429b66fd9f7c28af4bb9e287}} 
+void {\bfseries set\+Clicked} (bool c)
+\item 
+\mbox{\Hypertarget{class_obstacle_a038612ebb2bf5457eb1b447849a6a9b0}\label{class_obstacle_a038612ebb2bf5457eb1b447849a6a9b0}} 
+void {\bfseries update\+Position} ()
+\item 
+void \mbox{\hyperlink{class_obstacle_a601d8574fb13298bf693f0e4a2a5982f}{set\+Position}} (double x, double y)
+\item 
+\mbox{\Hypertarget{class_obstacle_a99a30018b72dc2fdbe0641ebd9dbe7dc}\label{class_obstacle_a99a30018b72dc2fdbe0641ebd9dbe7dc}} 
+virtual double {\bfseries calculate\+Rotation} ()
+\item 
+virtual Q\+RectF \mbox{\hyperlink{class_obstacle_a6f02b341e339ea27c3391a44c787b5f2}{bounding\+Rect}} () const
+\item 
+virtual void \mbox{\hyperlink{class_obstacle_a42945fd08ee06a3bc33199f4f2ca37c1}{paint}} (Q\+Painter $\ast$painter, const Q\+Style\+Option\+Graphics\+Item $\ast$option, Q\+Widget $\ast$widget)
+\item 
+virtual Q\+String \mbox{\hyperlink{class_obstacle_a14ba5e7996c9e0a0bd3afc3bea5771ea}{get\+Type}} ()
+\item 
+\mbox{\Hypertarget{class_obstacle_afccb1406e9f18b60f51da28213592379}\label{class_obstacle_afccb1406e9f18b60f51da28213592379}} 
+virtual Q\+PointF {\bfseries get\+Starting\+Point} ()
+\item 
+\mbox{\Hypertarget{class_obstacle_a7b164b4542c63039e2a33af1fe571457}\label{class_obstacle_a7b164b4542c63039e2a33af1fe571457}} 
+virtual Q\+PointF {\bfseries get\+Ending\+Point} ()
+\item 
+\mbox{\hyperlink{class_obstacle_a8f734072321fa06a7b7dae2d5f50f352}{Obstacle}} ()
+\item 
+\mbox{\hyperlink{class_obstacle_ab31bcc85e9865eb103d86196c640cbe5}{Obstacle}} (double x, double y, double width, double length)
+\item 
+Q\+PointF $\ast$ \mbox{\hyperlink{class_obstacle_acc23c6ded38190d10b50e6190a85744e}{get\+Position}} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_obstacle_ac3bcd488b16a8d8cf99875c6d0172e15}{advance}} (int phase)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_obstacle_a585c9f0982084573c2e1172076aac502}\label{class_obstacle_a585c9f0982084573c2e1172076aac502}} 
+Q\+PointF $\ast$ {\bfseries position}
+\item 
+\mbox{\Hypertarget{class_obstacle_aea38cecf56d04b14398c07388c6cdc5d}\label{class_obstacle_aea38cecf56d04b14398c07388c6cdc5d}} 
+double {\bfseries width}
+\item 
+\mbox{\Hypertarget{class_obstacle_a71008c9d9ddaa8faa92e3ec1973fc572}\label{class_obstacle_a71008c9d9ddaa8faa92e3ec1973fc572}} 
+double {\bfseries length}
+\item 
+\mbox{\Hypertarget{class_obstacle_ae712955c5f72f3ac00e460702950130c}\label{class_obstacle_ae712955c5f72f3ac00e460702950130c}} 
+bool {\bfseries clicked}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Klasse für statische Hindernisse 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_obstacle_a8f734072321fa06a7b7dae2d5f50f352}\label{class_obstacle_a8f734072321fa06a7b7dae2d5f50f352}} 
+\index{Obstacle@{Obstacle}!Obstacle@{Obstacle}}
+\index{Obstacle@{Obstacle}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{Obstacle()}{Obstacle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Obstacle\+::\+Obstacle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Erstellt ein neues \mbox{\hyperlink{class_obstacle}{Obstacle}} ohne Größe und Position auf der \mbox{\hyperlink{class_map}{Map}} \mbox{\Hypertarget{class_obstacle_ab31bcc85e9865eb103d86196c640cbe5}\label{class_obstacle_ab31bcc85e9865eb103d86196c640cbe5}} 
+\index{Obstacle@{Obstacle}!Obstacle@{Obstacle}}
+\index{Obstacle@{Obstacle}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{Obstacle()}{Obstacle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Obstacle\+::\+Obstacle (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{width,  }\item[{double}]{length }\end{DoxyParamCaption})}
+
+Erstellt ein neues \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/\+Koordinate des \mbox{\hyperlink{class_obstacle}{Obstacle}} \\
+\hline
+{\em y} & y-\/\+Koordinate des \mbox{\hyperlink{class_obstacle}{Obstacle}} \\
+\hline
+{\em width} & Breite des \mbox{\hyperlink{class_obstacle}{Obstacle}} \\
+\hline
+{\em length} & Höhe des \mbox{\hyperlink{class_obstacle}{Obstacle}} \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_obstacle_ac3bcd488b16a8d8cf99875c6d0172e15}\label{class_obstacle_ac3bcd488b16a8d8cf99875c6d0172e15}} 
+\index{Obstacle@{Obstacle}!advance@{advance}}
+\index{advance@{advance}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{advance()}{advance()}}
+{\footnotesize\ttfamily void Obstacle\+::advance (\begin{DoxyParamCaption}\item[{int}]{phase }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Wählt ein \mbox{\hyperlink{class_obstacle}{Obstacle}} an, wenn es angeklickt wurde 
+
+Reimplemented in \mbox{\hyperlink{class_dynamic_obstacle_a533d0927fbe09aa105c47e00b1cd045f}{Dynamic\+Obstacle}}.
+
+\mbox{\Hypertarget{class_obstacle_a6f02b341e339ea27c3391a44c787b5f2}\label{class_obstacle_a6f02b341e339ea27c3391a44c787b5f2}} 
+\index{Obstacle@{Obstacle}!bounding\+Rect@{bounding\+Rect}}
+\index{bounding\+Rect@{bounding\+Rect}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{bounding\+Rect()}{boundingRect()}}
+{\footnotesize\ttfamily Q\+RectF Obstacle\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Erstellt ein Begrenzungsrechteck für das \mbox{\hyperlink{class_obstacle}{Obstacle}}. Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt \begin{DoxyReturn}{Returns}
+Begrenzungsrechteck des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{class_dynamic_obstacle_ac1b0b15d722a45decc8b77fcde22efd0}{Dynamic\+Obstacle}}.
+
+\mbox{\Hypertarget{class_obstacle_afe853d8607d0794e44d3507c47ad5761}\label{class_obstacle_afe853d8607d0794e44d3507c47ad5761}} 
+\index{Obstacle@{Obstacle}!getlength@{getlength}}
+\index{getlength@{getlength}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{getlength()}{getlength()}}
+{\footnotesize\ttfamily double Obstacle\+::getlength (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Länge des \mbox{\hyperlink{class_obstacle}{Obstacle}} zurück \begin{DoxyReturn}{Returns}
+Länge des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_obstacle_acc23c6ded38190d10b50e6190a85744e}\label{class_obstacle_acc23c6ded38190d10b50e6190a85744e}} 
+\index{Obstacle@{Obstacle}!get\+Position@{get\+Position}}
+\index{get\+Position@{get\+Position}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{get\+Position()}{getPosition()}}
+{\footnotesize\ttfamily Q\+PointF $\ast$ Obstacle\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Position des \mbox{\hyperlink{class_obstacle}{Obstacle}} zurück \begin{DoxyReturn}{Returns}
+Position des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_obstacle_a14ba5e7996c9e0a0bd3afc3bea5771ea}\label{class_obstacle_a14ba5e7996c9e0a0bd3afc3bea5771ea}} 
+\index{Obstacle@{Obstacle}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{get\+Type()}{getType()}}
+{\footnotesize\ttfamily Q\+String Obstacle\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Gibt den Typ des \mbox{\hyperlink{class_obstacle}{Obstacle}} zurück \begin{DoxyReturn}{Returns}
+Typ des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{class_dynamic_obstacle_ac52c38ef60b99a7a29f89b6eb23df460}{Dynamic\+Obstacle}}.
+
+\mbox{\Hypertarget{class_obstacle_a2bf33211e30b7dd9292ff23f76a7d008}\label{class_obstacle_a2bf33211e30b7dd9292ff23f76a7d008}} 
+\index{Obstacle@{Obstacle}!getwidth@{getwidth}}
+\index{getwidth@{getwidth}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{getwidth()}{getwidth()}}
+{\footnotesize\ttfamily double Obstacle\+::getwidth (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Breite des \mbox{\hyperlink{class_obstacle}{Obstacle}} zurück \begin{DoxyReturn}{Returns}
+Breite des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_obstacle_a42945fd08ee06a3bc33199f4f2ca37c1}\label{class_obstacle_a42945fd08ee06a3bc33199f4f2ca37c1}} 
+\index{Obstacle@{Obstacle}!paint@{paint}}
+\index{paint@{paint}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Obstacle\+::paint (\begin{DoxyParamCaption}\item[{Q\+Painter $\ast$}]{painter,  }\item[{const Q\+Style\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{Q\+Widget $\ast$}]{widget }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Zeichnet das \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\begin{DoxyParams}{Parameters}
+{\em painter} & Painter der zum zeichnen benutzt wird \\
+\hline
+{\em option} & Optionen für das Zeichnen \\
+\hline
+{\em widget} & Widget in welches gezeichnet wird \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{class_dynamic_obstacle_a30c0753280f05f69a9da89bc9d9ce3f6}{Dynamic\+Obstacle}}.
+
+\mbox{\Hypertarget{class_obstacle_a601d8574fb13298bf693f0e4a2a5982f}\label{class_obstacle_a601d8574fb13298bf693f0e4a2a5982f}} 
+\index{Obstacle@{Obstacle}!set\+Position@{set\+Position}}
+\index{set\+Position@{set\+Position}!Obstacle@{Obstacle}}
+\subsubsection{\texorpdfstring{set\+Position()}{setPosition()}}
+{\footnotesize\ttfamily void Obstacle\+::set\+Position (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})}
+
+Verändert die Position des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\begin{DoxyParams}{Parameters}
+{\em x} & neue x-\/\+Koordinate des \mbox{\hyperlink{class_obstacle}{Obstacle}} \\
+\hline
+{\em y} & neue y-\/\+Koordinate des \mbox{\hyperlink{class_obstacle}{Obstacle}} \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/obstacle.\+h\item 
+D\+:/swt1718-\/editor/bin/source/obstacle.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,171 @@
+\hypertarget{class_editor}{}\section{Editor Class Reference}
+\label{class_editor}\index{Editor@{Editor}}
+Inheritance diagram for Editor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_editor}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_editor_a2918aceeffbc123a96e201b0934b9b16}{Editor}} (Q\+Widget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_editor_a1641e805c7e3d2441c8658ddc9f04ed1}{create\+Map}} ()
+\item 
+void \mbox{\hyperlink{class_editor_add1f4b900d9c8ae6065ccd769929b617}{save\+Map}} ()
+\item 
+void \mbox{\hyperlink{class_editor_a392c4c8e63399e824bbac9b669287602}{load\+Map}} ()
+\item 
+void \mbox{\hyperlink{class_editor_a35b08c0c5641203323d8865afe4a2959}{clear\+Tree}} ()
+\item 
+void \mbox{\hyperlink{class_editor_a5e4c7dcadb49adcdece3235a92a5fa5c}{delete\+Map}} ()
+\item 
+\mbox{\Hypertarget{class_editor_ad07ccb2dbdf4d50be5fdf02543c4e904}\label{class_editor_ad07ccb2dbdf4d50be5fdf02543c4e904}} 
+void {\bfseries draw\+Grid\+Layout} (int x, int y)
+\item 
+void \mbox{\hyperlink{class_editor_a64370ff1f5ceddcb1e261f2360ca1f82}{update\+Tree\+Number\+Of\+Tiles}} ()
+\item 
+void \mbox{\hyperlink{class_editor_ab6a95acaa882cf1184e5fee306bf0d60}{update\+Tree\+Number\+Of\+Obstacles}} ()
+\item 
+void \mbox{\hyperlink{class_editor_af7eec42c19816c227c820871cf119dac}{update\+Tree\+Map\+Size}} ()
+\item 
+void \mbox{\hyperlink{class_editor_af487b4d79b6a61c4613ccf605328b708}{update\+Map\+Values}} (int x, int y)
+\item 
+void \mbox{\hyperlink{class_editor_a90948c660641c5e416a34ecf05c134ae}{add\+Tree\+Items}} ()
+\item 
+void \mbox{\hyperlink{class_editor_a567769e5c55f904085a8ed615159ffd9}{add\+Tree\+Map}} (double x, double y)
+\item 
+\mbox{\Hypertarget{class_editor_a0b2bc4197d01bfc6c7a34645be26159e}\label{class_editor_a0b2bc4197d01bfc6c7a34645be26159e}} 
+void {\bfseries set\+Tree\+Tiles\+Position} (Q\+PointF position, int index)
+\item 
+\mbox{\Hypertarget{class_editor_ae674ecab67ac5f3842f1af550cfe60e3}\label{class_editor_ae674ecab67ac5f3842f1af550cfe60e3}} 
+void {\bfseries set\+Tree\+Obstacles\+Position} (Q\+PointF position, int index)
+\item 
+void \mbox{\hyperlink{class_editor_a7c91cc0098ff48ec885422b6c49d27e0}{add\+Child}} (Q\+Tree\+Widget\+Item $\ast$parent, Q\+String name, int posX, int posY)
+\item 
+\mbox{\Hypertarget{class_editor_a13cac52c413b63b00ff2fe780f65ba69}\label{class_editor_a13cac52c413b63b00ff2fe780f65ba69}} 
+void {\bfseries connect\+Scene} ()
+\item 
+\mbox{\Hypertarget{class_editor_ae60e42139a89b158340861caeded5ac0}\label{class_editor_ae60e42139a89b158340861caeded5ac0}} 
+void {\bfseries connect\+Tree\+Widget} ()
+\item 
+\mbox{\Hypertarget{class_editor_a27e06cb4821cac63581425db3e556195}\label{class_editor_a27e06cb4821cac63581425db3e556195}} 
+void {\bfseries auto\+Save} ()
+\item 
+\mbox{\Hypertarget{class_editor_a5adfadc8dff014c5462cd71e0a2c6259}\label{class_editor_a5adfadc8dff014c5462cd71e0a2c6259}} 
+void {\bfseries key\+Press\+Event} (Q\+Key\+Event $\ast$event)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_editor_a2918aceeffbc123a96e201b0934b9b16}\label{class_editor_a2918aceeffbc123a96e201b0934b9b16}} 
+\index{Editor@{Editor}!Editor@{Editor}}
+\index{Editor@{Editor}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{Editor()}{Editor()}}
+{\footnotesize\ttfamily Editor\+::\+Editor (\begin{DoxyParamCaption}\item[{Q\+Widget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+Erstellt ein Editorfenster 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$parent} & Fenster in welchem der \mbox{\hyperlink{class_editor}{Editor}} gezeichnet werden soll \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_editor_a7c91cc0098ff48ec885422b6c49d27e0}\label{class_editor_a7c91cc0098ff48ec885422b6c49d27e0}} 
+\index{Editor@{Editor}!add\+Child@{add\+Child}}
+\index{add\+Child@{add\+Child}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{add\+Child()}{addChild()}}
+{\footnotesize\ttfamily void Editor\+::add\+Child (\begin{DoxyParamCaption}\item[{Q\+Tree\+Widget\+Item $\ast$}]{parent,  }\item[{Q\+String}]{name,  }\item[{int}]{posX,  }\item[{int}]{posY }\end{DoxyParamCaption})}
+
+Fügt dem Tree\+View ein Kindelement hinzu. 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$param} & zeigt auf das Tree\+View \\
+\hline
+{\em name} & Typ des Elementes (\mbox{\hyperlink{class_tile}{Tile}},\mbox{\hyperlink{class_obstacle}{Obstacle}}..) \\
+\hline
+{\em posX} & x-\/\+Position des Elementes \\
+\hline
+{\em posY} & y-\/\+Position des Elementes \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_editor_a90948c660641c5e416a34ecf05c134ae}\label{class_editor_a90948c660641c5e416a34ecf05c134ae}} 
+\index{Editor@{Editor}!add\+Tree\+Items@{add\+Tree\+Items}}
+\index{add\+Tree\+Items@{add\+Tree\+Items}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{add\+Tree\+Items()}{addTreeItems()}}
+{\footnotesize\ttfamily void Editor\+::add\+Tree\+Items (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Erstellt Überschriftelemente für das Tree\+View \mbox{\Hypertarget{class_editor_a567769e5c55f904085a8ed615159ffd9}\label{class_editor_a567769e5c55f904085a8ed615159ffd9}} 
+\index{Editor@{Editor}!add\+Tree\+Map@{add\+Tree\+Map}}
+\index{add\+Tree\+Map@{add\+Tree\+Map}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{add\+Tree\+Map()}{addTreeMap()}}
+{\footnotesize\ttfamily void Editor\+::add\+Tree\+Map (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})}
+
+Setzt die geöffnete \mbox{\hyperlink{class_map}{Map}} als Hauptelement des Tree\+View \mbox{\Hypertarget{class_editor_a35b08c0c5641203323d8865afe4a2959}\label{class_editor_a35b08c0c5641203323d8865afe4a2959}} 
+\index{Editor@{Editor}!clear\+Tree@{clear\+Tree}}
+\index{clear\+Tree@{clear\+Tree}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{clear\+Tree()}{clearTree()}}
+{\footnotesize\ttfamily void Editor\+::clear\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Löscht alle Elemente des Tree\+View \mbox{\Hypertarget{class_editor_a1641e805c7e3d2441c8658ddc9f04ed1}\label{class_editor_a1641e805c7e3d2441c8658ddc9f04ed1}} 
+\index{Editor@{Editor}!create\+Map@{create\+Map}}
+\index{create\+Map@{create\+Map}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{create\+Map()}{createMap()}}
+{\footnotesize\ttfamily void Editor\+::create\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Erstellt eine leere \mbox{\hyperlink{class_map}{Map}} und öffnet diese. \mbox{\Hypertarget{class_editor_a5e4c7dcadb49adcdece3235a92a5fa5c}\label{class_editor_a5e4c7dcadb49adcdece3235a92a5fa5c}} 
+\index{Editor@{Editor}!delete\+Map@{delete\+Map}}
+\index{delete\+Map@{delete\+Map}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{delete\+Map()}{deleteMap()}}
+{\footnotesize\ttfamily void Editor\+::delete\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Löscht die geoffnete \mbox{\hyperlink{class_map}{Map}} \mbox{\Hypertarget{class_editor_a392c4c8e63399e824bbac9b669287602}\label{class_editor_a392c4c8e63399e824bbac9b669287602}} 
+\index{Editor@{Editor}!load\+Map@{load\+Map}}
+\index{load\+Map@{load\+Map}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{load\+Map()}{loadMap()}}
+{\footnotesize\ttfamily void Editor\+::load\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Lädt eine Map-\/\+Datei und öffnet die \mbox{\hyperlink{class_map}{Map}} im \mbox{\hyperlink{class_editor}{Editor}} \mbox{\Hypertarget{class_editor_add1f4b900d9c8ae6065ccd769929b617}\label{class_editor_add1f4b900d9c8ae6065ccd769929b617}} 
+\index{Editor@{Editor}!save\+Map@{save\+Map}}
+\index{save\+Map@{save\+Map}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{save\+Map()}{saveMap()}}
+{\footnotesize\ttfamily void Editor\+::save\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Speichert die geöffnete \mbox{\hyperlink{class_map}{Map}} in einer X\+M\+L-\/\+Datei \mbox{\Hypertarget{class_editor_af487b4d79b6a61c4613ccf605328b708}\label{class_editor_af487b4d79b6a61c4613ccf605328b708}} 
+\index{Editor@{Editor}!update\+Map\+Values@{update\+Map\+Values}}
+\index{update\+Map\+Values@{update\+Map\+Values}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{update\+Map\+Values()}{updateMapValues()}}
+{\footnotesize\ttfamily void Editor\+::update\+Map\+Values (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Ändert die Größe der \mbox{\hyperlink{class_map}{Map}} und zeichnet diese neu 
+\begin{DoxyParams}{Parameters}
+{\em x} & neuer x-\/\+Wert der \mbox{\hyperlink{class_map}{Map}} \\
+\hline
+{\em y} & neuer y-\/\+Wert der \mbox{\hyperlink{class_map}{Map}} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_editor_af7eec42c19816c227c820871cf119dac}\label{class_editor_af7eec42c19816c227c820871cf119dac}} 
+\index{Editor@{Editor}!update\+Tree\+Map\+Size@{update\+Tree\+Map\+Size}}
+\index{update\+Tree\+Map\+Size@{update\+Tree\+Map\+Size}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{update\+Tree\+Map\+Size()}{updateTreeMapSize()}}
+{\footnotesize\ttfamily void Editor\+::update\+Tree\+Map\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Aktualisiert die Größe der \mbox{\hyperlink{class_map}{Map}} im Tree\+View \mbox{\Hypertarget{class_editor_ab6a95acaa882cf1184e5fee306bf0d60}\label{class_editor_ab6a95acaa882cf1184e5fee306bf0d60}} 
+\index{Editor@{Editor}!update\+Tree\+Number\+Of\+Obstacles@{update\+Tree\+Number\+Of\+Obstacles}}
+\index{update\+Tree\+Number\+Of\+Obstacles@{update\+Tree\+Number\+Of\+Obstacles}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{update\+Tree\+Number\+Of\+Obstacles()}{updateTreeNumberOfObstacles()}}
+{\footnotesize\ttfamily void Editor\+::update\+Tree\+Number\+Of\+Obstacles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Aktualisiert die Anzahl der Obstacles im Tree\+View \mbox{\Hypertarget{class_editor_a64370ff1f5ceddcb1e261f2360ca1f82}\label{class_editor_a64370ff1f5ceddcb1e261f2360ca1f82}} 
+\index{Editor@{Editor}!update\+Tree\+Number\+Of\+Tiles@{update\+Tree\+Number\+Of\+Tiles}}
+\index{update\+Tree\+Number\+Of\+Tiles@{update\+Tree\+Number\+Of\+Tiles}!Editor@{Editor}}
+\subsubsection{\texorpdfstring{update\+Tree\+Number\+Of\+Tiles()}{updateTreeNumberOfTiles()}}
+{\footnotesize\ttfamily void Editor\+::update\+Tree\+Number\+Of\+Tiles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Aktualisiert die Anzahl der Tiles im Tree\+View 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/editor.\+h\item 
+D\+:/swt1718-\/editor/bin/source/editor.\+cpp\end{DoxyCompactItemize}

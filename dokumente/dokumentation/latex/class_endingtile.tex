@@ -1,0 +1,91 @@
+\hypertarget{class_endingtile}{}\section{Endingtile Class Reference}
+\label{class_endingtile}\index{Endingtile@{Endingtile}}
+Inheritance diagram for Endingtile\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_endingtile}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\+RectF \mbox{\hyperlink{class_endingtile_a96035b6213a6704c781ccde3792e04d8}{bounding\+Rect}} () const
+\item 
+virtual void \mbox{\hyperlink{class_endingtile_accfd225f8b68494147466d98f0eb38a3}{paint}} (Q\+Painter $\ast$painter, const Q\+Style\+Option\+Graphics\+Item $\ast$option, Q\+Widget $\ast$widget)
+\item 
+virtual Q\+String \mbox{\hyperlink{class_endingtile_a1e3f8d51207bd2fcd295e88b5e037b03}{get\+Type}} ()
+\item 
+void \mbox{\hyperlink{class_endingtile_a130af5ae1efa2bf53ffe23f89fe06834}{rotate}} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_endingtile}{Endingtile}} $\ast$ \mbox{\hyperlink{class_endingtile_aebb90e09ae669f305c980e9e7420c397}{create\+Ending\+Tile}} (int nx, int ny, double nascent, int ndirection)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_endingtile_a96035b6213a6704c781ccde3792e04d8}\label{class_endingtile_a96035b6213a6704c781ccde3792e04d8}} 
+\index{Endingtile@{Endingtile}!bounding\+Rect@{bounding\+Rect}}
+\index{bounding\+Rect@{bounding\+Rect}!Endingtile@{Endingtile}}
+\subsubsection{\texorpdfstring{bounding\+Rect()}{boundingRect()}}
+{\footnotesize\ttfamily Q\+RectF Endingtile\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Erstellt ein Begrenzungsrechteck für das \mbox{\hyperlink{class_tile}{Tile}},Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt \mbox{\Hypertarget{class_endingtile_aebb90e09ae669f305c980e9e7420c397}\label{class_endingtile_aebb90e09ae669f305c980e9e7420c397}} 
+\index{Endingtile@{Endingtile}!create\+Ending\+Tile@{create\+Ending\+Tile}}
+\index{create\+Ending\+Tile@{create\+Ending\+Tile}!Endingtile@{Endingtile}}
+\subsubsection{\texorpdfstring{create\+Ending\+Tile()}{createEndingTile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_endingtile}{Endingtile}} $\ast$ Endingtile\+::create\+Ending\+Tile (\begin{DoxyParamCaption}\item[{int}]{nx,  }\item[{int}]{ny,  }\item[{double}]{nascent,  }\item[{int}]{ndirection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Prüft ob die \mbox{\hyperlink{class_map}{Map}} schon einen Endabschnitt hat, falls nicht, wird einer Erzeugt \begin{DoxyReturn}{Returns}
+Pointer der auf den Endabschnitt zeigt 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_endingtile_a1e3f8d51207bd2fcd295e88b5e037b03}\label{class_endingtile_a1e3f8d51207bd2fcd295e88b5e037b03}} 
+\index{Endingtile@{Endingtile}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!Endingtile@{Endingtile}}
+\subsubsection{\texorpdfstring{get\+Type()}{getType()}}
+{\footnotesize\ttfamily Q\+String Endingtile\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Gibt den Typen des \mbox{\hyperlink{class_tile}{Tile}} zurück \begin{DoxyReturn}{Returns}
+Typ des \mbox{\hyperlink{class_tile}{Tile}} 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ad1dbea94d96060491a2dc4c7b92b31ab}{Tile}}.
+
+\mbox{\Hypertarget{class_endingtile_accfd225f8b68494147466d98f0eb38a3}\label{class_endingtile_accfd225f8b68494147466d98f0eb38a3}} 
+\index{Endingtile@{Endingtile}!paint@{paint}}
+\index{paint@{paint}!Endingtile@{Endingtile}}
+\subsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Endingtile\+::paint (\begin{DoxyParamCaption}\item[{Q\+Painter $\ast$}]{painter,  }\item[{const Q\+Style\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{Q\+Widget $\ast$}]{widget }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Zeichnet das \mbox{\hyperlink{class_tile}{Tile}} 
+\begin{DoxyParams}{Parameters}
+{\em painter} & Painter der zum Zeichnen benutzt wird \\
+\hline
+{\em option} & Optionen für das Zeichnen \\
+\hline
+{\em widget} & Widget in welches gezeichnet wird \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ab0a7262b6fab842a7a467fcb2f7592eb}{Tile}}.
+
+\mbox{\Hypertarget{class_endingtile_a130af5ae1efa2bf53ffe23f89fe06834}\label{class_endingtile_a130af5ae1efa2bf53ffe23f89fe06834}} 
+\index{Endingtile@{Endingtile}!rotate@{rotate}}
+\index{rotate@{rotate}!Endingtile@{Endingtile}}
+\subsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily void Endingtile\+::rotate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Rotiert das \mbox{\hyperlink{class_tile}{Tile}} 
+
+Reimplemented from \mbox{\hyperlink{class_tile_a15c3d8260c8950d3461e3ba2849cd141}{Tile}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/endingtile.\+h\item 
+D\+:/swt1718-\/editor/bin/source/endingtile.\+cpp\end{DoxyCompactItemize}

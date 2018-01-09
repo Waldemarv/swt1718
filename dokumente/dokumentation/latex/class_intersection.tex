@@ -1,0 +1,85 @@
+\hypertarget{class_intersection}{}\section{Intersection Class Reference}
+\label{class_intersection}\index{Intersection@{Intersection}}
+Inheritance diagram for Intersection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_intersection}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_intersection_ae877f46e9471e82f16ff180c41e1490a}{Intersection}} (double x, double y, double ascent)
+\item 
+Q\+RectF \mbox{\hyperlink{class_intersection_a0d96ac4dc6971a4a99ab652b7f15ed41}{bounding\+Rect}} () const
+\item 
+Q\+String \mbox{\hyperlink{class_intersection_a8bed77f9049accb2dcc50c3e961f5143}{get\+Type}} ()
+\item 
+void \mbox{\hyperlink{class_intersection_aa9e14b51410964e0ce66b1762bec252a}{paint}} (Q\+Painter $\ast$painter, const Q\+Style\+Option\+Graphics\+Item $\ast$option, Q\+Widget $\ast$widget)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_intersection_ae877f46e9471e82f16ff180c41e1490a}\label{class_intersection_ae877f46e9471e82f16ff180c41e1490a}} 
+\index{Intersection@{Intersection}!Intersection@{Intersection}}
+\index{Intersection@{Intersection}!Intersection@{Intersection}}
+\subsubsection{\texorpdfstring{Intersection()}{Intersection()}}
+{\footnotesize\ttfamily Intersection\+::\+Intersection (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{ascent }\end{DoxyParamCaption})}
+
+Erstellt eine Kreuzung und fügt diese dem \mbox{\hyperlink{class_editor}{Editor}} hinzu 
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/\+Koordinate der Kreuzung \\
+\hline
+{\em y} & y-\/\+Koordinate der Kreuzung \\
+\hline
+{\em ascent} & Steigung der Kreuzung \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_intersection_a0d96ac4dc6971a4a99ab652b7f15ed41}\label{class_intersection_a0d96ac4dc6971a4a99ab652b7f15ed41}} 
+\index{Intersection@{Intersection}!bounding\+Rect@{bounding\+Rect}}
+\index{bounding\+Rect@{bounding\+Rect}!Intersection@{Intersection}}
+\subsubsection{\texorpdfstring{bounding\+Rect()}{boundingRect()}}
+{\footnotesize\ttfamily Q\+RectF Intersection\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Erstellt ein Begrenzungsrechteck für das \mbox{\hyperlink{class_tile}{Tile}},Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt \mbox{\Hypertarget{class_intersection_a8bed77f9049accb2dcc50c3e961f5143}\label{class_intersection_a8bed77f9049accb2dcc50c3e961f5143}} 
+\index{Intersection@{Intersection}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!Intersection@{Intersection}}
+\subsubsection{\texorpdfstring{get\+Type()}{getType()}}
+{\footnotesize\ttfamily Q\+String Intersection\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Gibt den Typen des \mbox{\hyperlink{class_tile}{Tile}} zurück \begin{DoxyReturn}{Returns}
+Typ des \mbox{\hyperlink{class_tile}{Tile}} 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ad1dbea94d96060491a2dc4c7b92b31ab}{Tile}}.
+
+\mbox{\Hypertarget{class_intersection_aa9e14b51410964e0ce66b1762bec252a}\label{class_intersection_aa9e14b51410964e0ce66b1762bec252a}} 
+\index{Intersection@{Intersection}!paint@{paint}}
+\index{paint@{paint}!Intersection@{Intersection}}
+\subsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Intersection\+::paint (\begin{DoxyParamCaption}\item[{Q\+Painter $\ast$}]{painter,  }\item[{const Q\+Style\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{Q\+Widget $\ast$}]{widget }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Zeichnet das \mbox{\hyperlink{class_tile}{Tile}} 
+\begin{DoxyParams}{Parameters}
+{\em painter} & Painter der zum Zeichnen benutzt wird \\
+\hline
+{\em option} & Optionen für das Zeichnen \\
+\hline
+{\em widget} & Widget in welches gezeichnet wird \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ab0a7262b6fab842a7a467fcb2f7592eb}{Tile}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/intersection.\+h\item 
+D\+:/swt1718-\/editor/bin/source/intersection.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,97 @@
+\hypertarget{classturn}{}\section{turn Class Reference}
+\label{classturn}\index{turn@{turn}}
+Inheritance diagram for turn\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classturn}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classturn_aa00a91ae978f5c08e8d8294ed438e785}{turn}} (double nx, double ny, double nascent, int ndirection)
+\item 
+Q\+RectF \mbox{\hyperlink{classturn_ad04b4ca6ec629c381d38bafbbf0c7052}{bounding\+Rect}} () const
+\item 
+Q\+String \mbox{\hyperlink{classturn_aee2e0c3c195f855186f12868232b18dd}{get\+Type}} ()
+\item 
+void \mbox{\hyperlink{classturn_a227bb1866470de67a42cc79890b5bf65}{paint}} (Q\+Painter $\ast$painter, const Q\+Style\+Option\+Graphics\+Item $\ast$option, Q\+Widget $\ast$widget)
+\item 
+void \mbox{\hyperlink{classturn_a91ab1e69c9ec2d7ded346a2701e1be1d}{rotate}} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classturn_aa00a91ae978f5c08e8d8294ed438e785}\label{classturn_aa00a91ae978f5c08e8d8294ed438e785}} 
+\index{turn@{turn}!turn@{turn}}
+\index{turn@{turn}!turn@{turn}}
+\subsubsection{\texorpdfstring{turn()}{turn()}}
+{\footnotesize\ttfamily turn\+::turn (\begin{DoxyParamCaption}\item[{double}]{nx,  }\item[{double}]{ny,  }\item[{double}]{nascent,  }\item[{int}]{ndirection }\end{DoxyParamCaption})}
+
+Erstellt eine Kurve 
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/\+Position der Kurve \\
+\hline
+{\em y} & y-\/\+Position der Kurve \\
+\hline
+{\em ascent} & Steigung der Kurve \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classturn_ad04b4ca6ec629c381d38bafbbf0c7052}\label{classturn_ad04b4ca6ec629c381d38bafbbf0c7052}} 
+\index{turn@{turn}!bounding\+Rect@{bounding\+Rect}}
+\index{bounding\+Rect@{bounding\+Rect}!turn@{turn}}
+\subsubsection{\texorpdfstring{bounding\+Rect()}{boundingRect()}}
+{\footnotesize\ttfamily Q\+RectF turn\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Erstellt ein Begrenzungsrechteck für das \mbox{\hyperlink{class_tile}{Tile}},Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt \mbox{\Hypertarget{classturn_aee2e0c3c195f855186f12868232b18dd}\label{classturn_aee2e0c3c195f855186f12868232b18dd}} 
+\index{turn@{turn}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!turn@{turn}}
+\subsubsection{\texorpdfstring{get\+Type()}{getType()}}
+{\footnotesize\ttfamily Q\+String turn\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Gibt den Typen des \mbox{\hyperlink{class_tile}{Tile}} zurück \begin{DoxyReturn}{Returns}
+Typ des \mbox{\hyperlink{class_tile}{Tile}} 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ad1dbea94d96060491a2dc4c7b92b31ab}{Tile}}.
+
+\mbox{\Hypertarget{classturn_a227bb1866470de67a42cc79890b5bf65}\label{classturn_a227bb1866470de67a42cc79890b5bf65}} 
+\index{turn@{turn}!paint@{paint}}
+\index{paint@{paint}!turn@{turn}}
+\subsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void turn\+::paint (\begin{DoxyParamCaption}\item[{Q\+Painter $\ast$}]{painter,  }\item[{const Q\+Style\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{Q\+Widget $\ast$}]{widget }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Zeichnet das \mbox{\hyperlink{class_tile}{Tile}} 
+\begin{DoxyParams}{Parameters}
+{\em painter} & Painter der zum Zeichnen benutzt wird \\
+\hline
+{\em option} & Optionen für das Zeichnen \\
+\hline
+{\em widget} & Widget in welches gezeichnet wird \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ab0a7262b6fab842a7a467fcb2f7592eb}{Tile}}.
+
+\mbox{\Hypertarget{classturn_a91ab1e69c9ec2d7ded346a2701e1be1d}\label{classturn_a91ab1e69c9ec2d7ded346a2701e1be1d}} 
+\index{turn@{turn}!rotate@{rotate}}
+\index{rotate@{rotate}!turn@{turn}}
+\subsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily void turn\+::rotate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Rotiert das \mbox{\hyperlink{class_tile}{Tile}} um 90 Grad 
+
+Reimplemented from \mbox{\hyperlink{class_tile_a15c3d8260c8950d3461e3ba2849cd141}{Tile}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/turn.\+h\item 
+D\+:/swt1718-\/editor/bin/source/turn.\+cpp\end{DoxyCompactItemize}

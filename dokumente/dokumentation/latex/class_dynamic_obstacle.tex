@@ -1,0 +1,146 @@
+\hypertarget{class_dynamic_obstacle}{}\section{Dynamic\+Obstacle Class Reference}
+\label{class_dynamic_obstacle}\index{Dynamic\+Obstacle@{Dynamic\+Obstacle}}
+Inheritance diagram for Dynamic\+Obstacle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_dynamic_obstacle}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a5a4ea17aa7b7fe99f9a627aa762b1f5b}\label{class_dynamic_obstacle_a5a4ea17aa7b7fe99f9a627aa762b1f5b}} 
+void {\bfseries accelerate} (double acc=0.\+1)
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a158690143090a4b8001f411db9b6c1e0}\label{class_dynamic_obstacle_a158690143090a4b8001f411db9b6c1e0}} 
+void {\bfseries brake} (double br=0.\+1)
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_ab7968cfdaab0d81fcb75db774de1adb2}\label{class_dynamic_obstacle_ab7968cfdaab0d81fcb75db774de1adb2}} 
+double {\bfseries get\+Speed} ()
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_ab4ca72e5c4f18fdac9dd43cf26fe1d35}\label{class_dynamic_obstacle_ab4ca72e5c4f18fdac9dd43cf26fe1d35}} 
+void {\bfseries set\+Speed} (double s)
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a3f4321cfcfd9c480bf779042228b8de1}\label{class_dynamic_obstacle_a3f4321cfcfd9c480bf779042228b8de1}} 
+int {\bfseries get\+Direction} ()
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_ab1bf58416de0faf82f18c0d2c42ba000}\label{class_dynamic_obstacle_ab1bf58416de0faf82f18c0d2c42ba000}} 
+void {\bfseries set\+Direction} (int d)
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a1ff562d7a0c22eb41cdd86f71d964a4e}\label{class_dynamic_obstacle_a1ff562d7a0c22eb41cdd86f71d964a4e}} 
+double {\bfseries calculate\+Rotation} ()
+\item 
+Q\+RectF \mbox{\hyperlink{class_dynamic_obstacle_ac1b0b15d722a45decc8b77fcde22efd0}{bounding\+Rect}} () const
+\item 
+void \mbox{\hyperlink{class_dynamic_obstacle_a30c0753280f05f69a9da89bc9d9ce3f6}{paint}} (Q\+Painter $\ast$painter, const Q\+Style\+Option\+Graphics\+Item $\ast$option, Q\+Widget $\ast$widget)
+\item 
+Q\+String \mbox{\hyperlink{class_dynamic_obstacle_ac52c38ef60b99a7a29f89b6eb23df460}{get\+Type}} ()
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a6dae975b1b2abe86f62ab1df11d19293}\label{class_dynamic_obstacle_a6dae975b1b2abe86f62ab1df11d19293}} 
+void {\bfseries set\+Starting\+Point} (Q\+PointF s)
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a17645d997a7c2a7deaf5fe4726421097}\label{class_dynamic_obstacle_a17645d997a7c2a7deaf5fe4726421097}} 
+void {\bfseries set\+Ending\+Point} (Q\+PointF e)
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_ad2eb80be1ef5df9f1ff70d200751c818}\label{class_dynamic_obstacle_ad2eb80be1ef5df9f1ff70d200751c818}} 
+Q\+PointF {\bfseries get\+Starting\+Point} ()
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a6f51781c092dee7eeed1de6bb588b9ba}\label{class_dynamic_obstacle_a6f51781c092dee7eeed1de6bb588b9ba}} 
+Q\+PointF {\bfseries get\+Ending\+Point} ()
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a8dc5e893aa21f59e0b8ca4a9035612ea}\label{class_dynamic_obstacle_a8dc5e893aa21f59e0b8ca4a9035612ea}} 
+{\bfseries Dynamic\+Obstacle} (double x, double y, double width, double length, double speed, Q\+PointF nstarting\+Point, Q\+PointF nending\+Point)
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a3d2a49ec759253b9035954ecf8de9123}\label{class_dynamic_obstacle_a3d2a49ec759253b9035954ecf8de9123}} 
+void {\bfseries mouse\+Release\+Event} (Q\+Graphics\+Scene\+Mouse\+Event $\ast$event)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dynamic_obstacle_a533d0927fbe09aa105c47e00b1cd045f}{advance}} (int phase)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a57b1f4d6ce397c1fba42066c0c93ac9b}\label{class_dynamic_obstacle_a57b1f4d6ce397c1fba42066c0c93ac9b}} 
+double {\bfseries speed}
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a82a9f801c59a03ef05e856e76731321c}\label{class_dynamic_obstacle_a82a9f801c59a03ef05e856e76731321c}} 
+double {\bfseries angle}
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a9ed7793ab1d8db38569d756882860bbf}\label{class_dynamic_obstacle_a9ed7793ab1d8db38569d756882860bbf}} 
+int {\bfseries direction} = 0
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_ad70ebecc813893d81bfbe03ec32c109e}\label{class_dynamic_obstacle_ad70ebecc813893d81bfbe03ec32c109e}} 
+Q\+PointF {\bfseries starting\+Point}
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_af7198f0448b18664740569a2e6d5a291}\label{class_dynamic_obstacle_af7198f0448b18664740569a2e6d5a291}} 
+Q\+PointF {\bfseries ending\+Point}
+\item 
+\mbox{\Hypertarget{class_dynamic_obstacle_a0a9b420c0c2e862d2a2bb27091d3e890}\label{class_dynamic_obstacle_a0a9b420c0c2e862d2a2bb27091d3e890}} 
+Q\+Graphics\+Item $\ast$ {\bfseries ending\+Ellipse}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_dynamic_obstacle_a533d0927fbe09aa105c47e00b1cd045f}\label{class_dynamic_obstacle_a533d0927fbe09aa105c47e00b1cd045f}} 
+\index{Dynamic\+Obstacle@{Dynamic\+Obstacle}!advance@{advance}}
+\index{advance@{advance}!Dynamic\+Obstacle@{Dynamic\+Obstacle}}
+\subsubsection{\texorpdfstring{advance()}{advance()}}
+{\footnotesize\ttfamily void Dynamic\+Obstacle\+::advance (\begin{DoxyParamCaption}\item[{int}]{phase }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Wählt ein \mbox{\hyperlink{class_obstacle}{Obstacle}} an, wenn es angeklickt wurde 
+
+Reimplemented from \mbox{\hyperlink{class_obstacle_ac3bcd488b16a8d8cf99875c6d0172e15}{Obstacle}}.
+
+\mbox{\Hypertarget{class_dynamic_obstacle_ac1b0b15d722a45decc8b77fcde22efd0}\label{class_dynamic_obstacle_ac1b0b15d722a45decc8b77fcde22efd0}} 
+\index{Dynamic\+Obstacle@{Dynamic\+Obstacle}!bounding\+Rect@{bounding\+Rect}}
+\index{bounding\+Rect@{bounding\+Rect}!Dynamic\+Obstacle@{Dynamic\+Obstacle}}
+\subsubsection{\texorpdfstring{bounding\+Rect()}{boundingRect()}}
+{\footnotesize\ttfamily Q\+RectF Dynamic\+Obstacle\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Erstellt ein Begrenzungsrechteck für das \mbox{\hyperlink{class_obstacle}{Obstacle}}. Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt \begin{DoxyReturn}{Returns}
+Begrenzungsrechteck des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_obstacle_a6f02b341e339ea27c3391a44c787b5f2}{Obstacle}}.
+
+\mbox{\Hypertarget{class_dynamic_obstacle_ac52c38ef60b99a7a29f89b6eb23df460}\label{class_dynamic_obstacle_ac52c38ef60b99a7a29f89b6eb23df460}} 
+\index{Dynamic\+Obstacle@{Dynamic\+Obstacle}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!Dynamic\+Obstacle@{Dynamic\+Obstacle}}
+\subsubsection{\texorpdfstring{get\+Type()}{getType()}}
+{\footnotesize\ttfamily Q\+String Dynamic\+Obstacle\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Gibt den Typ des \mbox{\hyperlink{class_obstacle}{Obstacle}} zurück \begin{DoxyReturn}{Returns}
+Typ des \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_obstacle_a14ba5e7996c9e0a0bd3afc3bea5771ea}{Obstacle}}.
+
+\mbox{\Hypertarget{class_dynamic_obstacle_a30c0753280f05f69a9da89bc9d9ce3f6}\label{class_dynamic_obstacle_a30c0753280f05f69a9da89bc9d9ce3f6}} 
+\index{Dynamic\+Obstacle@{Dynamic\+Obstacle}!paint@{paint}}
+\index{paint@{paint}!Dynamic\+Obstacle@{Dynamic\+Obstacle}}
+\subsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Dynamic\+Obstacle\+::paint (\begin{DoxyParamCaption}\item[{Q\+Painter $\ast$}]{painter,  }\item[{const Q\+Style\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{Q\+Widget $\ast$}]{widget }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Zeichnet das \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\begin{DoxyParams}{Parameters}
+{\em painter} & Painter der zum zeichnen benutzt wird \\
+\hline
+{\em option} & Optionen für das Zeichnen \\
+\hline
+{\em widget} & Widget in welches gezeichnet wird \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_obstacle_a42945fd08ee06a3bc33199f4f2ca37c1}{Obstacle}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/dynamicobstacle.\+h\item 
+D\+:/swt1718-\/editor/bin/source/dynamicobstacle.\+cpp\end{DoxyCompactItemize}

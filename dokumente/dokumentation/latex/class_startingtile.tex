@@ -1,0 +1,91 @@
+\hypertarget{class_startingtile}{}\section{Startingtile Class Reference}
+\label{class_startingtile}\index{Startingtile@{Startingtile}}
+Inheritance diagram for Startingtile\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_startingtile}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\+RectF \mbox{\hyperlink{class_startingtile_adfdbbb769775bf4a71f42795a3ca5cc7}{bounding\+Rect}} () const
+\item 
+virtual void \mbox{\hyperlink{class_startingtile_a125d0c3c2c814103a172c08180258d17}{paint}} (Q\+Painter $\ast$painter, const Q\+Style\+Option\+Graphics\+Item $\ast$option, Q\+Widget $\ast$widget)
+\item 
+virtual Q\+String \mbox{\hyperlink{class_startingtile_af9014bd47962800743b2057b520546d7}{get\+Type}} ()
+\item 
+void \mbox{\hyperlink{class_startingtile_aa2a399114844375bb6900b87f39ad946}{rotate}} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_startingtile}{Startingtile}} $\ast$ \mbox{\hyperlink{class_startingtile_a802644c93a230d81ba5a21c87866a411}{create\+Starting\+Tile}} (int nx, int ny, double nascent, int ndirection)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_startingtile_adfdbbb769775bf4a71f42795a3ca5cc7}\label{class_startingtile_adfdbbb769775bf4a71f42795a3ca5cc7}} 
+\index{Startingtile@{Startingtile}!bounding\+Rect@{bounding\+Rect}}
+\index{bounding\+Rect@{bounding\+Rect}!Startingtile@{Startingtile}}
+\subsubsection{\texorpdfstring{bounding\+Rect()}{boundingRect()}}
+{\footnotesize\ttfamily Q\+RectF Startingtile\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Erstellt ein Begrenzungsrechteck für das \mbox{\hyperlink{class_tile}{Tile}},Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt \mbox{\Hypertarget{class_startingtile_a802644c93a230d81ba5a21c87866a411}\label{class_startingtile_a802644c93a230d81ba5a21c87866a411}} 
+\index{Startingtile@{Startingtile}!create\+Starting\+Tile@{create\+Starting\+Tile}}
+\index{create\+Starting\+Tile@{create\+Starting\+Tile}!Startingtile@{Startingtile}}
+\subsubsection{\texorpdfstring{create\+Starting\+Tile()}{createStartingTile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_startingtile}{Startingtile}} $\ast$ Startingtile\+::create\+Starting\+Tile (\begin{DoxyParamCaption}\item[{int}]{nx,  }\item[{int}]{ny,  }\item[{double}]{nascent,  }\item[{int}]{ndireciton }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Prüft ob die \mbox{\hyperlink{class_map}{Map}} schon einen Startabschnitt hat, falls nicht, wird einer Erzeugt \begin{DoxyReturn}{Returns}
+Pointer der auf den Startabschnitt zeigt 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_startingtile_af9014bd47962800743b2057b520546d7}\label{class_startingtile_af9014bd47962800743b2057b520546d7}} 
+\index{Startingtile@{Startingtile}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!Startingtile@{Startingtile}}
+\subsubsection{\texorpdfstring{get\+Type()}{getType()}}
+{\footnotesize\ttfamily Q\+String Startingtile\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Gibt den Typen des \mbox{\hyperlink{class_tile}{Tile}} zurück \begin{DoxyReturn}{Returns}
+Typ des \mbox{\hyperlink{class_tile}{Tile}} 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ad1dbea94d96060491a2dc4c7b92b31ab}{Tile}}.
+
+\mbox{\Hypertarget{class_startingtile_a125d0c3c2c814103a172c08180258d17}\label{class_startingtile_a125d0c3c2c814103a172c08180258d17}} 
+\index{Startingtile@{Startingtile}!paint@{paint}}
+\index{paint@{paint}!Startingtile@{Startingtile}}
+\subsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Startingtile\+::paint (\begin{DoxyParamCaption}\item[{Q\+Painter $\ast$}]{painter,  }\item[{const Q\+Style\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{Q\+Widget $\ast$}]{widget }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Zeichnet das \mbox{\hyperlink{class_tile}{Tile}} 
+\begin{DoxyParams}{Parameters}
+{\em painter} & Painter der zum Zeichnen benutzt wird \\
+\hline
+{\em option} & Optionen für das Zeichnen \\
+\hline
+{\em widget} & Widget in welches gezeichnet wird \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_tile_ab0a7262b6fab842a7a467fcb2f7592eb}{Tile}}.
+
+\mbox{\Hypertarget{class_startingtile_aa2a399114844375bb6900b87f39ad946}\label{class_startingtile_aa2a399114844375bb6900b87f39ad946}} 
+\index{Startingtile@{Startingtile}!rotate@{rotate}}
+\index{rotate@{rotate}!Startingtile@{Startingtile}}
+\subsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily void Startingtile\+::rotate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Rotiert das \mbox{\hyperlink{class_tile}{Tile}} 
+
+Reimplemented from \mbox{\hyperlink{class_tile_a15c3d8260c8950d3461e3ba2849cd141}{Tile}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/startingtile.\+h\item 
+D\+:/swt1718-\/editor/bin/source/startingtile.\+cpp\end{DoxyCompactItemize}

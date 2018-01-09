@@ -1,0 +1,344 @@
+\hypertarget{class_map}{}\section{Map Class Reference}
+\label{class_map}\index{Map@{Map}}
+
+
+{\ttfamily \#include $<$map.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_map_a0f5ad0fd4563497b4214038cbca8b582}{Map}} ()
+\item 
+\mbox{\hyperlink{class_map_a7dd574b3746a45123fd765945b6a2a7e}{Map}} (int x, int y)
+\item 
+\mbox{\hyperlink{class_map_aa403fbe09394ccf39747588f5168e3b2}{$\sim$\+Map}} ()
+\item 
+\mbox{\hyperlink{class_tile}{Tile}} $\ast$ \mbox{\hyperlink{class_map_a60bdbaac9468f1ceb427e38db3eb46a0}{get\+Tile}} (int i)
+\item 
+\mbox{\hyperlink{class_tile}{Tile}} $\ast$ \mbox{\hyperlink{class_map_aa84b261dd360a64ef6fadfb4c4b1f2ff}{get\+Current\+Tile}} ()
+\item 
+\mbox{\hyperlink{class_obstacle}{Obstacle}} $\ast$ \mbox{\hyperlink{class_map_a17453848c1ade655219c73c15a9b1b78}{get\+Obstacle}} (int i)
+\item 
+\mbox{\hyperlink{class_obstacle}{Obstacle}} $\ast$ \mbox{\hyperlink{class_map_a61b2390d5a19071bf3509152872f5ac6}{get\+Current\+Obstacle}} ()
+\item 
+\mbox{\Hypertarget{class_map_a6ad7382f42482e46415124c5af3b9c33}\label{class_map_a6ad7382f42482e46415124c5af3b9c33}} 
+\mbox{\hyperlink{class_tile}{Tile}} $\ast$ {\bfseries get\+Starting\+Tile} ()
+\item 
+\mbox{\Hypertarget{class_map_a4e5e1640f6520226491b06490f624eb6}\label{class_map_a4e5e1640f6520226491b06490f624eb6}} 
+\mbox{\hyperlink{class_tile}{Tile}} $\ast$ {\bfseries get\+Ending\+Tile} ()
+\item 
+\mbox{\Hypertarget{class_map_a941f348abe63fb43c8a912500a61f2f6}\label{class_map_a941f348abe63fb43c8a912500a61f2f6}} 
+void {\bfseries set\+Starting\+Tile} (\mbox{\hyperlink{class_tile}{Tile}} $\ast$t)
+\item 
+\mbox{\Hypertarget{class_map_a88b6d85703a92e96963e6dc6a8042521}\label{class_map_a88b6d85703a92e96963e6dc6a8042521}} 
+void {\bfseries set\+Ending\+Tile} (\mbox{\hyperlink{class_tile}{Tile}} $\ast$t)
+\item 
+void \mbox{\hyperlink{class_map_ab4fe2e5f95e7fd16f028a0ffe1db8917}{set\+Starting\+Point}} (int x, int y)
+\item 
+void \mbox{\hyperlink{class_map_aedbdf210bf5ec2b87fa834e8e20b16dd}{set\+Ending\+Point}} (int x, int y)
+\item 
+void \mbox{\hyperlink{class_map_a483c836df20db96ba2f7118f7b3c2dfd}{set\+Size}} (int x, int y)
+\item 
+void \mbox{\hyperlink{class_map_a2727714e173313a9b2738b34deb78fb7}{add\+Tile}} (\mbox{\hyperlink{class_tile}{Tile}} $\ast$t)
+\item 
+void \mbox{\hyperlink{class_map_adf099f25e89a3470a348ccf87bc4a55d}{add\+Obstacle}} (\mbox{\hyperlink{class_obstacle}{Obstacle}} $\ast$o)
+\item 
+void \mbox{\hyperlink{class_map_aa220ee8afb6eb77ae41d137d44919173}{delete\+Tile}} (int i)
+\item 
+void \mbox{\hyperlink{class_map_aaad5b40b9c748b23da1cb3420e0c86de}{delete\+Obstacle}} (int i)
+\item 
+void \mbox{\hyperlink{class_map_a89bab8e9b24c94b2696d624dac43cffa}{delete\+Current\+Tile}} ()
+\item 
+void \mbox{\hyperlink{class_map_ac29cdcf87495d5335655ab55f890a57e}{delete\+Current\+Obstacle}} ()
+\item 
+Q\+PointF \mbox{\hyperlink{class_map_a378b0d0c136bd92b080d206f3bc2cd00}{get\+Starting\+Point}} ()
+\item 
+Q\+PointF \mbox{\hyperlink{class_map_a89f8852e818ad3c4ff7ff3ff9434e544}{get\+Ending\+Point}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_map_ae993424a64bb5638db33127d2a450014}{get\+Number\+Of\+Tiles}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_map_a2314b59099da9d9fdd16e9f816150709}{get\+Number\+Of\+Obstacles}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_map_af960a5f3d085679f49fc56b0cc0ffdaf}{get\+Number\+Of\+Items}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_map_a295543a6b7ade2cdffd2faba2adda417}{get\+SizeX}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_map_a07c437bb06a96676d6a732a559d3df4f}{get\+SizeY}} ()
+\item 
+int \mbox{\hyperlink{class_map_aced3d71b8481cf37e218ff4ddb987874}{get\+Grid\+Size}} ()
+\item 
+void \mbox{\hyperlink{class_map_a575b2a270c179acb59b5809b4fa1dfeb}{set\+Map\+Path}} ()
+\item 
+Q\+Painter\+Path \mbox{\hyperlink{class_map_ada28e2fd173999bcf7981d55de145d6d}{get\+Map\+Path}} ()
+\item 
+\mbox{\Hypertarget{class_map_aa043caa073487984ab260266249fad44}\label{class_map_aa043caa073487984ab260266249fad44}} 
+\mbox{\hyperlink{class_memento}{Memento}} $\ast$ {\bfseries create\+Memento} ()
+\item 
+\mbox{\Hypertarget{class_map_aa8d2945eaaf81e9f12122c4a65b02e73}\label{class_map_aa8d2945eaaf81e9f12122c4a65b02e73}} 
+void {\bfseries set\+Memento} (\mbox{\hyperlink{class_memento}{Memento}} $\ast$m)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Speichert die relevanten Daten einer \mbox{\hyperlink{class_map}{Map}} und erlaubt das hinzufügen und bearbeiten von Elementen auf dieser 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_map_a0f5ad0fd4563497b4214038cbca8b582}\label{class_map_a0f5ad0fd4563497b4214038cbca8b582}} 
+\index{Map@{Map}!Map@{Map}}
+\index{Map@{Map}!Map@{Map}}
+\subsubsection{\texorpdfstring{Map()}{Map()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Map\+::\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Erstellt eine \mbox{\hyperlink{class_map}{Map}} der größe 0 \mbox{\Hypertarget{class_map_a7dd574b3746a45123fd765945b6a2a7e}\label{class_map_a7dd574b3746a45123fd765945b6a2a7e}} 
+\index{Map@{Map}!Map@{Map}}
+\index{Map@{Map}!Map@{Map}}
+\subsubsection{\texorpdfstring{Map()}{Map()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Map\+::\+Map (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Erstellt eine leere \mbox{\hyperlink{class_map}{Map}} 
+\begin{DoxyParams}{Parameters}
+{\em x} & Größe der \mbox{\hyperlink{class_map}{Map}} in x-\/\+Richtung \\
+\hline
+{\em y} & Größe der \mbox{\hyperlink{class_map}{Map}} in y-\/\+Richtung \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_map_aa403fbe09394ccf39747588f5168e3b2}\label{class_map_aa403fbe09394ccf39747588f5168e3b2}} 
+\index{Map@{Map}!````~Map@{$\sim$\+Map}}
+\index{````~Map@{$\sim$\+Map}!Map@{Map}}
+\subsubsection{\texorpdfstring{$\sim$\+Map()}{~Map()}}
+{\footnotesize\ttfamily Map\+::$\sim$\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Destruktor für die \mbox{\hyperlink{class_map}{Map}}. Es werden erst alle Elememte auf der \mbox{\hyperlink{class_map}{Map}} gelöscht, dann die \mbox{\hyperlink{class_map}{Map}} selbst 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_map_adf099f25e89a3470a348ccf87bc4a55d}\label{class_map_adf099f25e89a3470a348ccf87bc4a55d}} 
+\index{Map@{Map}!add\+Obstacle@{add\+Obstacle}}
+\index{add\+Obstacle@{add\+Obstacle}!Map@{Map}}
+\subsubsection{\texorpdfstring{add\+Obstacle()}{addObstacle()}}
+{\footnotesize\ttfamily void Map\+::add\+Obstacle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_obstacle}{Obstacle}} $\ast$}]{o }\end{DoxyParamCaption})}
+
+Fügt ein \mbox{\hyperlink{class_obstacle}{Obstacle}} dem Obstacle-\/\+Vektor hinzu 
+\begin{DoxyParams}{Parameters}
+{\em o} & \mbox{\hyperlink{class_obstacle}{Obstacle}}, welches hinzugefügt wird \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_map_a2727714e173313a9b2738b34deb78fb7}\label{class_map_a2727714e173313a9b2738b34deb78fb7}} 
+\index{Map@{Map}!add\+Tile@{add\+Tile}}
+\index{add\+Tile@{add\+Tile}!Map@{Map}}
+\subsubsection{\texorpdfstring{add\+Tile()}{addTile()}}
+{\footnotesize\ttfamily void Map\+::add\+Tile (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_tile}{Tile}} $\ast$}]{t }\end{DoxyParamCaption})}
+
+Fügt ein \mbox{\hyperlink{class_tile}{Tile}} dem Tile-\/\+Vektor hinzu 
+\begin{DoxyParams}{Parameters}
+{\em t} & \mbox{\hyperlink{class_tile}{Tile}}, welches hinzugefügt wird \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_map_ac29cdcf87495d5335655ab55f890a57e}\label{class_map_ac29cdcf87495d5335655ab55f890a57e}} 
+\index{Map@{Map}!delete\+Current\+Obstacle@{delete\+Current\+Obstacle}}
+\index{delete\+Current\+Obstacle@{delete\+Current\+Obstacle}!Map@{Map}}
+\subsubsection{\texorpdfstring{delete\+Current\+Obstacle()}{deleteCurrentObstacle()}}
+{\footnotesize\ttfamily void Map\+::delete\+Current\+Obstacle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Löscht das letzte erstellte \mbox{\hyperlink{class_obstacle}{Obstacle}} \mbox{\Hypertarget{class_map_a89bab8e9b24c94b2696d624dac43cffa}\label{class_map_a89bab8e9b24c94b2696d624dac43cffa}} 
+\index{Map@{Map}!delete\+Current\+Tile@{delete\+Current\+Tile}}
+\index{delete\+Current\+Tile@{delete\+Current\+Tile}!Map@{Map}}
+\subsubsection{\texorpdfstring{delete\+Current\+Tile()}{deleteCurrentTile()}}
+{\footnotesize\ttfamily void Map\+::delete\+Current\+Tile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Löscht das letzte erstellte \mbox{\hyperlink{class_tile}{Tile}} \mbox{\Hypertarget{class_map_aaad5b40b9c748b23da1cb3420e0c86de}\label{class_map_aaad5b40b9c748b23da1cb3420e0c86de}} 
+\index{Map@{Map}!delete\+Obstacle@{delete\+Obstacle}}
+\index{delete\+Obstacle@{delete\+Obstacle}!Map@{Map}}
+\subsubsection{\texorpdfstring{delete\+Obstacle()}{deleteObstacle()}}
+{\footnotesize\ttfamily void Map\+::delete\+Obstacle (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+Löscht ein gewähltes \mbox{\hyperlink{class_obstacle}{Obstacle}} 
+\begin{DoxyParams}{Parameters}
+{\em i} & Position des Obstacles im Obstacle-\/\+Vektor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_map_aa220ee8afb6eb77ae41d137d44919173}\label{class_map_aa220ee8afb6eb77ae41d137d44919173}} 
+\index{Map@{Map}!delete\+Tile@{delete\+Tile}}
+\index{delete\+Tile@{delete\+Tile}!Map@{Map}}
+\subsubsection{\texorpdfstring{delete\+Tile()}{deleteTile()}}
+{\footnotesize\ttfamily void Map\+::delete\+Tile (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+Löscht ein gewähltes \mbox{\hyperlink{class_tile}{Tile}} 
+\begin{DoxyParams}{Parameters}
+{\em i} & Position des Tiles im Tile-\/\+Vektor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_map_a61b2390d5a19071bf3509152872f5ac6}\label{class_map_a61b2390d5a19071bf3509152872f5ac6}} 
+\index{Map@{Map}!get\+Current\+Obstacle@{get\+Current\+Obstacle}}
+\index{get\+Current\+Obstacle@{get\+Current\+Obstacle}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Current\+Obstacle()}{getCurrentObstacle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_obstacle}{Obstacle}} $\ast$ Map\+::get\+Current\+Obstacle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt das letzte erstellte \mbox{\hyperlink{class_obstacle}{Obstacle}} zurück \begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_obstacle}{Obstacle}},welches zuletzt erstellt wurde 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_aa84b261dd360a64ef6fadfb4c4b1f2ff}\label{class_map_aa84b261dd360a64ef6fadfb4c4b1f2ff}} 
+\index{Map@{Map}!get\+Current\+Tile@{get\+Current\+Tile}}
+\index{get\+Current\+Tile@{get\+Current\+Tile}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Current\+Tile()}{getCurrentTile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_tile}{Tile}} $\ast$ Map\+::get\+Current\+Tile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt das letzte erstellte \mbox{\hyperlink{class_tile}{Tile}} zurück \begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_tile}{Tile}}, welches zuletzt erstellt wurde 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_a89f8852e818ad3c4ff7ff3ff9434e544}\label{class_map_a89f8852e818ad3c4ff7ff3ff9434e544}} 
+\index{Map@{Map}!get\+Ending\+Point@{get\+Ending\+Point}}
+\index{get\+Ending\+Point@{get\+Ending\+Point}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Ending\+Point()}{getEndingPoint()}}
+{\footnotesize\ttfamily Q\+PointF Map\+::get\+Ending\+Point (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt den Endpunkt des autonomen Fahrzeugs zurück \begin{DoxyReturn}{Returns}
+Endpunkt des Fahrzeuges 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_aced3d71b8481cf37e218ff4ddb987874}\label{class_map_aced3d71b8481cf37e218ff4ddb987874}} 
+\index{Map@{Map}!get\+Grid\+Size@{get\+Grid\+Size}}
+\index{get\+Grid\+Size@{get\+Grid\+Size}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Grid\+Size()}{getGridSize()}}
+{\footnotesize\ttfamily int Map\+::get\+Grid\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Rastergröße der \mbox{\hyperlink{class_map}{Map}} zurück \begin{DoxyReturn}{Returns}
+Rastergröße der \mbox{\hyperlink{class_map}{Map}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_ada28e2fd173999bcf7981d55de145d6d}\label{class_map_ada28e2fd173999bcf7981d55de145d6d}} 
+\index{Map@{Map}!get\+Map\+Path@{get\+Map\+Path}}
+\index{get\+Map\+Path@{get\+Map\+Path}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Map\+Path()}{getMapPath()}}
+{\footnotesize\ttfamily Q\+Painter\+Path Map\+::get\+Map\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Begrenzungen der \mbox{\hyperlink{class_map}{Map}} zurück \mbox{\Hypertarget{class_map_af960a5f3d085679f49fc56b0cc0ffdaf}\label{class_map_af960a5f3d085679f49fc56b0cc0ffdaf}} 
+\index{Map@{Map}!get\+Number\+Of\+Items@{get\+Number\+Of\+Items}}
+\index{get\+Number\+Of\+Items@{get\+Number\+Of\+Items}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Number\+Of\+Items()}{getNumberOfItems()}}
+{\footnotesize\ttfamily unsigned int Map\+::get\+Number\+Of\+Items (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Gesamtanzahl der Elemente auf der \mbox{\hyperlink{class_map}{Map}} zurück \begin{DoxyReturn}{Returns}
+Gesamtzahl = Anzahl der Tiles + Anzahl der Obstacles +... 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_a2314b59099da9d9fdd16e9f816150709}\label{class_map_a2314b59099da9d9fdd16e9f816150709}} 
+\index{Map@{Map}!get\+Number\+Of\+Obstacles@{get\+Number\+Of\+Obstacles}}
+\index{get\+Number\+Of\+Obstacles@{get\+Number\+Of\+Obstacles}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Number\+Of\+Obstacles()}{getNumberOfObstacles()}}
+{\footnotesize\ttfamily unsigned int Map\+::get\+Number\+Of\+Obstacles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Anzahl der Obstacles auf der \mbox{\hyperlink{class_map}{Map}} zurück \begin{DoxyReturn}{Returns}
+Anzahl der Obstacles auf der \mbox{\hyperlink{class_map}{Map}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_ae993424a64bb5638db33127d2a450014}\label{class_map_ae993424a64bb5638db33127d2a450014}} 
+\index{Map@{Map}!get\+Number\+Of\+Tiles@{get\+Number\+Of\+Tiles}}
+\index{get\+Number\+Of\+Tiles@{get\+Number\+Of\+Tiles}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Number\+Of\+Tiles()}{getNumberOfTiles()}}
+{\footnotesize\ttfamily unsigned int Map\+::get\+Number\+Of\+Tiles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Anzahl der Tiles auf der \mbox{\hyperlink{class_map}{Map}} zurück \begin{DoxyReturn}{Returns}
+Anzahl der Tiles auf der \mbox{\hyperlink{class_map}{Map}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_a17453848c1ade655219c73c15a9b1b78}\label{class_map_a17453848c1ade655219c73c15a9b1b78}} 
+\index{Map@{Map}!get\+Obstacle@{get\+Obstacle}}
+\index{get\+Obstacle@{get\+Obstacle}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Obstacle()}{getObstacle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_obstacle}{Obstacle}} $\ast$ Map\+::get\+Obstacle (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+Gibt gewähltes \mbox{\hyperlink{class_obstacle}{Obstacle}} zurück 
+\begin{DoxyParams}{Parameters}
+{\em i} & Position des Obstacles im Obstacle-\/\+Vektor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_obstacle}{Obstacle}} an Position i im Obstacle-\/\+Vektor 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_a295543a6b7ade2cdffd2faba2adda417}\label{class_map_a295543a6b7ade2cdffd2faba2adda417}} 
+\index{Map@{Map}!get\+SizeX@{get\+SizeX}}
+\index{get\+SizeX@{get\+SizeX}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Size\+X()}{getSizeX()}}
+{\footnotesize\ttfamily unsigned int Map\+::get\+SizeX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Größe in x-\/\+Richtung der \mbox{\hyperlink{class_map}{Map}} zurück \begin{DoxyReturn}{Returns}
+Größe der \mbox{\hyperlink{class_map}{Map}} in x-\/\+Richtung 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_a07c437bb06a96676d6a732a559d3df4f}\label{class_map_a07c437bb06a96676d6a732a559d3df4f}} 
+\index{Map@{Map}!get\+SizeY@{get\+SizeY}}
+\index{get\+SizeY@{get\+SizeY}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Size\+Y()}{getSizeY()}}
+{\footnotesize\ttfamily unsigned int Map\+::get\+SizeY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt die Größe in y-\/\+Richtung der \mbox{\hyperlink{class_map}{Map}} zurück \begin{DoxyReturn}{Returns}
+Größe der \mbox{\hyperlink{class_map}{Map}} in y-\/\+Richtung 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_a378b0d0c136bd92b080d206f3bc2cd00}\label{class_map_a378b0d0c136bd92b080d206f3bc2cd00}} 
+\index{Map@{Map}!get\+Starting\+Point@{get\+Starting\+Point}}
+\index{get\+Starting\+Point@{get\+Starting\+Point}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Starting\+Point()}{getStartingPoint()}}
+{\footnotesize\ttfamily Q\+PointF Map\+::get\+Starting\+Point (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gibt den Startpunkt des autonomen Fahrzeugs zurück \begin{DoxyReturn}{Returns}
+Startpunkt des Fahrzeuges 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_a60bdbaac9468f1ceb427e38db3eb46a0}\label{class_map_a60bdbaac9468f1ceb427e38db3eb46a0}} 
+\index{Map@{Map}!get\+Tile@{get\+Tile}}
+\index{get\+Tile@{get\+Tile}!Map@{Map}}
+\subsubsection{\texorpdfstring{get\+Tile()}{getTile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_tile}{Tile}} $\ast$ Map\+::get\+Tile (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+Gibt gewähltes \mbox{\hyperlink{class_tile}{Tile}} zurück 
+\begin{DoxyParams}{Parameters}
+{\em i} & Position des Tiles im Tile-\/\+Vektor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_tile}{Tile}} an Position i im Tile-\/\+Vektor 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_map_aedbdf210bf5ec2b87fa834e8e20b16dd}\label{class_map_aedbdf210bf5ec2b87fa834e8e20b16dd}} 
+\index{Map@{Map}!set\+Ending\+Point@{set\+Ending\+Point}}
+\index{set\+Ending\+Point@{set\+Ending\+Point}!Map@{Map}}
+\subsubsection{\texorpdfstring{set\+Ending\+Point()}{setEndingPoint()}}
+{\footnotesize\ttfamily void Map\+::set\+Ending\+Point (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Setzt den Endpunkt des Fahrzeuges 
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/\+Koordinate des Endpunktes \\
+\hline
+{\em y} & y-\/\+Koordinate des Endpunktes \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_map_a575b2a270c179acb59b5809b4fa1dfeb}\label{class_map_a575b2a270c179acb59b5809b4fa1dfeb}} 
+\index{Map@{Map}!set\+Map\+Path@{set\+Map\+Path}}
+\index{set\+Map\+Path@{set\+Map\+Path}!Map@{Map}}
+\subsubsection{\texorpdfstring{set\+Map\+Path()}{setMapPath()}}
+{\footnotesize\ttfamily void Map\+::set\+Map\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Fügt die einzelnen Begrenzungen der Tiles zu einem Gesamtpfad zusammen \mbox{\Hypertarget{class_map_a483c836df20db96ba2f7118f7b3c2dfd}\label{class_map_a483c836df20db96ba2f7118f7b3c2dfd}} 
+\index{Map@{Map}!set\+Size@{set\+Size}}
+\index{set\+Size@{set\+Size}!Map@{Map}}
+\subsubsection{\texorpdfstring{set\+Size()}{setSize()}}
+{\footnotesize\ttfamily void Map\+::set\+Size (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Verändert die Größe einer \mbox{\hyperlink{class_map}{Map}} 
+\begin{DoxyParams}{Parameters}
+{\em x} & neue Größe der \mbox{\hyperlink{class_map}{Map}} in x-\/\+Richtung \\
+\hline
+{\em y} & neue Größe der \mbox{\hyperlink{class_map}{Map}} in y-\/\+Richtung \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_map_ab4fe2e5f95e7fd16f028a0ffe1db8917}\label{class_map_ab4fe2e5f95e7fd16f028a0ffe1db8917}} 
+\index{Map@{Map}!set\+Starting\+Point@{set\+Starting\+Point}}
+\index{set\+Starting\+Point@{set\+Starting\+Point}!Map@{Map}}
+\subsubsection{\texorpdfstring{set\+Starting\+Point()}{setStartingPoint()}}
+{\footnotesize\ttfamily void Map\+::set\+Starting\+Point (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Setzt den Startpunkt des Fahrzeuges 
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/\+Koordinate des Startpunktes \\
+\hline
+{\em y} & y-\/\+Koordinate des Startpunktes \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/swt1718-\/editor/bin/source/map.\+h\item 
+D\+:/swt1718-\/editor/bin/source/map.\+cpp\end{DoxyCompactItemize}
