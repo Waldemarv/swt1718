@@ -38,12 +38,15 @@
 	\vspace{1cm}
 	{\scshape\Large Gruppe 3\par}
 	\vspace{1.5cm}
+	\begin{center}
+		\includegraphics[width=0.35\textwidth]{icon}
+	\end{center}
 	{\huge\bfseries Autonomes Fahren\par}
 	\vspace{2cm}
 	{\Large\itshape Benutzerhandbuch\par}
-	\vfill
-	erstellt von\par
-    \textsc{Jan-Alexander Amann}
+	%\vfill
+	%erstellt von\par
+    %\textsc{Jan-Alexander Amann}
 
 	\vfill
 
@@ -65,12 +68,11 @@ Damit Sie die Software ausführen können und die Simulation ausreichend schnell
 \item Windows, macOS, Linux
 \item 2 GHz CPU
 \item 4 GB RAM
-\item Nvidia CUDA-fähige GPU
 \end{itemize}
 
 \subsection{Installationsprozess}
 
-Führen sie die mitgelieferte Installationsdatei aus und befolgen Sie den Anweisungen auf dem Bildschirm. Sie können das Programm ausführen, sobald die Installation vollständig abgeschlossen ist.
+Entpacken Sie das Programmpaket in einen beliebigen Installationsordner.
 
 \subsection{Erste Schritte}
 
@@ -82,28 +84,59 @@ Mit diesem Programm werden realitätsnahe Szenarien aus dem Straßenverkehr abst
 Das System lernt eigenständig vorgegebene Strecken zu absolvieren und weicht dabei statischen und dynamischen Hindernissen aus.
 
 \subsection{Map erstellen}
-Erstellen sie zunächst über „Datei $\rightarrow$ Neu“ in der Menüleiste oder über „Neue Map“ in der Schnellzugriffsleiste eine neue Map und geben sie deren Größe an. \\
+{
+\begin{center}
+	\includegraphics[width=130pt]{newMap}
+\end{center}
+Erstellen sie zunächst über „Datei $\rightarrow$ Neu“ in der Menüleiste oder über „\includegraphics[height=11pt]{icon/new_map} Neue Map“ in der Schnellzugriffsleiste eine neue Karte und geben sie deren Größe an. \\
 Als nächstes können Sie jedem Feld ein Streckenteil zuordnen und diverse Hindernisse auf die Felder setzen.
 Überhalb der Map finden Sie Streckenteile und Hindernisse die Sie auf der Karte setzen können.\\
-Es müssen nun Start- und Zielpunkt gesetzt werden, um eine Simulation durchführen zu können. Die erstellte Strecke kann gespeichert und dann in die Simulation geladen werden. \\
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{s3}
+\end{center}
 
+Start- und Zielpunkt müssen gesetzt werden, bevor eine Simulation durchgeführt wird. Die erstellte Strecke kann gespeichert und dann in die Simulation geladen werden. \\
+}
 \subsection{Map ändern}
-Öffnen sie eine bereits erstellte Map mit „Datei $\rightarrow$ Map Laden“ oder mit „Map Laden“ in der Schnellzugriffsleiste. Sie können diese Map nun nach ihren Wünschen anpassen. 
+Öffnen sie eine bereits erstellte Map mit „Datei $\rightarrow$ Map laden“ oder mit „\includegraphics[height=11pt]{icon/load} Map laden“ in der Schnellzugriffsleiste. Sie können diese Map nun nach ihren Wünschen anpassen. 
 Anschließend können sie die Map wieder speichern.
-\newpage
+
 \subsection{Map speichern}
-Eine Map kann gespeichert werden indem sie in der Menü-Leiste „Datei $\rightarrow$ Speichern“ oder in der Schnellzugriffsleiste „Map Speichern“ auswählen. Geben sie einen Dateipfad an unter dem die Strecke gespeichert werden soll.
-\subsection{Fahrzeug erstellen}
-Erstellen sie ein neues Fahrzeug, indem sie in der Menü-Leiste „Datei $\rightarrow$ Neu $\rightarrow$ Fahrzeug“ auswählen. Sie müssen nun eine Mapdatei auswählen, für die das Fahrzeug erstellt werden soll. Nun geben Sie alle relevanten Fahrzeugdaten an. Anschließend wird das Fahrzeug in der Mapdatei gespeichert. Anschließend wird getestet ob das Fahrzeug die Strecke passieren kann.
+Eine Map kann gespeichert werden indem sie in der Menü-Leiste „Datei $\rightarrow$ Map speichern“ oder in der Schnellzugriffsleiste „\includegraphics[height=11pt]{icon/save} Map speichern“ auswählen. Geben sie einen Dateipfad an unter dem die Strecke gespeichert werden soll.
+%\subsection{Fahrzeug erstellen}
+%Erstellen sie ein neues Fahrzeug, indem sie in der Menü-Leiste „Datei $\rightarrow$ Neu $\rightarrow$ Fahrzeug“ auswählen. Sie müssen nun eine Mapdatei auswählen, für die das Fahrzeug erstellt werden soll. Nun geben Sie alle relevanten Fahrzeugdaten an. Anschließend wird das Fahrzeug in der Mapdatei gespeichert. Anschließend wird getestet ob das Fahrzeug die Strecke passieren kann.
 \newpage
 \section{Simulation}
-Simulationen können in 2D und 3D durchgeführt werden. Die Simulation läuft nach dem Start bis das Fahrzeug den Zielpunkt erreicht hat oder eine Kollision besteht.
+%Simulationen können in 2D und 3D durchgeführt werden.
+Die Simulation läuft nach dem Start bis das Fahrzeug den Zielpunkt erreicht hat oder eine Kollision besteht.
 Des Weiteren kann die Simulation vom Benutzer pausiert oder gestoppt werden.
 
-\subsection{Simulation Starten}
-Um eine Strecke in die Simulation zu Laden wählen sie in der Menüleiste „Simulation $\rightarrow$ Simulation Starten“ oder in der Schnellzugriffsleiste „Simulation Starten“ und geben sie an ob die Simulation in 2D oder 3D erfolgen soll.
+\subsection{Neuronales Netz erstellen / laden}
+Sie können ein neues neuronales Netz erstellen \includegraphics[height=11pt]{icon/create_Neural_network} oder ein bereits vorhandenes laden \includegraphics[height=11pt]{icon/load}.
+\subsubsection{Neuronales Netz erstellen}
+Klicken Sie auf die Schaltfläche „\includegraphics[height=11pt]{icon/create_Neural_network} Neuronales Netz erstellen“ und geben Sie an, wie viele Hidden Layer mit jeweils wie vielen Neuronen das Netzwerk enthalten soll. Folgen Sie den Bildschirmanweisungen.
+
+
+\subsubsection{Neuronales Netz trainieren}
+Zum Trainieren des neuronalen Netzes öffnen Sie den gewünschten Testkurs und klicken auf die Schaltfläche „Train Model“ oberhalb der Karte.
+\begin{center}
+	\includegraphics[width=120pt]{s5}
+\end{center}
+Anschließend wählen Sie aus, wie viele Runden lang das System trainieren soll und bestätigen die Eingabe.
+
+\subsection{Simulationsmodi umschalten}
+Die Simulation bietet sowohl einen Trainings-, als auch einen „autonom Fahren“-Modus.
+
+\begin{center}
+	\includegraphics[width=\textwidth]{s6}
+\end{center}
+
+Diese können, wie gezeigt, am unteren Rand des Simulationsfensters umgeschaltet werden. 
+
+\subsection{Simulation starten}
+Um eine Strecke in die Simulation zu laden wählen sie in der Menüleiste „Simulation $\rightarrow$ Simulation starten“ oder in der Schnellzugriffsleiste „\includegraphics[height=11pt]{icon/run} Simulation starten“. % und geben sie an ob die Simulation in 2D oder 3D erfolgen soll.
 \subsection{Simulation stoppen oder pausieren}
-Um die Simulation zu pausieren oder zu stoppen klicken Sie auf den entsprechenden Button in der Simulation.
+Um die Simulation zu \includegraphics[height=11pt]{icon/pause} pausieren, \includegraphics[height=11pt]{icon/resume_play} fortzusetzen oder zum Stoppen klicken Sie auf die entsprechende Schaltfläche in der Simulation.
 \newpage
 \section{Kontakt und Support}
 \textbf{Mitwirkende} \\ 
