@@ -7,7 +7,12 @@ SmartVehicle::SmartVehicle()
     speed = 1;
     setPos(100,100);
 }
-
+/*! Erstellt ein neues SmartVehicle
+ * \param nangle Rotation des SmartVehicle
+ * \param nspeed Geschwindigkeit des SmartVehicle
+ * \param nrotationSpeed Lenkgeschwindigkeit des SmartVehicle
+ * \param x x-Position des SmartVehicle
+ * \param y y-Position des SmartVehicle */
 SmartVehicle::SmartVehicle(int nangle, double nspeed, int nrotationSpeed, int x, int y)
 {
     angle = nangle%360;
@@ -35,6 +40,7 @@ QRectF SmartVehicle::boundingRect() const
     return QRectF(0,0,8,4);
 }
 
+/*! Zeichnet das SmartVehicle */
 void SmartVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {   
     Q_UNUSED(option);
@@ -51,13 +57,13 @@ Sensor *SmartVehicle::getSensor(int i)
 {
     return sensors.at(i);
 }
-
+/*! Dreht das SmartVehicle nach rechts*/
 void SmartVehicle::right()
 {
     angle+=rotationSpeed;
     setRotation(angle);
 
-    for(int i = 0; i<sensors.size();i++)
+    for(unsigned long i = 0; i<sensors.size();i++)
     {
         switch(i)
         {
@@ -91,7 +97,7 @@ void SmartVehicle::setAngle(int nangle)
 
 void SmartVehicle::resetSensors()
 {
-    for(int i=0; i<sensors.size();i++)
+    for(unsigned long i=0; i<sensors.size();i++)
         sensors[i]->resetRotation();
 }
 
@@ -105,12 +111,13 @@ int SmartVehicle::getNumberOfSensors()
     return sensors.size();
 }
 
+/*! Dreht das SmartVehicle nach links */
 void SmartVehicle::left()
 {
     angle-=rotationSpeed;
     setRotation(angle);
 
-    for(int i = 0; i<sensors.size();i++)
+    for(unsigned long i = 0; i<sensors.size();i++)
     {
         switch(i)
         {
@@ -125,13 +132,14 @@ void SmartVehicle::left()
     }
 }
 
+/*! Bewegt das Fahrzeug nach vorne */
 void SmartVehicle::advance(int phase)
 {
     if(!phase)
         return;
     setPos(mapToParent(speed, 0));
 
-    for(int i = 0; i<sensors.size();i++)
+    for(unsigned long i = 0; i<sensors.size();i++)
     {
         switch(i)
         {

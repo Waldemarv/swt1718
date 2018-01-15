@@ -24,6 +24,8 @@ QRectF Intersection::boundingRect() const
  * \param widget Widget in welches gezeichnet wird */
 void Intersection::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
     //Hightligh when Selected
     if(isSelected()){
         QPen pen;

@@ -1,6 +1,7 @@
 #include "simulatorwindow.h"
 #include "ui_simulatorwindow.h"
 
+/*! Erstellt ein Simulationsfenster mit Hilfe einer Map, die aus dem Editor geladen wird*/
 SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SimulatorWindow)
@@ -64,7 +65,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         connectFitnessTime();
         connectSensorCalculation();
 
-        ui->graphicsView->setEnabled(false);
+        ui->graphicsView->setEnabled(true);
 
         if(trainingMode)
         {
@@ -79,6 +80,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
     }
 }
 
+/*! Funktion für die Kollisionsdetektion. */
 void SimulatorWindow::collisionDetection() 
 {
     //Keine Kollision mit der Strecke
@@ -87,15 +89,9 @@ void SimulatorWindow::collisionDetection()
         if(goal.contains(sv->pos())) {
             qDebug() << "Ziel erreicht!";
             sv->setColor(Qt::blue); 
-
-            straightTimer->stop();
-            leftTimer->stop();
-            rightTimer->stop();
-            speed=0;
-            right = left = straight= 0.0;
-            mainTimer->stop();
-            sensorsTimer->stop();
             collision = false;
+
+            stopSimulation();
         }
         else {
             sv->setColor(Qt::green);
@@ -104,17 +100,10 @@ void SimulatorWindow::collisionDetection()
                 if(m.getObstacle(i)->collidesWithItem(sv, mode))
                 {
                     //Kollision mit Obstacle
-                    qDebug()<<"collision with obstacle at: "<<sv->pos();
-                    straightTimer->stop();
-                    leftTimer->stop();
-                    rightTimer->stop();
-                    speed=0;
-                    right = left = straight=0.0;
-                    mainTimer->stop();
-                    sensorsTimer->stop();
-                    collision = true;
-
+                    qDebug()<<"collision with obstacle at: "<<sv->pos();           
                     sv->setColor(Qt::red);
+                    collision = true;
+                    stopSimulation();
                 }
             }
         }
@@ -122,19 +111,14 @@ void SimulatorWindow::collisionDetection()
     else {
         //Kollision mit der Strecke
         qDebug()<<"collision with map at: "<<sv->pos();
-        straightTimer->stop();
-        leftTimer->stop();
-        rightTimer->stop();
-        speed=0;
-        right = left = straight=0.0;
-        mainTimer->stop();
-        sensorsTimer->stop();
+        sv->setColor(Qt::red);
         collision = true;
 
-        sv->setColor(Qt::red);
+        stopSimulation();
     }
 }
 
+/*! Definiert die Steuerung des autonomen Fahrzeugs */
 void SimulatorWindow::vehicleControls()
 {
     if(straight)
@@ -173,9 +157,14 @@ SimulatorWindow::~SimulatorWindow()
 {
     delete ui;
 }
-
+/*! Startet die Simulation */
 void SimulatorWindow::on_actionSimulation_starten_triggered()
 {
+    ui->actionSimulation_Stoppen->setEnabled(true);
+    ui->trainModelButton->setEnabled(false);
+    ui->autonomousModeButton->setEnabled(false);
+    ui->trainingModeButton->setEnabled(false);
+    ui->graphicsView->setFocus();
     startSimulation();
 }
 
@@ -206,8 +195,10 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 
 }
 
+/*! Startet die Simulation der geladenen Strecke */
 void SimulatorWindow::startSimulation()
 {
+    ui->graphicsView->setEnabled(false);
     if(drivingNet == 0)
     {
         QMessageBox::warning(this, "Kein neuronales Netz vorhanden!", "Bitte erstellen oder laden Sie vor der Simulation ein neuonales Netz.");
@@ -252,6 +243,34 @@ void SimulatorWindow::startSimulation()
     collision = false;
 }
 
+/*! Stoppt die Simulation. Wird entweder durch Input des Benutzers, oder bei Kollision des Fahrzeugs ausgelöst */
+void SimulatorWindow::stopSimulation(){
+    if(trainingMode)
+    {
+        ui->trainingModeButton->setEnabled(false);
+        ui->autonomousModeButton->setEnabled(true);
+    }
+    else
+    {
+        ui->autonomousModeButton->setEnabled(false);
+        ui->trainingModeButton->setEnabled(true);
+    }
+
+    ui->actionSimulation_starten->setEnabled(true);
+    ui->actionSimulation_Stoppen->setEnabled(false);
+    ui->actionPause->setEnabled(false);
+
+    straightTimer->stop();
+    leftTimer->stop();
+    rightTimer->stop();
+    speed=0;
+    right = left = straight= 0.0;
+    mainTimer->stop();
+    sensorsTimer->stop();
+    collision = false;
+}
+
+/*! Speichert das neuronale Netz */
 void SimulatorWindow::saveNet()
 {
 
@@ -318,6 +337,7 @@ void SimulatorWindow::saveNet()
     }
 }
 
+/*! Lädt ein neuronales Netz vom Rechner */
 void SimulatorWindow::loadNet()
 {
     //Falls netz vorhanden vorher löschen
@@ -413,6 +433,8 @@ void SimulatorWindow::loadNet()
     }
 }
 
+/*! Erstellt die Topologie des neuronalen Netzes
+    \return Topologie des Netzwerkes als Vektor*/
 std::vector<unsigned> SimulatorWindow::createTopology()
 {
     std::vector<unsigned> tempTopology;
@@ -420,7 +442,7 @@ std::vector<unsigned> SimulatorWindow::createTopology()
      tempTopology.push_back(3);
 
      bool ok;
-     int x = QInputDialog::getInt(this, tr("Struktur des neuronalen Netzes"), tr("Wie viele hidden Layer wollen Sie?"), 3, 1, 10, 1, &ok);
+     int x = QInputDialog::getInt(this, tr("Struktur des neuronalen Netzes"), tr("Anzahl der Hidden Layer:"), 3, 1, 10, 1, &ok);
      if(ok) { //Wenn OK gedrückt wurde :
      for(int i=0; i<x;i++)
      {
@@ -440,6 +462,7 @@ std::vector<unsigned> SimulatorWindow::createTopology()
     }
 }
 
+/*! Wechselt vom Simulator wieder in den Editor. */
 void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
 {
     this->hide();
@@ -447,6 +470,7 @@ void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
     this->parentWidget()->show();
 }
 
+/*! Pausiert die Simulation. Timer und position des Fahrzeuges etc. bleiben hierbei erhalten */
 void SimulatorWindow::pauseSimulation()
 {
     if(straightTimer->isActive())
@@ -470,6 +494,7 @@ void SimulatorWindow::pauseSimulation()
     qDebug()<<"Simulation paused";
 }
 
+/*! Setzt die Simulation nach der Pausierung wieder fort */
 void SimulatorWindow::resumeSimulation()
 {
     pauseTime = pauseTime + fitnessTime.elapsed() - tempTime;
@@ -484,6 +509,7 @@ void SimulatorWindow::resumeSimulation()
     qDebug()<<"Simulation resumed";
 }
 
+/*! Abstandserkennung der Sensoren zu einem Hindernis */
 void SimulatorWindow::connectSensorCalculation()
 {
     //Automatische Abstandserkennung der Senoren
@@ -494,8 +520,10 @@ void SimulatorWindow::connectSensorCalculation()
      * Somit ist in den Sensoren immer die aktuelle länge gespeichert und sie lässt sich leicht (nahezu) kontinuierlich ausgeben*/
     for(int i=0; i<sv->getNumberOfSensors(); i++)
     {
-        /* Hier wird die Sensorlänge hochgezählt. 1000 ist in dem Fall ein fester GrenzWert bei dem ich dachte, das höhere Werte dem System nicht mehr informationen geben würden (MapSize und GridSize beachten) - kann gerne noch kleiner angepasst werden*/
-        for(int j=0;j<1000; j=j+10)
+        /* Hier wird die Sensorlänge hochgezählt. Seitensensoren, haben im Normalfall einen Wert 25-50, dementsprechend würde hier ein Wert leicht über 50 ausreichen, da aber bekannt sein muss, ob bei einer Abbiegung
+           in eine Richtung, vorne eine Sackgasse liegt, muss der Sensorwert höher gelegt werden. Bei einem Sensorwert von 200 hat man sowohl Übersicht über meherere Tiles (bis zu 4 Stück) als auch keine unnötige Performance
+           -verschwendung für die Seitensensoren, die meist weit unter 200 liegen werden.*/
+        for(int j=0;j<200; j=j+10)
         {
             sv->getSensor(i)->setLength(j);
 
@@ -553,6 +581,9 @@ void SimulatorWindow::connectSensorCalculation()
 
     if(trainingMode)
     {
+
+        /*  NO LIFE TRAINING ANYMORE DUE TO PERFORMANCE ISSUES
+
         //FEED THE NEURAL NET --- LIFE TRAINING//
         //Sensor data
         std::vector<double> inputVals;
@@ -589,6 +620,27 @@ void SimulatorWindow::connectSensorCalculation()
 
         qDebug() << "Net recent average error: "
                         << drivingNet->getRecentAverageError();
+        */
+
+
+
+        //SAFE SENSOR DATA IN MEMORY ---  TRAINING HAPPENS LATER//
+        std::vector<double> tempVectorSensors;
+
+        for(int y=0; y<sv->getNumberOfSensors(); y++)
+        {
+            tempVectorSensors.push_back((double)sv->getSensor(y)->getLength()/(double)1000);
+        }
+        sensorData.push_back(tempVectorSensors);
+
+        //Safe SteeringData in Memory//
+        std::vector<double> tempVectorSteering;
+
+        tempVectorSteering.push_back(left);
+        tempVectorSteering.push_back(straight);
+        tempVectorSteering.push_back(right);
+
+        steeringData.push_back(tempVectorSteering);
     }
 
     else
@@ -615,24 +667,6 @@ void SimulatorWindow::connectSensorCalculation()
         straight = resultVals.at(1) < 0.5 ? 0.0 : 1;
         right = resultVals.at(2) < 0.5 ? 0.0 : 1;
     }
-
-    //SAFE SENSOR DATA IN MEMORY ---  TRAINING HAPPENS LATER//
-    std::vector<double> tempVectorSensors;
-
-    for(int y=0; y<sv->getNumberOfSensors(); y++)
-    {
-        tempVectorSensors.push_back((double)sv->getSensor(y)->getLength()/(double)1000);
-    }
-    sensorData.push_back(tempVectorSensors);
-
-    //Safe SteeringData in Memory//
-    std::vector<double> tempVectorSteering;
-
-    tempVectorSteering.push_back(left);
-    tempVectorSteering.push_back(straight);
-    tempVectorSteering.push_back(right);
-
-    steeringData.push_back(tempVectorSteering);
     });
 }
 
@@ -655,6 +689,7 @@ void SimulatorWindow::on_actionResume_triggered()
     resumeSimulation();
 }
 
+/*! Wechselt in den Trainingmodus. Bei diesem fährt der Benutzer das Fahrzeug und bringt ihm somit das selbstständige Fahren bei */
 void SimulatorWindow::on_trainingModeButton_clicked()
 {
     if(ui->trainingModeButton->isEnabled())
@@ -667,6 +702,7 @@ void SimulatorWindow::on_trainingModeButton_clicked()
 
 }
 
+/*! Wechselt in den autonomen Modus. Hier fährt das Auto, mithilfe der gesammelten Daten, selbstständig */
 void SimulatorWindow::on_autonomousModeButton_clicked()
 {
     if(!ui->trainingModeButton->isEnabled())
@@ -679,6 +715,7 @@ void SimulatorWindow::on_autonomousModeButton_clicked()
 
 }
 
+/*! Hier wird das Fahrzeug mithilfe der gesammelten Daten über eine beliebige Anzahl an Epochen trainiert */
 void SimulatorWindow::on_trainModelButton_clicked()
 {
     //ITERATIVE TRAINING WITH TRAINING DATA//
@@ -715,6 +752,7 @@ void SimulatorWindow::on_actionloadNeuralNet_triggered()
     loadNet();
 }
 
+/*! Erstellt ein neuronales Netz */
 void SimulatorWindow::createNeuralNet(std::vector<unsigned> top)
 {
     drivingNet = new neuralNet(topology);
@@ -735,4 +773,9 @@ void SimulatorWindow::on_actioncreateNeuralNet_triggered()
         drivingNet = 0;
         createNeuralNet(createTopology());
     }
+}
+
+void SimulatorWindow::on_actionSimulation_Stoppen_triggered()
+{
+    stopSimulation();
 }

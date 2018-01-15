@@ -1,7 +1,7 @@
 #include <neuralnet.h>
 
 double neuralNet::m_recentAverageSmoothingFactor = 100.0; // Number of training samples to average over
-
+/*! Holt die Ergebnisse der Einzelnen Neuronen des Neuronalen Netzes */
 void neuralNet::getResults(std::vector<double> &resultVals) const
 {
     resultVals.clear();
@@ -10,7 +10,7 @@ void neuralNet::getResults(std::vector<double> &resultVals) const
         resultVals.push_back(m_layers.back()[n]->getOutputVal());
     }
 }
-
+/*! Gibt an wie stark sich das Ergebnis des Netzes ändert, wenn sich einer der Parameter ändert */
 void neuralNet::backProp(const std::vector<double> &targetVals)
 {
     // Calculate overall net error (RMS of output neuron errors)
@@ -60,7 +60,7 @@ void neuralNet::backProp(const std::vector<double> &targetVals)
         }
     }
 }
-
+/*! Bewegt das Netzwerk auf den nächsten Layer */
 void neuralNet::feedForward(const std::vector<double> &inputVals)
 {
     assert(inputVals.size() == m_layers[0].size() - 1);
@@ -78,7 +78,8 @@ void neuralNet::feedForward(const std::vector<double> &inputVals)
         }
     }
 }
-
+/*! Erstellt ein Neuronales Netz mit der gegebenen Topologie
+ * \param topology Topologie des Neuronalen Netzes */
 neuralNet::neuralNet(const std::vector<unsigned> &topology)
 {
     unsigned numLayers = topology.size();
@@ -99,7 +100,7 @@ neuralNet::neuralNet(const std::vector<unsigned> &topology)
     }
 }
 
-
+/*! Zeigt die einzelnen Werte der Vektoren in der Konsole */
 void neuralNet::showVectorVals(QString label, std::vector<double> &v)
 {
     qDebug() << label << " ";

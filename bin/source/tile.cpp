@@ -31,7 +31,7 @@ void Tile::setClicked(bool c)
 
 /*! Erstellt ein Begrenzungsrechteck für das Tile,Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
  * \return Begrenzungsrechteck für das Tile */
-QRectF Tile::boundingRect()
+QRectF Tile::boundingRect() const
 {
     return QRectF(0,0,50,50);
 }

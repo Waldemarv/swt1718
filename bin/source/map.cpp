@@ -145,20 +145,23 @@ void Map::setMapPath()
 QPainterPath Map::getMapPath() {
     return this->mapPath;
 }
-
+/*! Erstellt ein Memento der Map
+* \return Schnappschuss des aktuellen Zustandes der Map*/
 Memento *Map::createMemento()
 {
     return new Memento(tiles, obstacles, gridSize, sizeX, sizeY, startingPoint, endingPoint, startingTile, endingTile);
 }
 
+/*! Setzt die Map auf das letzte gespeicherte Memento
+* \param m Memento, nach welchem die Map gesetzt werden soll*/
 void Map::setMemento(Memento *m)
 {
     tiles = m->tiles;
     obstacles = m->obstacles;
 
-    for(auto i = 0; i<tiles.size(); i++)
+    for(unsigned long i = 0; i<tiles.size(); i++)
         tiles.at(i)->setPos(m->tilesPositions.at(i));
-    for(auto i = 0; i<obstacles.size(); i++)
+    for(unsigned long i = 0; i<obstacles.size(); i++)
         obstacles.at(i)->setPos(m->obstaclesPositions.at(i));
 
     gridSize = m->gridSize;

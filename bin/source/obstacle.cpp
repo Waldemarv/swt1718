@@ -61,12 +61,12 @@ double Obstacle::getlength() { return length; }
 
 double Obstacle::getSpeed()
 {
-
+    return 0;
 }
 
 void Obstacle::setSpeed(double s)
 {
-
+    Q_UNUSED(s);
 }
 
 bool Obstacle::isClicked()
@@ -119,14 +119,14 @@ void Obstacle::setPosition(double x, double y)
 
 double Obstacle::calculateRotation()
 {
-
+    return 0;
 }
 
 // Mouse Event Handlers
 /*! Wählt ein Obstacle an, wenn es angeklickt wurde */
 void Obstacle::advance(int phase)
 {
-
+    Q_UNUSED(phase);
 }
 
 void Obstacle::mousePressEvent(QGraphicsSceneMouseEvent *event)

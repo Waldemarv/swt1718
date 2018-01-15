@@ -363,7 +363,7 @@ void Editor::loadMap()
             double speed = obstaclesAt.attribute("speed:").toDouble();
             double rotation = obstaclesAt.attribute("rotation").toDouble();
 
-            Obstacle *o = new DynamicObstacle(obstacleX, obstacleY, obstacleWidth, obstacleLength, speed,QPointF(dynamicObstacleStartingPointX, dynamicObstacleStartingPointY), QPointF(dynamicObstacleEndingPointX, dynamicObstacleEndingPointY));
+            Obstacle *o = new DynamicObstacle(obstacleX, obstacleY, rotation, obstacleWidth, obstacleLength, speed,QPointF(dynamicObstacleStartingPointX, dynamicObstacleStartingPointY), QPointF(dynamicObstacleEndingPointX, dynamicObstacleEndingPointY));
             o->calculateRotation();
             scene->addItem(o);
             m->addObstacle(o);
@@ -472,7 +472,7 @@ void Editor::drawGridLayout(int x, int y)
     //Pen für das Zeichnen des Rasters erstellen
     QPen pen;
     pen.setColor(Qt::lightGray);
-    pen.setWidth(0.5);
+    pen.setWidth(1);
 
     //Koordinatenraster zeichnen
     for (int i = 0 ; i<=x ; i++)
@@ -560,11 +560,11 @@ void Editor::addChild(QTreeWidgetItem *parent, QString name, int posX, int posY)
     parent->addChild(item);
 }
 
+/*! Verbindet alle graphischen Objekte mit der Scene der Benutzeroberfläche */
 void Editor::connectScene()
 {
     connect(scene, &QGraphicsScene::changed, [this]{
 
-        int pos;
         bool itemsSelected = false; // Speichert ob Objekt auf Map ausgewählt ist
 
         ui->ObjectSpecs->show();
@@ -685,7 +685,7 @@ void Editor::connectScene()
         scene->update();
     });
 }
-
+/*! Verbindet alle graphischen Elemente mit dem TreeWidget der Benutzeroberfläche */
 void Editor::connectTreeWidget()
 {
     connect(ui->treeWidget, &QTreeWidget::doubleClicked, [this]{
@@ -700,6 +700,7 @@ void Editor::connectTreeWidget()
 
 void Editor::keyPressEvent(QKeyEvent *event)
 {
+    Q_UNUSED(event);
     caretaker->setMemento(m->createMemento());
 }
 
@@ -901,7 +902,7 @@ void Editor::on_deleteObstacleButton_clicked()
     }
     scene->update();
 }
-
+/*! Erzeugt eine Intersection auf der Scene */
 void Editor::on_intersectionButton_clicked()
 {
     if(m == nullptr)
@@ -922,7 +923,7 @@ void Editor::on_intersectionButton_clicked()
         updateTreeNumberOfTiles();
     }
 }
-
+/*! Erzeugt eine T-Intersection auf der Scene */
 void Editor::on_tIntersectionButton_clicked()
 {
     if(m == nullptr)
@@ -944,7 +945,7 @@ void Editor::on_tIntersectionButton_clicked()
 
     }
 }
-
+/*! Erzeugt einen Startpunkt auf der Scene */
 void Editor::on_startingPointButton_clicked()
 {
     if(m == nullptr)
@@ -967,7 +968,7 @@ void Editor::on_startingPointButton_clicked()
         ui->startingPointButton->setEnabled(false);
     }
 }
-
+/*! Erzeugt einen Endpunkt auf der Scene */
 void Editor::on_endingPointButton_clicked()
 {
     if(m == nullptr)
@@ -991,7 +992,7 @@ void Editor::on_endingPointButton_clicked()
         ui->endingPointButton->setEnabled(false);
     }
 }
-
+/*! Wechselt in das Simulationsfenster */
 void Editor::on_actionSimulation_starten_triggered()
 {
     if(m!=0)
@@ -1013,7 +1014,7 @@ void Editor::on_actionSimulation_starten_triggered()
         QMessageBox::warning(this, "Keine Map vorhanden", "Bitte erstellen Sie vor der Simulation eine Map!");
     }
 }
-
+/*! Macht den letzten gemachten Schritt der Scene (Tile/Obstacle hinzufügen/verschieben) rückgängig*/
 void Editor::on_actionUndo_triggered()
 {
     //Wenn es ein Memento gibt
@@ -1064,7 +1065,7 @@ void Editor::on_actionUndo_triggered()
         return;
     }
 }
-
+/*! Erzeugt eine dynamisches Hindernis auf der Scene */
 void Editor::on_dynamicObstacleButton_clicked()
 {
     if(m == nullptr)
@@ -1076,7 +1077,7 @@ void Editor::on_dynamicObstacleButton_clicked()
         //Für Undo
         caretaker->setMemento(m->createMemento());
 
-        Obstacle *o = new DynamicObstacle(200, 50, 5, 5, 1, QPointF(200,50), QPointF(500,300));
+        Obstacle *o = new DynamicObstacle(200, 50, 0, 5, 5, 1, QPointF(200,50), QPointF(500,300));
 
         m->addObstacle(o);
         scene->addItem(o);

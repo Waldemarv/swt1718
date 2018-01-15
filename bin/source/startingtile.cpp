@@ -47,6 +47,8 @@ Startingtile *Startingtile::createStartingTile(int nx, int ny, double nascent, i
 * \param widget Widget in welches gezeichnet wird */
 void Startingtile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
     //Hightlight when Selected
     if(isSelected()){
         QPen pen;

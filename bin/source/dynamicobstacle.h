@@ -33,7 +33,7 @@ class  DynamicObstacle: public Obstacle {
         QPointF getEndingPoint();
 
         DynamicObstacle();
-        DynamicObstacle(double x, double y, double width, double length, double speed, QPointF nstartingPoint, QPointF nendingPoint);
+        DynamicObstacle(double x, double y, double rotation, double width, double length, double speed, QPointF nstartingPoint, QPointF nendingPoint);
 
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 

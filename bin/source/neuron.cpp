@@ -2,7 +2,8 @@
 
 double Neuron::eta = 0.01;    // overall net learning rate, [0.0..1.0]
 double Neuron::alpha = 0.5;   // momentum, multiplier of last deltaWeight, [0.0..1.0]
-
+/*! Aktualisiert die Gewichtung des aktuellen Layer anhand des letzten Layers
+ * \param prevLayer Layer vor dem aktuellem Layer */
 void Neuron::updateInputWeights(Layer &prevLayer)
 {
     // The weights to be updated are in the Connection container
@@ -36,7 +37,7 @@ void Neuron::setWeights(int index, double weight, double deltaWeight)
     m_outputWeights[index].weight = weight;
     m_outputWeights[index].deltaWeight = deltaWeight;
 }
-
+/*! Berechnet die Fehlersumme des aktuellen Layers */
 double Neuron::sumDOW(const Layer &nextLayer) const
 {
     double sum = 0.0;
@@ -49,13 +50,13 @@ double Neuron::sumDOW(const Layer &nextLayer) const
 
     return sum;
 }
-
+/*! Berechnet den Gradienten für das nächste Layer */
 void Neuron::calcHiddenGradients(const Layer &nextLayer)
 {
     double dow = sumDOW(nextLayer);
     m_gradient = dow * Neuron::transferFunctionDerivative(m_outputVal);
 }
-
+/*! Berechnet den Gradienten für das letzte Layer */
 void Neuron::calcOutputGradients(double targetVal)
 {
     double delta = targetVal - m_outputVal;
@@ -74,7 +75,7 @@ double Neuron::transferFunctionDerivative(double x)
     // tanh derivative
     return 1.0 - x * x;
 }
-
+/*! Bewegt das Netzwerk auf den nächsten Layer */
 void Neuron::feedForward(const Layer &prevLayer)
 {
     double sum = 0.0;
@@ -89,7 +90,7 @@ void Neuron::feedForward(const Layer &prevLayer)
 
     m_outputVal = Neuron::transferFunction(sum);
 }
-
+/*! Erzeugt ein neues Neuron */
 Neuron::Neuron(unsigned numOutputs, unsigned myIndex)
 {
     for (unsigned c = 0; c < numOutputs; ++c) {

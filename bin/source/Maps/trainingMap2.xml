@@ -1,0 +1,56 @@
+<Map>
+ <Data>
+  <MapSize Y:="16" X:="16"/>
+ </Data>
+ <Points>
+  <StartingPoint Y:="20" X:="20"/>
+  <EndingPoint Y:="520" X:="620"/>
+ </Points>
+ <Obstacles/>
+ <Tiles>
+  <Tile Typ:="StartingTile" direction:="0" ascent:="0" Y:="0" X:="0"/>
+  <Tile Typ:="Turn" direction:="0" ascent:="0" Y:="0" X:="0"/>
+  <Tile Typ:="Straight" direction:="1" ascent:="0" Y:="100" X:="50"/>
+  <Tile Typ:="Turn" direction:="2" ascent:="0" Y:="150" X:="50"/>
+  <Tile Typ:="Intersection" direction:="0" ascent:="0" Y:="150" X:="200"/>
+  <Tile Typ:="Turn" direction:="1" ascent:="0" Y:="150" X:="350"/>
+  <Tile Typ:="Turn" direction:="0" ascent:="0" Y:="50" X:="350"/>
+  <Tile Typ:="Turn" direction:="3" ascent:="0" Y:="50" X:="250"/>
+  <Tile Typ:="T-Intersection" direction:="1" ascent:="0" Y:="300" X:="200"/>
+  <Tile Typ:="Intersection" direction:="0" ascent:="0" Y:="300" X:="50"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="250" X:="100"/>
+  <Tile Typ:="Turn" direction:="3" ascent:="0" Y:="350" X:="0"/>
+  <Tile Typ:="T-Intersection" direction:="1" ascent:="0" Y:="400" X:="50"/>
+  <Tile Typ:="Turn" direction:="2" ascent:="0" Y:="400" X:="0"/>
+  <Tile Typ:="Turn" direction:="2" ascent:="0" Y:="550" X:="100"/>
+  <Tile Typ:="T-Intersection" direction:="2" ascent:="0" Y:="400" X:="200"/>
+  <Tile Typ:="Straight" direction:="1" ascent:="0" Y:="450" X:="150"/>
+  <Tile Typ:="T-Intersection" direction:="0" ascent:="0" Y:="600" X:="200"/>
+  <Tile Typ:="Turn" direction:="2" ascent:="0" Y:="650" X:="250"/>
+  <Tile Typ:="Turn" direction:="1" ascent:="0" Y:="550" X:="350"/>
+  <Tile Typ:="Intersection" direction:="0" ascent:="0" Y:="400" X:="350"/>
+  <Tile Typ:="Turn" direction:="3" ascent:="0" Y:="250" X:="400"/>
+  <Tile Typ:="Straight" direction:="1" ascent:="0" Y:="350" X:="400"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="450" X:="500"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="250" X:="500"/>
+  <Tile Typ:="Turn" direction:="1" ascent:="0" Y:="200" X:="550"/>
+  <Tile Typ:="Turn" direction:="3" ascent:="0" Y:="150" X:="600"/>
+  <Tile Typ:="Turn" direction:="0" ascent:="0" Y:="150" X:="650"/>
+  <Tile Typ:="Turn" direction:="1" ascent:="0" Y:="250" X:="650"/>
+  <Tile Typ:="Turn" direction:="3" ascent:="0" Y:="300" X:="600"/>
+  <Tile Typ:="Turn" direction:="0" ascent:="0" Y:="450" X:="500"/>
+  <Tile Typ:="EndingTile" direction:="0" ascent:="0" Y:="500" X:="600"/>
+  <Tile Typ:="Turn" direction:="2" ascent:="0" Y:="350" X:="600"/>
+  <Tile Typ:="T-Intersection" direction:="1" ascent:="0" Y:="450" X:="700"/>
+  <Tile Typ:="Turn" direction:="0" ascent:="0" Y:="400" X:="700"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="200" X:="150"/>
+  <Tile Typ:="T-Intersection" direction:="3" ascent:="0" Y:="550" X:="550"/>
+  <Tile Typ:="Turn" direction:="1" ascent:="0" Y:="550" X:="700"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="500" X:="650"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="600" X:="650"/>
+  <Tile Typ:="Turn" direction:="1" ascent:="0" Y:="650" X:="500"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="700" X:="350"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="700" X:="400"/>
+  <Tile Typ:="Straight" direction:="0" ascent:="0" Y:="700" X:="450"/>
+ </Tiles>
+</Map>

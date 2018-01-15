@@ -2,7 +2,10 @@
 
 Sensor::Sensor() : direction(0)
 {}
-
+/*! Erstellt einen neuen Sensor
+ * \param nangle Winkel des Sensors
+ * \param nlength Länge des Sensors
+ * \param p Punkt an dem der Sensor beginnen soll */
 Sensor::Sensor(int nangle, int nlength, QPointF p) : direction(direction), angle(nangle), length(nlength)
 {
     setPos(p);
@@ -11,11 +14,13 @@ Sensor::Sensor(int nangle, int nlength, QPointF p) : direction(direction), angle
 
     setRotation(angle);
 }
+/*! Erstellt ein BoundingRect für den Sensor */
 QRectF Sensor::boundingRect() const
 {
     return QRectF(0,0,length,2);
 }
 
+/*! Zeichnet den Sensor */
 void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPainterPath *newPath = new QPainterPath;

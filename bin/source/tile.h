@@ -38,7 +38,7 @@ public:
     bool isClicked();
     void setClicked(bool c);
 
-    virtual QRectF boundingRect();
+    virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual QString getType();
 

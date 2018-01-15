@@ -61,7 +61,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -92,6 +92,7 @@
    <addaction name="separator"/>
    <addaction name="actionResume"/>
    <addaction name="actionPause"/>
+   <addaction name="actionSimulation_Stoppen"/>
    <addaction name="separator"/>
    <addaction name="actioncreateNeuralNet"/>
    <addaction name="actionsaveNeuralNet"/>
@@ -160,6 +161,11 @@
    </property>
    <property name="text">
     <string>Simulation starten</string>
+   </property>
+  </action>
+  <action name="actionSimulation_Stoppen">
+   <property name="text">
+    <string>Simulation Stoppen</string>
    </property>
   </action>
  </widget>

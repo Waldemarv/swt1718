@@ -45,6 +45,7 @@ private slots:
     void on_actionZu_Editor_wechseln_triggered();
     void pauseSimulation();
     void resumeSimulation();
+    void stopSimulation();
 
     void connectSensorCalculation();
     void connectFitnessTime();
@@ -64,6 +65,8 @@ private slots:
     void on_actionloadNeuralNet_triggered();
 
     void on_actioncreateNeuralNet_triggered();
+
+    void on_actionSimulation_Stoppen_triggered();
 
 private:
     Map m;
