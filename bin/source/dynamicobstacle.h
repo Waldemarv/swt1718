@@ -37,13 +37,16 @@ class  DynamicObstacle: public Obstacle {
 
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
+        void setMode(int n);
+        void advance(int phase);
+        double absoloute(double a);
+        void updateEndingPoint();
+
     protected:
         double speed;
         double angle;
 
         int direction = 0;
-
-        void advance(int phase);
 
         QPointF startingPoint;
         QPointF endingPoint;

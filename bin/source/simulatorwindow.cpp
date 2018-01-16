@@ -9,7 +9,6 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
     ui->setupUi(this);
     if(&nm == nullptr) 
 	{
-        //TODO : Egal was geklickt wird : Es muss eine Map geladen werden
     }
     else 
 	{
@@ -33,9 +32,13 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         for(int i=0; i<this->m.getNumberOfObstacles();i++)
         {
             m.getObstacle(i)->setSelected(false);
-            scene->addItem(m.getObstacle(i));
             if(m.getObstacle(i)->getType() == "dynamicObstacle")
+            {
+                m.getObstacle(i)->setMode(1); //mode simulation = 1
                 m.getObstacle(i)->setRotation(m.getObstacle(i)->calculateRotation());
+                m.getObstacle(i)->updateEndingPoint();
+            }
+            scene->addItem(m.getObstacle(i));
         }
 
         sv=0;
@@ -55,9 +58,10 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         rightTimer = new QTimer();
         mainTimer = new QTimer();
         sensorsTimer = new QTimer();
+        dynamicObstacleTimer = new QTimer();
 
         //Verbinde die Timer mit der fortbewegung(advance) und auslenkung(left), (right), sowie der collisionDeteciton
-        connect(straightTimer, SIGNAL(timeout()), scene, SLOT(advance()));
+        connect(mainTimer, SIGNAL(timeout()), scene, SLOT(advance()));
         connect(leftTimer, &QTimer::timeout, [this]{ sv->left(); });
         connect(rightTimer, &QTimer::timeout, [this]{ sv->right(); });
         connect(mainTimer, &QTimer::timeout, [this] { collisionDetection(); vehicleControls(); });
@@ -90,7 +94,6 @@ void SimulatorWindow::collisionDetection()
             qDebug() << "Ziel erreicht!";
             sv->setColor(Qt::blue); 
             collision = false;
-
             stopSimulation();
         }
         else {
@@ -118,18 +121,20 @@ void SimulatorWindow::collisionDetection()
     }
 }
 
-/*! Definiert die Steuerung des autonomen Fahrzeugs */
+/*! Definiert die Steuerung des autonomen Fahrzeugs wichtig für steuerung vom neuronalen Netz */
 void SimulatorWindow::vehicleControls()
 {
     if(straight)
     {
-        if(!straightTimer->isActive())
-            straightTimer->start(10);
+        sv->setSpeed(1);
+        //if(!straightTimer->isActive())
+        //    straightTimer->start(10);
     }
     else
     {
-        if(straightTimer->isActive())
-            straightTimer->stop();
+        sv->setSpeed(0);
+        //if(straightTimer->isActive())
+        //    straightTimer->stop();
     }
 
     if(left)
@@ -160,11 +165,6 @@ SimulatorWindow::~SimulatorWindow()
 /*! Startet die Simulation */
 void SimulatorWindow::on_actionSimulation_starten_triggered()
 {
-    ui->actionSimulation_Stoppen->setEnabled(true);
-    ui->trainModelButton->setEnabled(false);
-    ui->autonomousModeButton->setEnabled(false);
-    ui->trainingModeButton->setEnabled(false);
-    ui->graphicsView->setFocus();
     startSimulation();
 }
 
@@ -198,15 +198,18 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 /*! Startet die Simulation der geladenen Strecke */
 void SimulatorWindow::startSimulation()
 {
-    ui->graphicsView->setEnabled(false);
     if(drivingNet == 0)
     {
         QMessageBox::warning(this, "Kein neuronales Netz vorhanden!", "Bitte erstellen oder laden Sie vor der Simulation ein neuonales Netz.");
         return;
     }
 
-    qDebug()<<"Simulation wurde gestartet!";
-
+    ui->graphicsView->setEnabled(false);
+    ui->actionSimulation_Stoppen->setEnabled(true);
+    ui->trainModelButton->setEnabled(false);
+    ui->autonomousModeButton->setEnabled(false);
+    ui->trainingModeButton->setEnabled(false);
+    ui->graphicsView->setFocus();
     ui->actionPause->setEnabled(true);
 
     if(sv != 0)
@@ -241,6 +244,8 @@ void SimulatorWindow::startSimulation()
     sensorsTimer->start(10);
     //Parameter für kollisionsAbfrage aus falsch setzen damit SV bewegbar und wieder auf Ausgangsvariablen
     collision = false;
+
+    qDebug()<<"Simulation wurde gestartet!";
 }
 
 /*! Stoppt die Simulation. Wird entweder durch Input des Benutzers, oder bei Kollision des Fahrzeugs ausgelöst */
@@ -259,6 +264,7 @@ void SimulatorWindow::stopSimulation(){
     ui->actionSimulation_starten->setEnabled(true);
     ui->actionSimulation_Stoppen->setEnabled(false);
     ui->actionPause->setEnabled(false);
+    ui->trainModelButton->setEnabled(true);
 
     straightTimer->stop();
     leftTimer->stop();
@@ -718,6 +724,16 @@ void SimulatorWindow::on_autonomousModeButton_clicked()
 /*! Hier wird das Fahrzeug mithilfe der gesammelten Daten über eine beliebige Anzahl an Epochen trainiert */
 void SimulatorWindow::on_trainModelButton_clicked()
 {
+    if(drivingNet == 0)
+    {
+        QMessageBox::warning(this, "Kein neuronales Netz vorhanden!", "Bitte erstellen oder laden Sie vor der Simulation ein neuonales Netz.");
+        return;
+    }
+    if(sensorData.size() == 0)
+    {
+        QMessageBox::warning(this, "Keine Trainingsdaten..", "Bitte sammeln Sie zuerst Trainingsdaten indem Sie die Strecke erfolgreich passieren.");
+        return;
+    }
     //ITERATIVE TRAINING WITH TRAINING DATA//
     bool ok;
     int x = QInputDialog::getInt(this, tr("Trainingsepochen"), tr("Wie oft soll trainiert werden?"), 10000, 100, INT_MAX, 100, &ok);

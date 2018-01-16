@@ -79,6 +79,7 @@ private:
     QTimer *rightTimer;
     QTimer *mainTimer;
     QTimer *sensorsTimer;
+    QTimer * dynamicObstacleTimer;
 
     QGraphicsPathItem mapBoundaries;
     Qt::ItemSelectionMode mode = Qt::IntersectsItemShape;
@@ -101,7 +102,6 @@ private:
 
     neuralNet *drivingNet;
     std::vector<unsigned> topology;
-
 };
 
 #endif // SIMULATORWINDOW_H

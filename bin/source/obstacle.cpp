@@ -17,6 +17,21 @@ QPointF Obstacle::getEndingPoint()
 
 }
 
+void Obstacle::setMode(int n)
+{
+    mode = n;
+}
+
+void Obstacle::move()
+{
+
+}
+
+void Obstacle::updateEndingPoint()
+{
+
+}
+
 /*! Erstellt ein Begrenzungsrechteck für das Obstacle. Dieses wird sowohl zum zeichnen, als auch für weitere Interaktion benötigt
  * \return Begrenzungsrechteck des Obstacle */
 QRectF Obstacle::boundingRect() const

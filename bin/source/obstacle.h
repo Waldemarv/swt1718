@@ -18,6 +18,8 @@ protected:
     double length;
     bool clicked;
 
+    bool mode = 0; // 0 = editormode
+
     virtual void advance(int phase);
 
 public:
@@ -45,6 +47,9 @@ public:
     virtual QPointF getStartingPoint();
     virtual QPointF getEndingPoint();
 
+    virtual void setMode(int n);
+    virtual void move();
+    virtual void updateEndingPoint();
 
     Obstacle();
     Obstacle(double x, double y, double width, double length);
