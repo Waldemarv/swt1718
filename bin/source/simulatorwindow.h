@@ -102,6 +102,8 @@ private:
 
     neuralNet *drivingNet;
     std::vector<unsigned> topology;
+
+    int svStartRotation;
 };
 
 #endif // SIMULATORWINDOW_H

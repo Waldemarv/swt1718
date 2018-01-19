@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1500</width>
-    <height>800</height>
+    <width>1800</width>
+    <height>1275</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,9 @@
   <property name="windowIcon">
    <iconset resource="icons.qrc">
     <normaloff>:/icon/img/icon/editor.svg</normaloff>:/icon/img/icon/editor.svg</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -481,7 +484,7 @@ image: url(:/icon/img/icon/editor.svg);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1500</width>
+     <width>1800</width>
      <height>22</height>
     </rect>
    </property>

@@ -50,6 +50,7 @@ SimulatorWindow::SimulatorWindow(const Map &nm, QWidget *parent) :
         collision = false;
         ui->actionPause->setEnabled(false);
         ui->actionResume->setEnabled(false);
+        ui->actionSimulation_Stoppen->setEnabled(false);
 
 
         // Timer erstellen
@@ -197,7 +198,7 @@ void SimulatorWindow::keyReleaseEvent(QKeyEvent *event)
 
 /*! Startet die Simulation der geladenen Strecke */
 void SimulatorWindow::startSimulation()
-{
+{ 
     if(drivingNet == 0)
     {
         QMessageBox::warning(this, "Kein neuronales Netz vorhanden!", "Bitte erstellen oder laden Sie vor der Simulation ein neuonales Netz.");
@@ -211,12 +212,13 @@ void SimulatorWindow::startSimulation()
     ui->trainingModeButton->setEnabled(false);
     ui->graphicsView->setFocus();
     ui->actionPause->setEnabled(true);
+    ui->actionSimulation_Stoppen->setEnabled(true);
 
     if(sv != 0)
     {
         sv->setPos(m.getStartingPoint().x(), m.getStartingPoint().y());
-        sv->setRotation(0);
-        sv->setAngle(0);
+        sv->setRotation(svStartRotation);
+        sv->setAngle(svStartRotation);
         sv->resetSensors();
         straightTimer->stop();
         leftTimer->stop();
@@ -227,25 +229,41 @@ void SimulatorWindow::startSimulation()
     }
     else
     {
-    // Autonomes Fahrzeug hinzufügen
-    sv = new SmartVehicle(0,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
-    scene->addItem(sv);
-    //Sensoren der scene hinzufügen
-    for(int i = 0; i<sv->getNumberOfSensors(); i++)
-        scene->addItem(sv->getSensor(i));
-    fitnessTime.restart();
-    }
+        if(m.getStartingTile()->getDirection() == 0)
+        {
+            svStartRotation = 0;
+        }
+        else if(m.getStartingTile()->getDirection() == 1)
+        {
+            svStartRotation = 90;
+        }
+        else if(m.getStartingTile()->getDirection() == 2)
+        {
+            svStartRotation = 180;
+        }
+        else if(m.getStartingTile()->getDirection() == 3)
+        {
+            svStartRotation = 270;
+        }
+        // Autonomes Fahrzeug hinzufügen
+        sv = new SmartVehicle(svStartRotation,1,2,m.getStartingPoint().x(), m.getStartingPoint().y());
+        scene->addItem(sv);
+        //Sensoren der scene hinzufügen
+        for(int i = 0; i<sv->getNumberOfSensors(); i++)
+            scene->addItem(sv->getSensor(i));
+        fitnessTime.restart();
+        }
 
-    //Timer der die collisionsdetection Funktion aufruft starten
-    mainTimer->start(10);
-    //fitnessTime starten und aktualisieren
-    fitnessTime.restart();
-    //Sensorcalculation aktivieren
-    sensorsTimer->start(10);
-    //Parameter für kollisionsAbfrage aus falsch setzen damit SV bewegbar und wieder auf Ausgangsvariablen
-    collision = false;
+        //Timer der die collisionsdetection Funktion aufruft starten
+        mainTimer->start(10);
+        //fitnessTime starten und aktualisieren
+        fitnessTime.restart();
+        //Sensorcalculation aktivieren
+        sensorsTimer->start(10);
+        //Parameter für kollisionsAbfrage aus falsch setzen damit SV bewegbar und wieder auf Ausgangsvariablen
+        collision = false;
 
-    qDebug()<<"Simulation wurde gestartet!";
+        qDebug()<<"Simulation wurde gestartet!";
 }
 
 /*! Stoppt die Simulation. Wird entweder durch Input des Benutzers, oder bei Kollision des Fahrzeugs ausgelöst */
@@ -443,38 +461,49 @@ void SimulatorWindow::loadNet()
     \return Topologie des Netzwerkes als Vektor*/
 std::vector<unsigned> SimulatorWindow::createTopology()
 {
+    topology.clear();
     std::vector<unsigned> tempTopology;
-     //3inputs (3 sensors)
-     tempTopology.push_back(3);
+    //3inputs (3 sensors)
+    tempTopology.push_back(3);
 
      bool ok;
      int x = QInputDialog::getInt(this, tr("Struktur des neuronalen Netzes"), tr("Anzahl der Hidden Layer:"), 3, 1, 10, 1, &ok);
      if(ok) { //Wenn OK gedrückt wurde :
-     for(int i=0; i<x;i++)
-     {
-         bool ok1 = false;
-         QString layernum = QString("Layer"+QString::number(i+1));
-         QString neurons = QString("Anzahl der Neuronen in Layer " +QString::number(i+1)+ " auswählen:");
-         int y = QInputDialog::getInt(this, layernum, neurons, 1, 6, 100, 1, &ok1);
-         if(ok1)
+         for(int i=0; i<x;i++)
          {
-             tempTopology.push_back(y);
+             bool ok1 = false;
+             QString layernum = QString("Layer"+QString::number(i+1));
+             QString neurons = QString("Anzahl der Neuronen in Layer " +QString::number(i+1)+ " auswählen:");
+             int y = QInputDialog::getInt(this, layernum, neurons, 1, 6, 100, 1, &ok1);
+             if(ok1)
+             {
+                 tempTopology.push_back(y);
+             }
+             else
+             {
+                 QMessageBox::warning(this, "Vorgang abgebrochen.", "Netz konnte nicht vollständig erstellt werden!");
+                 return topology;
+             }
          }
+         //3 outputs (left straight right)
+         tempTopology.push_back(3);
+         topology = tempTopology;
+         return topology;
      }
-     //3 outputs (left straight right)
-     tempTopology.push_back(3);
-     topology = tempTopology;
-     return topology;
+    else
+    {
+         QMessageBox::warning(this, "Vorgang abgebrochen.", "Netz konnte nicht vollständig erstellt werden!");
+         return topology;
     }
 }
 
 /*! Wechselt vom Simulator wieder in den Editor. */
-void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
+/* void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
 {
     this->hide();
     pauseSimulation();
     this->parentWidget()->show();
-}
+} */
 
 /*! Pausiert die Simulation. Timer und position des Fahrzeuges etc. bleiben hierbei erhalten */
 void SimulatorWindow::pauseSimulation()
@@ -771,22 +800,30 @@ void SimulatorWindow::on_actionloadNeuralNet_triggered()
 /*! Erstellt ein neuronales Netz */
 void SimulatorWindow::createNeuralNet(std::vector<unsigned> top)
 {
-    drivingNet = new neuralNet(topology);
+    if(topology.size() > 0)
+        drivingNet = new neuralNet(topology);
 }
 
 void SimulatorWindow::on_actioncreateNeuralNet_triggered()
 {
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Vor dem Erstellen speichern?", "Möchten Sie ihr aktuelles neuronales Netz vor dem erstellen eines Anderen speichern?\nAndernfalls gehen alle Daten unwiederruflich verloren!",
-                                  QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+    if(drivingNet != 0)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Vor dem Erstellen speichern?", "Möchten Sie ihr aktuelles neuronales Netz vor dem erstellen eines Anderen speichern?\nAndernfalls gehen alle Daten unwiederruflich verloren!",
+                                      QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
 
-    if (reply == QMessageBox::No) {
-        drivingNet = 0;
-        createNeuralNet(createTopology());
+        if (reply == QMessageBox::No) {
+            drivingNet = 0;
+            createNeuralNet(createTopology());
+        }
+        if (reply == QMessageBox::Yes) {
+            saveNet();
+            drivingNet = 0;
+            createNeuralNet(createTopology());
+        }
     }
-    if (reply == QMessageBox::Yes) {
-        saveNet();
-        drivingNet = 0;
+    else
+    {
         createNeuralNet(createTopology());
     }
 }

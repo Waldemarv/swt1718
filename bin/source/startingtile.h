@@ -17,7 +17,6 @@ public:
     virtual QString getType();
 
     static Startingtile* createStartingTile(int nx, int ny, double nascent, int ndirection);
-
     void rotate();
 };
 

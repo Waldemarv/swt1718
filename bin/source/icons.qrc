@@ -15,6 +15,7 @@
         <file>img/icon/pause.svg</file>
         <file>img/icon/resume_play.svg</file>
         <file>img/icon/create_Neural_network.svg</file>
+        <file>img/icon/stop.svg</file>
     </qresource>
     <qresource prefix="/btn_icon">
         <file>img/icon/turn.svg</file>
