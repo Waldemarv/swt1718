@@ -498,12 +498,15 @@ std::vector<unsigned> SimulatorWindow::createTopology()
 }
 
 /*! Wechselt vom Simulator wieder in den Editor. */
-/* void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
+void SimulatorWindow::on_actionZu_Editor_wechseln_triggered()
 {
+    QMessageBox::warning(this, "Feature nicht verfügbar.", "Dieses Feature ist nur in der Pro Version verfügbar.\nDiese können Sie für 19,99€ erwerben.");
+    /*
     this->hide();
     pauseSimulation();
     this->parentWidget()->show();
-} */
+    */
+}
 
 /*! Pausiert die Simulation. Timer und position des Fahrzeuges etc. bleiben hierbei erhalten */
 void SimulatorWindow::pauseSimulation()
